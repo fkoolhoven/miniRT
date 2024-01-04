@@ -13,18 +13,13 @@ LIBMLX		= ./MLX42
 LIBMLXBUILD	= ./MLX42/build
 LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 
-all: libmlx $(NAME)
+all: $(NAME)
 
-libmlx: $(LIBMLX) $(LIBMLXBUILD)
-
-$(LIBMLX):
-	git clone https://github.com/codam-coding-college/MLX42.git
+$(NAME): $(OBJ) $(LIBMLXBUILD)
+	$(COMP) $(LEAK_CHECK) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBMLXBUILD):
 	@cmake $(LIBMLX) -B $(LIBMLXBUILD) && make -C $(LIBMLXBUILD) -j4
-
-$(NAME): $(OBJ)
-	$(COMP) $(LEAK_CHECK) $(OBJ) $(LIBS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(OBJ_DIR)
@@ -38,10 +33,4 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 
-libclean: fclean
-	@rm -rf $(LIBMLX)
-	@echo Removed MLX42 repository/directory
-
 re: fclean all
-
-libre: fclean libclean all
