@@ -6,13 +6,16 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:31:19 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 14:41:02 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:08:14 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	parse(void)
+void	parse(char *file)
 {
-	printf("Parsing...\n");
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	printf("fd = %i\n", fd);
 }

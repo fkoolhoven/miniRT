@@ -7,16 +7,19 @@ INC			= inc
 OBJ_DIR		= obj
 OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
-SRC_DIR		= src
-SUBDIR		:= . \
-			   parser
-SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
-SRC			= main.c \
-				parser/parse.c
-
 LIBMLX		= ./MLX42
 LIBMLXBUILD	= ./MLX42/build
 LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
+
+SRC_DIR		= src
+SUBDIR		:= . \
+			   parser \
+			   errors
+SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
+SRC			= main.c \
+				parser/parse.c \
+				errors/error.c
+
 
 VPATH = $(SRCDIRS)
 

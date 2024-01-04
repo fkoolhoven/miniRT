@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 14:31:50 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 15:07:47 by fkoolhov         ###   ########.fr       */
+/*   Created: 2024/01/04 14:57:16 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/01/04 15:02:42 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef ERRORS_H
+# define ERRORS_H
 
-# include <fcntl.h>
-
-// parse.c
-void	parse(char *file);
+// error.c
+void	error(char *message, int code);
 
 #endif
