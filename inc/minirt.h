@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 12:51:37 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 13:07:17 by fkoolhov         ###   ########.fr       */
+/*   Created: 2024/01/04 13:06:45 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/01/04 13:07:46 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef MINIRT_H
+# define MINIRT_H
 
-int	main(void)
-{
-	printf(MESSAGE);
-	return (0);
-}
+# include <stdio.h>
+
+# define MESSAGE "Hello, world!\n"
+
+#endif
