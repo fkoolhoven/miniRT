@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 13:06:45 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 14:32:37 by fkoolhov         ###   ########.fr       */
+/*   Created: 2024/01/04 14:31:50 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/01/04 14:32:07 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef PARSER_H
+# define PARSER_H
 
-# include <stdio.h>
-
-# include "types.h"
-# include "parser.h"
-
-# define MESSAGE "Hello, world!\n"
+// parse.c
+void	parse(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:51:37 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 13:07:17 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:32:43 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 int	main(void)
 {
 	printf(MESSAGE);
+	parse();
 	return (0);
 }

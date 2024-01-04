@@ -6,9 +6,12 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:02:48 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 14:13:37 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:32:23 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef TYPES_H
+# define TYPES_H
 
 typedef struct s_color
 {
@@ -66,3 +69,5 @@ typedef struct s_cylinder
 	double	height;
 	t_color	color;
 }	t_cylinder;
+
+#endif

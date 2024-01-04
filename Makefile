@@ -6,12 +6,19 @@ RM			= rm -f
 INC			= inc
 OBJ_DIR		= obj
 OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+
 SRC_DIR		= src
-SRC			= main.c
+SUBDIR		:= . \
+			   parser
+SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
+SRC			= main.c \
+				parser/parse.c
 
 LIBMLX		= ./MLX42
 LIBMLXBUILD	= ./MLX42/build
 LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
+
+VPATH = $(SRCDIRS)
 
 all: $(NAME)
 
@@ -22,8 +29,11 @@ $(LIBMLXBUILD):
 	@cmake $(LIBMLX) -B $(LIBMLXBUILD) && make -C $(LIBMLXBUILD) -j4
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(@D)
 	$(COMP) $(LEAK_CHECK) -I $(INC) $(FLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir $@
 
 clean:
 	$(RM)r $(OBJ_DIR)
