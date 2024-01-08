@@ -15,13 +15,15 @@ SRC_DIR		= src
 SUBDIR		:= . \
 			   parser \
 			   errors \
-			   arithmetic
+			   arithmetic \
+			   setup
 SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
 SRC			= main.c \
 				parser/parse.c \
 				errors/error.c \
 				arithmetic/vector_vector.c \
-				arithmetic/vector_double.c
+				arithmetic/vector_double.c \
+				setup/setup_mlx.c
 
 
 VPATH = $(SRCDIRS)

@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   setup.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 12:51:37 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/08 15:25:27 by fkoolhov         ###   ########.fr       */
+/*   Created: 2024/01/08 15:48:46 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/01/08 15:49:14 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef SETUP_H
+# define SETUP_H
 
-int	main(int argc, char **argv)
-{
-	if (argc != 2)
-		error("Incorrect number of arguments", EXIT_FAILURE);
-	parse(argv[1]); // also validates input?
-	setup_mlx();
-	// init mlx
-	// init mlx hooks
-	// image to window
-	// draw image somehow
-	// clean up
-	return (EXIT_SUCCESS);
-}
+// setup.c
+void	setup_mlx(void);
+
+#endif
