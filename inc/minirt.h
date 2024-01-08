@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 13:06:45 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 15:04:07 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:18:37 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # include "types.h"
 # include "parser.h"
 # include "errors.h"
+# include "arithmetic.h"
 
 #endif

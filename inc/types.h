@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvan-sch <cvan-sch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:02:48 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/08 14:46:21 by cvan-sch         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:54:13 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,5 @@ typedef struct s_cylinder
 	t_color				color;
 	struct s_cylinder	*next;
 }	t_cylinder;
-
-typedef struct s_data
-{
-	t_camera	*
-}
 
 #endif
