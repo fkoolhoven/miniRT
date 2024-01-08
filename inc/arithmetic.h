@@ -2,15 +2,15 @@
 # define ARITHMETIC_H
 
 // vector_vector.c
-void	vector_divide(t_vector *v1, t_vector *v2, t_vector *new);
-void	vector_multiply(t_vector *v1, t_vector *v2, t_vector *new);
-void	vector_add(t_vector *v1, t_vector *v2, t_vector *new);
-void	vector_subtract(t_vector *v1, t_vector *v2, t_vector *new);
+t_vector	vector_divide(const t_vector *v1, const t_vector *v2);
+t_vector	vector_multiply(const t_vector *v1, const t_vector *v2);
+t_vector	vector_add(const t_vector *v1, const t_vector *v2);
+t_vector	vector_subtract(const t_vector *v1, const t_vector *v2);
 
 // vector_double.c
-void	divide(t_vector *v1, double d);
-void	multiply(t_vector *v1, double d);
-void	add(t_vector *v1, double d);
-void	subtract(t_vector *v1, double d);
+t_vector	divide(const t_vector *v1, double d);
+t_vector	multiply(const t_vector *v1, double d);
+t_vector	add(const t_vector *v1, double d);
+t_vector	subtract(const t_vector *v1, double d);
 
 #endif

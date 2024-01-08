@@ -11,17 +11,24 @@ typedef struct s_point
 typedef t_point	t_vector;
 typedef t_point	t_color;
 
+typedef struct s_viewport
+{
+	double	width;
+	double	height;
+}	t_viewport;
+
 typedef struct s_ray
 {
 	const t_point	origin; // = camera view point
 	t_vector		direction; // = a point on viewport
+	t_point			location; // = P(t) = A + tb; initialize to origin
 }	t_ray;
 
 typedef struct s_camera
 {
-	const t_point	view_point; // 0, 0, -1
-	const t_vector	orientation; // 0, 0, 0
-	const double	horizontal_field_of_view; // 90
+	t_point	view_point; // 0, 0, -1
+	t_vector	orientation; // 0, 0, 0
+	double	horizontal_field_of_view; // 90
 }	t_camera;
 
 typedef struct s_ambient_light

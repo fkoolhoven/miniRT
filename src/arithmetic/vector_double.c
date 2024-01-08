@@ -1,29 +1,41 @@
 #include "minirt.h"
 
-void	divide(t_vector *v1, double d)
+t_vector	divide(const t_vector *v1, double d)
 {
-	v1->x /= d;
-	v1->y /= d;
-	v1->z /= d;
+	t_vector new;
+
+	new.x = v1->x / d;
+	new.y = v1->y / d;
+	new.z = v1->z / d;
+	return (new);
 }
 
-void	multiply(t_vector *v1, double d)
+t_vector	multiply(const t_vector *v1, double d)
 {
-	v1->x *= d;
-	v1->y *= d;
-	v1->z *= d;
+	t_vector new;
+
+	new.x = v1->x * d;
+	new.y = v1->y * d;
+	new.z = v1->z * d;
+	return (new);
 }
 
-void	add(t_vector *v1, double d)
+t_vector	add(const t_vector *v1, double d)
 {
-	v1->x += d;
-	v1->y += d;
-	v1->z += d;
+	t_vector new;
+
+	new.x = v1->x + d;
+	new.y = v1->y + d;
+	new.z = v1->z + d;
+	return (new);
 }
 
-void	subtract(t_vector *v1, double d)
+t_vector	subtract(const t_vector *v1, double d)
 {
-	v1->x -= d;
-	v1->y -= d;
-	v1->z -= d;
+	t_vector new;
+
+	new.x = v1->x - d;
+	new.y = v1->y - d;
+	new.z = v1->z - d;
+	return (new);
 }
