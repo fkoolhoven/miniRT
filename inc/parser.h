@@ -6,14 +6,16 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:31:50 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 14:32:07 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:07:47 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+# include <fcntl.h>
+
 // parse.c
-void	parse(void);
+void	parse(char *file);
 
 #endif
