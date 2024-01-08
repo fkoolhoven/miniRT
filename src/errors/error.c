@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvan-sch <cvan-sch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:57:57 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 15:06:16 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:27:44 by cvan-sch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,5 @@ void	error(char *message, int code)
 	write(STDERR_FILENO, "\n", 1);
 	exit(code);
 }
+
+

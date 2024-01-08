@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:02:48 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/08 14:46:21 by cvan-sch         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:58:30 by cvan-sch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,13 @@ typedef struct s_cylinder
 
 typedef struct s_data
 {
-	t_camera	*
-}
+	t_camera		camera;
+	t_light			light;
+	t_ambient_light	ambient;
+
+	t_plane		*plane;
+	t_cylinder	*cylinder;
+	t_sphere	*sphere;
+}	t_data;
 
 #endif

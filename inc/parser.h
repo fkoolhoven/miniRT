@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvan-sch <cvan-sch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:31:50 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 15:07:47 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:10:25 by cvan-sch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include <fcntl.h>
 
 // parse.c
-void	parse(char *file);
+void	parse(t_data *data, char *file);
 
 #endif

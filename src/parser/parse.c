@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvan-sch <cvan-sch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:31:19 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 15:08:14 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:58:20 by cvan-sch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	parse(char *file)
+void	parse(t_data *data, char *file)
 {
-	int	fd;
+	int		fd;
 
 	fd = open(file, O_RDONLY);
-	printf("fd = %i\n", fd);
+	/*if we want to be fancy we can prompt user for different map that is legit*/
+	if (fd == -1)
+		error(strerror(errno), errno);
+	(void)data;
 }
