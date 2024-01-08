@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvan-sch <cvan-sch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:02:48 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 17:04:39 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:46:21 by cvan-sch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,26 @@ typedef struct s_point
 }	t_point;
 
 typedef t_point	t_vector;
+typedef t_point	t_color;
 
 typedef struct s_ray
 {
-	t_point		origin;
-	t_vector	direction;
+	const t_point	origin; // = camera view point
+	t_vector		direction; // = a point on viewport
 }	t_ray;
 
-typedef struct s_color
+typedef struct s_camera
 {
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
-}	t_color;
+	const t_point	view_point; // 0, 0, -1
+	const t_vector	orientation; // 0, 0, 0
+	const double	horizontal_field_of_view; // 90
+}	t_camera;
 
 typedef struct s_ambient_light
 {
 	double		ratio;
 	t_color		color;
 }	t_ambient_light;
-
-typedef struct s_camera
-{
-	t_point		view_point;
-	t_point		orientation;
-	double		horizontal_field_of_view;
-}	t_camera;
 
 typedef struct s_light
 {
@@ -57,25 +51,33 @@ typedef struct s_light
 
 typedef struct s_plane
 {
-	t_point	center;
-	t_point	axis;
-	t_color	color;
+	t_point			center;
+	t_point			axis;
+	t_color			color;
+	struct s_plane	*next;
 }	t_plane;
 
 typedef struct s_sphere
 {
-	t_point	center;
-	double	diameter;
-	t_color	color;
+	t_point			center;
+	double			diameter;
+	t_color			color;
+	struct s_sphere	*next;
 }	t_sphere;
 
 typedef struct s_cylinder
 {
-	t_point	center;
-	t_point	axis;
-	double	diameter;
-	double	height;
-	t_color	color;
+	t_point				center;
+	t_point				axis;
+	double				diameter;
+	double				height;
+	t_color				color;
+	struct s_cylinder	*next;
 }	t_cylinder;
+
+typedef struct s_data
+{
+	t_camera	*
+}
 
 #endif
