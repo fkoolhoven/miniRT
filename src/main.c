@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:51:37 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/01/04 15:04:20 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:25:27 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		error("Incorrect number of arguments", EXIT_FAILURE);
 	parse(argv[1]); // also validates input?
+	setup_mlx();
 	// init mlx
 	// init mlx hooks
 	// image to window
