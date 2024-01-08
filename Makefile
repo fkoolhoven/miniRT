@@ -15,13 +15,18 @@ LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm libft/libft
 SRC_DIR		= src
 SUBDIR		:= . \
 			   parser \
-			   errors
+			   errors \
+			   arithmetic \
+			   setup
 SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
 SRC			= main.c \
 				parser/parse.c \
 				parser/utils/addlst.c \
 				parser/utils/newlst.c \
-				errors/error.c 
+				errors/error.c \
+				arithmetic/vector_vector.c \
+				arithmetic/vector_double.c \
+				setup/setup_mlx.c
 
 
 VPATH = $(SRCDIRS)
