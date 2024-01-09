@@ -19,9 +19,8 @@ typedef struct s_viewport
 
 typedef struct s_ray
 {
-	const t_point	origin; // = camera view point
-	t_vector		direction; // = a point on viewport
-	t_point			location; // = P(t) = A + tb; initialize to origin
+	t_point		origin; // = camera view point
+	t_vector	direction; // = a point on viewport
 }	t_ray;
 
 typedef struct s_camera

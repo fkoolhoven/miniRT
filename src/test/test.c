@@ -1,5 +1,15 @@
 #include "minirt.h"
 
+t_point	get_point(double x, double y, double z)
+{
+	t_point point;
+
+	point.x = x;
+	point.y = y;
+	point.z = z;
+	return (point);
+}
+
 double	dot(const t_vector *u, const t_vector *v) 
 {
     return (u->x * v->x + u->y * v->y + u->z * v->z);
@@ -10,16 +20,17 @@ t_viewport	setup_viewport()
 	t_viewport viewport;
 
 	viewport.height = 2.0;
-	viewport.width = viewport.height * (double)IMAGE_WIDTH / IMAGE_HEIGHT;
+	viewport.width = viewport.height * 1.0 * IMAGE_WIDTH / IMAGE_HEIGHT;
 	return (viewport);
 }
 
 t_point trace_ray(t_ray ray, double t)
 {
+	t_point ray_location;
 	// P(t) = A + tb
-	ray.location = multiply(&ray.direction, t);
-	ray.location = vector_add(&ray.origin, &ray.location);
-    return (ray.location); // not neccessary
+	ray_location = multiply(&ray.direction, t);
+	ray_location = vector_add(&ray.origin, &ray_location);
+    return (ray_location); // not neccessary?
 }
 
 int get_rgba(int r, int g, int b, int a)
@@ -46,23 +57,23 @@ double hit_sphere(t_sphere *sphere, t_ray *ray)
 {
 	t_vector offset_center;
 	double a;
-	double b;
+	double half_b;
 	double c;
 	double discriminant;
 
 	offset_center = vector_subtract(&ray->origin, &sphere->center);
-	a = dot(&ray->direction, &ray->direction);
-	b = 2.0 * dot(&offset_center, &ray->direction);
-	c = dot(&offset_center, &offset_center) - sphere->diameter / 2.0 * sphere->diameter / 2.0;
-	discriminant = b * b - 4 * a * c;
+	a = length_squared(&ray->direction);
+	half_b = dot(&offset_center, &ray->direction);
+	c = length_squared(&offset_center) - (sphere->diameter / 2) * (sphere->diameter / 2);
+	discriminant = half_b * half_b - a * c;
 
 	if (discriminant < 0) 
 	{
-        return -1.0;
+        return (-1.0);
     } 
 	else 
 	{
-        return (-b - sqrt(discriminant) ) / (2.0 * a);
+        return ((-half_b - sqrt(discriminant)) / a);
     }
 }
 
@@ -70,15 +81,10 @@ t_sphere	get_test_sphere()
 {
 	t_sphere sphere;
 
-	sphere.center.x = 0;
-	sphere.center.y = 0;
-	sphere.center.z = -1;
+	sphere.center = get_point(0, 0, -1);
+	sphere.color = get_point(1, 0, 0);
 	sphere.diameter = 1.0;
-	sphere.color.x = 1.0;
-	sphere.color.y = 0.0;
-	sphere.color.z = 0.0;
 	return (sphere);
-
 }
 
 t_color ray_color(t_ray ray) 
@@ -96,29 +102,30 @@ t_color ray_color(t_ray ray)
         return (multiply(&temp4, 0.5));
     }
 
-    t_vector unit_direction = divide(&ray.direction, length(&ray.direction));
+    t_vector unit_direction = unit_vector(&ray.direction);
     double a = 0.5 * (unit_direction.y + 1.0);
 
-	t_color temp1;
-	temp1.x = 1.0;
-	temp1.y = 1.0;
-	temp1.z = 1.0;
-
-	t_color temp2;
-	temp2.x = 0.5;
-	temp2.y = 0.7;
-	temp2.z = 1.0;
-
+	t_color temp1 = get_point(1.0, 1.0, 1.0);
+	t_color temp2 = get_point(0.5, 0.7, 1.0);
 	temp1 = multiply(&temp1, 1.0 - a);
 	temp2 = multiply(&temp2, a);
     return (vector_add(&temp1, &temp2));
 }
 
-void	render_image(t_vector *pixel_delta_u, t_vector *pixel_delta_v, t_point *pixel00_loc, const t_camera *camera, mlx_image_t *img_ptr)
+void	render_image(mlx_image_t *img_ptr)
 {
-	t_ray ray;
+	t_vector lower_left_corner;
+	t_vector horizontal_offset;
+	t_vector vertical_offset;
 	int y;
 	int x;
+
+	lower_left_corner = get_point(-2.0, 1.0, -1.0);
+	horizontal_offset = get_point(4.0, 0.0, 0.0);
+	vertical_offset = get_point(0.0, -2.0, 0.0);
+
+	t_ray ray;
+	ray.origin = get_point(0.0, 0.0, 0.0);
 
 	y = 0;
     while (y < IMAGE_HEIGHT) 
@@ -126,12 +133,12 @@ void	render_image(t_vector *pixel_delta_u, t_vector *pixel_delta_v, t_point *pix
 		x = 0;
         while (x < IMAGE_WIDTH) 
 		{
-			t_vector temp1 = multiply(pixel_delta_u, (double)x);
-			t_vector temp2 = multiply(pixel_delta_v, (double)y);
-			t_vector temp3 = vector_add(&temp1, &temp2);
-            t_point pixel_center = vector_add(pixel00_loc, &temp3);
-            ray.direction = vector_subtract(&pixel_center, &camera->view_point);
-
+			double x_scaled = (double)x / IMAGE_WIDTH;
+			double y_scaled = (double)y / IMAGE_HEIGHT;
+			t_vector x_offset_vector = multiply(&horizontal_offset, x_scaled);
+			t_vector y_offset_vector = multiply(&vertical_offset, y_scaled);
+			t_vector total_offset = vector_add(&x_offset_vector, &y_offset_vector);
+			ray.direction = vector_add(&lower_left_corner, &total_offset);
             t_color pixel_color = ray_color(ray);
 			int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
 			mlx_put_pixel(img_ptr, x, y, rgba);
@@ -141,51 +148,17 @@ void	render_image(t_vector *pixel_delta_u, t_vector *pixel_delta_v, t_point *pix
     }
 }
 
-t_camera	get_test_camera()
-{
-	t_camera camera;
+// t_camera	get_test_camera()
+// {
+// 	t_camera camera;
 
-	camera.view_point.x = 0;
-	camera.view_point.y = 0;
-	camera.view_point.z = 0;
-	camera.orientation.x = 0;
-	camera.orientation.y = 0;
-	camera.orientation.z = 0;
-	camera.horizontal_field_of_view = 90;
-	return (camera);
-}
+// 	camera.view_point = get_point(0, 0, 0);
+// 	camera.orientation = get_point(0, 0, -1);
+// 	camera.horizontal_field_of_view = 90;
+// 	return (camera);
+// }
 
 void	test(mlx_image_t *img_ptr)
 {
-	t_camera camera = get_test_camera();
-	t_viewport viewport = setup_viewport();
-	double focal_length = 1.0;
-    t_vector viewport_u;
-	viewport_u.x = viewport.width;
-	viewport_u.y = 0;
-	viewport_u.z = 0;
-
-	t_vector viewport_v;
-	viewport_v.x = 0;
-	viewport_v.y = -viewport.height;
-	viewport_v.z = 0;
-
-    t_vector pixel_delta_u = divide(&viewport_u, (double)IMAGE_WIDTH);
-    t_vector pixel_delta_v = divide(&viewport_v, (double)IMAGE_HEIGHT);
-
-	t_point temp1;
-	temp1.x = 0;
-	temp1.y = 0;
-	temp1.z = focal_length;
-
-	t_point temp2 = divide(&viewport_u, 2.0);
-	t_point temp3 = divide(&viewport_v, 2.0);
-	t_point temp4 = vector_subtract(&camera.view_point, &temp1);
-	t_point viewport_upper_left = vector_subtract(&temp4, &temp2);
-	t_point temp5 = vector_subtract(&viewport_upper_left, &temp3);
-
-	t_point pixel00_loc = multiply(&temp5, 0.5);
-	pixel00_loc = vector_add(&pixel00_loc, &pixel_delta_u);
-	pixel00_loc = vector_add(&pixel00_loc, &pixel_delta_v);
-	render_image(&pixel_delta_u, &pixel_delta_v, &pixel00_loc, &camera, img_ptr);
+	render_image(img_ptr);
 }
