@@ -112,20 +112,20 @@ t_color ray_color(t_ray ray)
     return (vector_add(&temp1, &temp2));
 }
 
-void	render_image(mlx_image_t *img_ptr)
+void	render_image(mlx_image_t *img_ptr, t_camera *camera)
 {
-	t_vector lower_left_corner;
+	t_vector upper_left_corner;
 	t_vector horizontal_offset;
 	t_vector vertical_offset;
 	int y;
 	int x;
 
-	lower_left_corner = get_point(-2.0, 1.0, -1.0);
+	upper_left_corner = get_point(-2.0, 1.0, -1.0);
 	horizontal_offset = get_point(4.0, 0.0, 0.0);
 	vertical_offset = get_point(0.0, -2.0, 0.0);
 
 	t_ray ray;
-	ray.origin = get_point(0.0, 0.0, 0.0);
+	ray.origin = camera->view_point;
 
 	y = 0;
     while (y < IMAGE_HEIGHT) 
@@ -138,7 +138,7 @@ void	render_image(mlx_image_t *img_ptr)
 			t_vector x_offset_vector = multiply(&horizontal_offset, x_scaled);
 			t_vector y_offset_vector = multiply(&vertical_offset, y_scaled);
 			t_vector total_offset = vector_add(&x_offset_vector, &y_offset_vector);
-			ray.direction = vector_add(&lower_left_corner, &total_offset);
+			ray.direction = vector_add(&upper_left_corner, &total_offset);
             t_color pixel_color = ray_color(ray);
 			int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
 			mlx_put_pixel(img_ptr, x, y, rgba);
@@ -148,17 +148,18 @@ void	render_image(mlx_image_t *img_ptr)
     }
 }
 
-// t_camera	get_test_camera()
-// {
-// 	t_camera camera;
+t_camera	get_test_camera()
+{
+	t_camera camera;
 
-// 	camera.view_point = get_point(0, 0, 0);
-// 	camera.orientation = get_point(0, 0, -1);
-// 	camera.horizontal_field_of_view = 90;
-// 	return (camera);
-// }
+	camera.view_point = get_point(0, 0, 0);
+	camera.orientation = get_point(0, 0, -1);
+	camera.horizontal_field_of_view = 90;
+	return (camera);
+}
 
 void	test(mlx_image_t *img_ptr)
 {
-	render_image(img_ptr);
+	t_camera camera = get_test_camera();
+	render_image(img_ptr, &camera);
 }
