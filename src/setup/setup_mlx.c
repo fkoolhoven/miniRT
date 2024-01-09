@@ -21,6 +21,7 @@ void	render_image(mlx_image_t *img_ptr)
 
 void	key_press(mlx_key_data_t key_data, void *param)
 {
+	(void)param;
 	printf("keycode = %i\n", key_data.key);
 	param = NULL;
 	if (key_data.key == ESCAPE)

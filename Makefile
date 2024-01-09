@@ -24,6 +24,7 @@ SRC			= main.c \
 				parser/parse.c \
 				parser/utils/addlst.c \
 				parser/utils/newlst.c \
+				parser/utils/utils.c \
 				errors/error.c \
 				arithmetic/vector_vector.c \
 				arithmetic/vector_double.c \
@@ -35,7 +36,7 @@ VPATH = $(SRCDIRS)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBMLXBUILD) $(LIBFT)
-	$(COMP) $(LEAK_CHECK) $(OBJ) $(LIBS) -o $(NAME)
+	$(COMP) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
@@ -45,7 +46,7 @@ $(LIBMLXBUILD):
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(COMP) $(LEAK_CHECK) $(INC) $(FLAGS) -c $< -o $@
+	$(COMP) $(INC) $(FLAGS) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir $@
