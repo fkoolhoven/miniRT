@@ -12,6 +12,7 @@
 # include <unistd.h>
 # include <sys/errno.h>
 # include <math.h>
+# include <float.h>
 
 # include <libft.h>
 

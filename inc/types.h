@@ -23,11 +23,18 @@ typedef struct s_ray
 	t_vector	direction; // = a point on viewport
 }	t_ray;
 
+typedef struct s_hit_record
+{
+	t_point		point;
+	t_vector	normal;
+	double		t;
+}	t_hit_record;
+
 typedef struct s_camera
 {
-	t_point	view_point; // 0, 0, -1
+	t_point		view_point; // 0, 0, -1
 	t_vector	orientation; // 0, 0, 0
-	double	horizontal_field_of_view; // 90
+	double		horizontal_field_of_view; // 90
 }	t_camera;
 
 typedef struct s_ambient_light
@@ -55,6 +62,7 @@ typedef struct s_sphere
 {
 	t_point			center;
 	double			diameter;
+	double			radius;
 	t_color			color;
 	struct s_sphere	*next;
 }	t_sphere;

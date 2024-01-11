@@ -24,7 +24,11 @@ SRC			= main.c \
 				arithmetic/vector_vector.c \
 				arithmetic/vector_double.c \
 				setup/setup_mlx.c \
-				test/test.c
+				test/test.c \
+				test/get_test_objects.c \
+				test/ray.c \
+				test/render.c \
+				test/utils.c
 
 
 VPATH = $(SRCDIRS)
