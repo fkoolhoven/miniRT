@@ -22,11 +22,12 @@ double hit_sphere(t_sphere *sphere, t_ray *ray, double ray_tmin, double ray_tmax
 	c = length_squared(&offset_center) - sphere->radius * sphere->radius;
 	discriminant = half_b * half_b - a * c;
 
-	if (discriminant < 0) 
+	if (discriminant < 0) // no sphere was hit 
 	{
-        return (false); // no sphere was hit
+        return (false);
     }
 
+	// continue to try to find the real point of intersection (if any)
     double discriminant_root = sqrt(discriminant);
     double try_root = (-half_b - discriminant_root) / a;
     if (try_root <= ray_tmin || try_root >= ray_tmax)  // first root out of range
@@ -34,10 +35,10 @@ double hit_sphere(t_sphere *sphere, t_ray *ray, double ray_tmin, double ray_tmax
         try_root = (-half_b + discriminant_root) / a; // try other root
         if (try_root <= ray_tmin || try_root >= ray_tmax)
 		{
-            return (false); // both roots out of range
+            return (false); // both roots out of range, no sphere was hit
 		}
     }
-    record_hit(try_root, sphere, ray, rec); // a sphere was hit within range
+    record_hit(try_root, sphere, ray, rec); // a sphere was hit, record at which point
     return (true);
 }
 

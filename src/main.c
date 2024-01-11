@@ -7,7 +7,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		error("Incorrect number of arguments", EXIT_FAILURE);
 	parse(&data, argv[1]); // also validates input? yes!
-	// setup_mlx();
+	setup_mlx();
 	// init mlx
 	// init mlx hooks
 	// image to window
