@@ -13,6 +13,8 @@ LIBMLX		= ./MLX42
 LIBMLXBUILD	= ./MLX42/build
 LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm $(LIBFT)
 
+
+
 SRC_DIR		= src
 SUBDIR		:= . \
 			   parser \
