@@ -21,7 +21,6 @@
 # include "parser.h"
 # include "errors.h"
 # include "arithmetic.h"
-# include "setup.h"
-# include "test.h"
+# include "render.h"
 
 #endif

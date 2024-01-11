@@ -39,6 +39,7 @@ t_sphere	*sphere_new(char *data)
 		store_xyz(items[2], &(new->color)))
 		error("Sphere parameters are incorrect", 1);
 	new->diameter = ft_atod(items[1]);
+	new->radius = new->diameter / 2;
 	new->next = NULL;
 	frdp(items);
 	return (new);

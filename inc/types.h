@@ -88,4 +88,10 @@ typedef struct s_data
 	t_sphere		*sphere;
 }	t_data;
 
+typedef struct s_mlx_info
+{
+	mlx_t		*mlx_ptr;
+	mlx_image_t	*img_ptr;
+}	t_mlx_info;
+
 #endif

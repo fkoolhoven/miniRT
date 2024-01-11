@@ -1,5 +1,14 @@
 #include "minirt.h"
 
+t_point trace_ray(t_ray *ray, double t)
+{
+	t_point ray_location;
+	// P(t) = A + tb
+	ray_location = multiply(&ray->direction, t);
+	ray_location = vector_add(&ray->origin, &ray_location);
+    return (ray_location);
+}
+
 void	record_hit(double root, t_sphere *sphere, t_ray *ray, t_hit_record *rec)
 {
 	rec->t = root;
@@ -42,33 +51,32 @@ double hit_sphere(t_sphere *sphere, t_ray *ray, double ray_tmin, double ray_tmax
     return (true);
 }
 
-bool try_to_hit_objects(t_sphere *world, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec)
+bool try_to_hit_objects(t_data *data, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec)
 {
-    t_hit_record *temp_rec = get_test_hit_record();
+    t_hit_record *temp_rec = get_hit_record();
     bool hit_anything = false;
     double closest_so_far = ray_tmax;
 
-    for (int i = 0; i < 2; i++) 
+	t_sphere *current_sphere = data->sphere;
+    while (current_sphere != NULL) 
 	{
-        if (hit_sphere(&world[i], ray, ray_tmin, closest_so_far, temp_rec)) 
+        if (hit_sphere(current_sphere, ray, ray_tmin, closest_so_far, temp_rec)) 
 		{
             hit_anything = true;
             closest_so_far = temp_rec->t;
             *rec = *temp_rec;
         }
+		current_sphere = current_sphere->next;
     }
 	free(temp_rec);
     return (hit_anything);
 }
 
-t_color get_ray_color(t_ray ray) 
+t_color get_ray_color(t_data *data, t_ray ray) 
 {
-	t_sphere sphere1 = get_test_sphere(0, 0, -1, 0.5);
-	t_sphere sphere2 = get_test_sphere(0, -100.5, -1, 100);
-	t_sphere world[] = {sphere1, sphere2};
-	t_hit_record *rec = get_test_hit_record();
+	t_hit_record *rec = get_hit_record();
 	
-	if (try_to_hit_objects(world, &ray, 0.0, DBL_MAX, rec)) // an object was hit, color it
+	if (try_to_hit_objects(data, &ray, 0.0, DBL_MAX, rec)) // an object was hit, color it
 	{
 		t_vector temp = get_point(rec->normal.x + 1, rec->normal.y + 1, rec->normal.z + 1);
 		free(rec);
@@ -103,7 +111,7 @@ t_vector	get_total_offset(int x, int y, t_vector *horizontal_offset, t_vector *v
 	return (total_offset);
 }
 
-void	render_image(mlx_image_t *img_ptr, t_camera *camera)
+void	render_image(t_data *data, mlx_image_t *img_ptr)
 {
 	t_vector upper_left_corner = get_point(-2.0, 1.0, -1.0);
 	t_vector horizontal_offset = get_point(4.0, 0.0, 0.0);
@@ -111,7 +119,7 @@ void	render_image(mlx_image_t *img_ptr, t_camera *camera)
 	int y;
 	int x;
 	t_ray ray;
-	ray.origin = camera->view_point;
+	ray.origin = data->camera.view_point;
 
 	y = 0;
     while (y < IMAGE_HEIGHT) 
@@ -121,7 +129,7 @@ void	render_image(mlx_image_t *img_ptr, t_camera *camera)
 		{
 			t_vector total_offset = get_total_offset(x, y, &horizontal_offset, &vertical_offset);
 			ray.direction = vector_add(&upper_left_corner, &total_offset);
-            t_color pixel_color = get_ray_color(ray);
+            t_color pixel_color = get_ray_color(data, ray);
 			int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
 			mlx_put_pixel(img_ptr, x, y, rgba);
 			x++;
