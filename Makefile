@@ -13,6 +13,8 @@ LIBMLX		= ./MLX42
 LIBMLXBUILD	= ./MLX42/build
 LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm $(LIBFT)
 
+
+
 SRC_DIR		= src
 SUBDIR		= . parser errors arithmetic setup test
 SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
@@ -20,6 +22,7 @@ SRC			= main.c \
 				parser/parse.c \
 				parser/utils/addlst.c \
 				parser/utils/newlst.c \
+				parser/utils/utils.c \
 				errors/error.c \
 				arithmetic/vector_vector.c \
 				arithmetic/vector_double.c \
@@ -36,7 +39,7 @@ VPATH = $(SRCDIRS)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBMLXBUILD) $(LIBFT)
-	$(COMP) $(LEAK_CHECK) $(OBJ) $(LIBS) -o $(NAME)
+	$(COMP) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
@@ -46,7 +49,7 @@ $(LIBMLXBUILD):
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(COMP) $(LEAK_CHECK) $(INC) $(FLAGS) -c $< -o $@
+	$(COMP) $(INC) $(FLAGS) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir $@

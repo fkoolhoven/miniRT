@@ -52,7 +52,7 @@ typedef struct s_light
 
 typedef struct s_plane
 {
-	t_point			center;
+	t_point			point;
 	t_point			axis;
 	t_color			color;
 	struct s_plane	*next;
@@ -83,9 +83,9 @@ typedef struct s_data
 	t_light			light;
 	t_ambient_light	ambient;
 
-	t_plane		*plane;
-	t_cylinder	*cylinder;
-	t_sphere	*sphere;
+	t_plane			*plane;
+	t_cylinder		*cylinder;
+	t_sphere		*sphere;
 }	t_data;
 
 #endif

@@ -23,3 +23,16 @@ void	print_array(char **array)
 		i++;
 	}
 }
+
+void	frdp(char **s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		free(s[i]);
+		i++;
+	}
+	free(s);
+}

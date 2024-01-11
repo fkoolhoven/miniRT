@@ -12,35 +12,54 @@
 
 #include "libft.h"
 
-static int	whitespace(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] == '\n' || s[i] == '\t' || s[i] == '\v'
-		|| s[i] == ' ' || s[i] == '\f' || s[i] == '\r')
-		i++;
-	return (i);
-}
-
 int	ft_atoi(const char *str)
 {
-	int		i;
 	int		res;
 	char	*s;
-	int		m;
+	int		sign;
 
 	s = (char *)str;
 	res = 0;
-	i = whitespace(s);
-	m = 1;
-	if (s[i] == '-' || s[i] == '+')
+	while (ft_iswhitespace(*s))
+		s++;
+	sign = 1;
+	if (*s == '-' || *s == '+')
 	{
-		if (s[i] == '-')
-			m = -1;
-		i++;
+		if (*s == '-')
+			sign = -1;
+		s++;
 	}
-	while (s[i] <= '9' && s[i] >= '0')
-		res = res * 10 + s[i++] - '0';
-	return (res * m);
+	while (ft_isdigit(*s))
+		res *= 10 + (*s - '0');
+	return (res * sign);
+}
+
+int	ft_iswhitespace(int c)
+{
+	return (c == ' ' || (c >= '\t'&& c <= '\r'));
+}
+
+double	ft_atod(char *s)
+{
+	double	result;
+	double	factor;
+	int		sign;
+
+	sign = 1;
+	result = 0.0;
+	factor = 0.1;
+	while (ft_iswhitespace(*s))
+		s++;
+	if ((*s == '+' || *s == '-') && *(s++) == '-')
+		sign = -1;
+	while (ft_isdigit(*s))
+		result = result * 10.0 + (*(s++) - '0');
+	if (*s == '.')
+		s++;
+	while (ft_isdigit(*s))
+	{
+		result = result + (factor * (*(s++) - '0'));
+		factor = factor * 0.1;
+	}
+	return (result * sign);
 }
