@@ -55,9 +55,12 @@ t_color get_ray_color(t_data *data, t_ray ray)
 
 	if (try_to_hit_objects(data, &ray, 0.0, DBL_MAX, rec)) // an object was hit, color it
 	{
-		t_color color = rec->color;
+		t_vector temp = get_point(rec->normal.x + 1, rec->normal.y + 1, rec->normal.z + 1);
 		free(rec);
-		return (color);
+		return (multiply(&temp, 0.5));
+		// t_color color = rec->color;
+		// free(rec);
+		// return (color);
 	}
 	else // no object was hit, color background with some gradient
 	{

@@ -9,7 +9,7 @@ t_point	trace_ray(t_ray *ray, double t)
 	return (ray_location);
 }
 
-void	record_new_closer_hit(double root, void *object, int type, t_ray *ray, t_hit_record *rec)
+void	record_new_closer_hit(double t, void *object, int type, t_ray *ray, t_hit_record *rec)
 {
 	t_sphere *sphere;
 	t_plane *plane;
@@ -18,7 +18,7 @@ void	record_new_closer_hit(double root, void *object, int type, t_ray *ray, t_hi
 	sphere = NULL;
 	plane = NULL;
 	cylinder = NULL;
-	rec->t = root;
+	rec->t = t;
 	rec->point = trace_ray(ray, rec->t);
 	if (type == SPHERE)
 	{
