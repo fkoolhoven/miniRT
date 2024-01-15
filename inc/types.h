@@ -11,11 +11,24 @@ typedef struct s_point
 typedef t_point	t_vector;
 typedef t_point	t_color;
 
+typedef struct s_viewport
+{
+	double	width;
+	double	height;
+}	t_viewport;
+
 typedef struct s_ray
 {
 	t_point		origin; // = camera view point
 	t_vector	direction; // = a point on viewport
 }	t_ray;
+
+typedef struct s_hit_record
+{
+	t_point		point;
+	t_vector	normal;
+	double		t;
+}	t_hit_record;
 
 typedef struct s_camera
 {
@@ -49,6 +62,7 @@ typedef struct s_sphere
 {
 	t_point			center;
 	double			diameter;
+	double			radius;
 	t_color			color;
 	struct s_sphere	*next;
 }	t_sphere;
@@ -73,5 +87,11 @@ typedef struct s_data
 	t_cylinder		*cylinder;
 	t_sphere		*sphere;
 }	t_data;
+
+typedef struct s_mlx_info
+{
+	mlx_t		*mlx_ptr;
+	mlx_image_t	*img_ptr;
+}	t_mlx_info;
 
 #endif

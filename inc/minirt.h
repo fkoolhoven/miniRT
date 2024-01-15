@@ -1,14 +1,18 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WINDOW_WIDTH 1600
+# define WINDOW_WIDTH 1800
 # define WINDOW_HEIGHT 900
+# define IMAGE_WIDTH WINDOW_WIDTH
+# define IMAGE_HEIGHT WINDOW_HEIGHT
 # define ESCAPE 256
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/errno.h>
+# include <math.h>
+# include <float.h>
 
 # include "libft.h"
 
@@ -17,6 +21,6 @@
 # include "parser.h"
 # include "errors.h"
 # include "arithmetic.h"
-# include "setup.h"
+# include "render.h"
 
 #endif

@@ -1,7 +1,7 @@
 To do:
 - Try to understand subject
 - Make a plan for data structures / code flow
-- Add libft of fee
+- Improve libft?
 - Check if MLX config in Makefile is correct
 - Write a parser
 - Write a raytracer
