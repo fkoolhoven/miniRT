@@ -110,8 +110,6 @@ void	render_image(t_data *data, mlx_image_t *img_ptr)
 			ray.direction = vector_add(&upper_left_corner, &total_offset);
 			t_color pixel_color = get_ray_color(data, ray);
 			unsigned int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
-			if (x == IMAGE_WIDTH - 5 && y == IMAGE_HEIGHT - 5)
-				printf("rgba = %i\n", rgba);
 			mlx_put_pixel(img_ptr, x, y, rgba);
 			x++;
 		}

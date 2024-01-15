@@ -88,7 +88,7 @@ void	print_plane(t_plane *pl)
 	printf("planes:\n");
 	while (pl)
 	{
-		printf("\t%.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %.2f,%.2f,%.2f\n", pl->point.x, pl->point.y, pl->point.z, pl->axis.x, pl->axis.y, pl->axis.z, pl->color.x,  pl->color.y, pl->color.z);
+		printf("\t%.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %.2f,%.2f,%.2f\n", pl->point.x, pl->point.y, pl->point.z, pl->normal.x, pl->normal.y, pl->normal.z, pl->color.x,  pl->color.y, pl->color.z);
 		pl = pl->next;
 	}
 }

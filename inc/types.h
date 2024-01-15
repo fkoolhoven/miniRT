@@ -54,7 +54,7 @@ typedef struct s_light
 typedef struct s_plane
 {
 	t_point			point;
-	t_point			axis;
+	t_vector		normal;
 	t_color			color;
 	struct s_plane	*next;
 }	t_plane;

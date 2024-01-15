@@ -30,7 +30,7 @@ void	record_new_closer_hit(double root, void *object, int type, t_ray *ray, t_hi
 	else if (type == PLANE)
 	{
 		plane = (t_plane *)object;
-		rec->normal = plane->axis;
+		rec->normal = plane->normal;
 		rec->color = plane->color;
 	}
 	else if (type == CYLINDER)
