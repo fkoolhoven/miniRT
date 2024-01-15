@@ -14,7 +14,7 @@ LIBMLXBUILD	= ./MLX42/build
 LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm $(LIBFT)
 
 SRC_DIR		= src
-SUBDIR		= . parser errors arithmetic setup render
+SUBDIR		= . parser errors arithmetic setup render hit_objects
 SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
 SRC			= main.c \
 				parser/parse.c \
@@ -26,7 +26,11 @@ SRC			= main.c \
 				arithmetic/vector_double.c \
 				render/get_objects.c \
 				render/render.c \
-				render/utils.c
+				render/utils.c \
+				hit_objects/plane.c \
+				hit_objects/sphere.c \
+				hit_objects/cylinder.c \
+				hit_objects/record_hit.c
 
 
 VPATH = $(SRCDIRS)

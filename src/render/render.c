@@ -1,53 +1,8 @@
 #include "minirt.h"
 
-t_point	trace_ray(t_ray *ray, double t)
-{
-	t_point ray_location;
-	// INTERSECTION(t) = ORIGIN + tDIRECTION
-	ray_location = multiply(&ray->direction, t);
-	ray_location = vector_add(&ray->origin, &ray_location);
-	return (ray_location);
-}
-
-void	record_new_closer_hit(double root, t_sphere *sphere, t_ray *ray, t_hit_record *rec)
-{
-	rec->t = root;
-	rec->point = trace_ray(ray, rec->t);
-	t_vector temp = vector_subtract(&rec->point, &sphere->center);
-	rec->normal = divide(&temp, sphere->radius);
-}
-
-double find_closer_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec) 
-{
-	t_vector offset_center;
-	double a;
-	double half_b;
-	double c;
-	double discriminant;
-
-	offset_center = vector_subtract(&ray->origin, &sphere->center);
-	a = length_squared(&ray->direction);
-	half_b = dot(&offset_center, &ray->direction);
-	c = length_squared(&offset_center) - sphere->radius * sphere->radius;
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0) // no sphere was hit 
-		return (false);
-
-	// continue to try to find the real point of intersection (if any)
-    double discriminant_root = sqrt(discriminant);
-    double try_root = (-half_b - discriminant_root) / a;
-    if (try_root <= ray_tmin || try_root >= ray_tmax)  // first root out of range
-	{
-		try_root = (-half_b + discriminant_root) / a; // try other root
-		if (try_root <= ray_tmin || try_root >= ray_tmax)
-		{
-			return (false); // both roots out of range, no sphere was hit
-		}
-	}
-	record_new_closer_hit(try_root, sphere, ray, rec); // a sphere was hit, record at which point
-	return (true);
-}
-
+// This function tries to hit all objects in the scene with the ray and updates
+// the hit record with the closest hit (if any). It does this by looping through
+// all objects in the scene and calling the appropriate find_closer_[object]_hit function.
 bool try_to_hit_objects(t_data *data, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec)
 {
 	t_hit_record *temp_rec = get_hit_record();
@@ -55,9 +10,9 @@ bool try_to_hit_objects(t_data *data, t_ray *ray, double ray_tmin, double ray_tm
 	double closest_so_far = ray_tmax;
 
 	t_sphere *current_sphere = data->sphere;
-	while (current_sphere != NULL) 
+	while (current_sphere != NULL) // gonna find the closest sphere hit
 	{
-		if (find_closer_hit(current_sphere, ray, ray_tmin, closest_so_far, temp_rec)) 
+		if (find_closer_sphere_hit(current_sphere, ray, ray_tmin, closest_so_far, temp_rec)) 
 		{
 			hit_anything = true;
 			closest_so_far = temp_rec->t;
@@ -65,21 +20,46 @@ bool try_to_hit_objects(t_data *data, t_ray *ray, double ray_tmin, double ray_tm
 		}
 		current_sphere = current_sphere->next;
 	}
+
+	t_plane *current_plane = data->plane;
+	while (current_plane != NULL) // the same thing but for planes
+	{
+		if (find_closer_plane_hit(current_plane, ray, ray_tmin, closest_so_far, temp_rec))
+		{
+			hit_anything = true;
+			closest_so_far = temp_rec->t;
+			*rec = *temp_rec;
+		}
+		current_plane = current_plane->next;
+	}
+
+	t_cylinder *current_cylinder = data->cylinder;
+	while (current_cylinder != NULL) // the same thing but for cylinders
+	{
+		if (find_closer_cylinder_hit(current_cylinder, ray, ray_tmin, closest_so_far, temp_rec))
+		{
+			hit_anything = true;
+			closest_so_far = temp_rec->t;
+			*rec = *temp_rec;
+		}
+		current_cylinder = current_cylinder->next;
+	}
 	free(temp_rec);
 	return (hit_anything);
 }
 
+// Gets the color of either the background or the object that was hit.
 t_color get_ray_color(t_data *data, t_ray ray) 
 {
 	t_hit_record *rec = get_hit_record();
 
 	if (try_to_hit_objects(data, &ray, 0.0, DBL_MAX, rec)) // an object was hit, color it
 	{
-		t_vector temp = get_point(rec->normal.x + 1, rec->normal.y + 1, rec->normal.z + 1);
+		t_color color = rec->color;
 		free(rec);
-		return (multiply(&temp, 0.5));
+		return (color);
 	}
-	else // no object was hit, color background
+	else // no object was hit, color background with some gradient
 	{
 		free(rec);
 		t_vector unit_direction = unit_vector(&ray.direction);
@@ -92,6 +72,7 @@ t_color get_ray_color(t_data *data, t_ray ray)
 	}
 }
 
+// Gets the offset needed to convert pixel coordinates to viewport coordinates.
 t_vector	get_total_offset(int x, int y, t_vector *horizontal_offset, t_vector *vertical_offset)
 {
 	double		x_scaled;
@@ -108,6 +89,7 @@ t_vector	get_total_offset(int x, int y, t_vector *horizontal_offset, t_vector *v
 	return (total_offset);
 }
 
+// Loops through all pixels in the image and renders them.
 void	render_image(t_data *data, mlx_image_t *img_ptr)
 {
 	t_vector	upper_left_corner = get_point(-2.0, 1.0, -1.0);
@@ -127,7 +109,9 @@ void	render_image(t_data *data, mlx_image_t *img_ptr)
 			t_vector total_offset = get_total_offset(x, y, &horizontal_offset, &vertical_offset);
 			ray.direction = vector_add(&upper_left_corner, &total_offset);
 			t_color pixel_color = get_ray_color(data, ray);
-			int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
+			unsigned int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
+			if (x == IMAGE_WIDTH - 5 && y == IMAGE_HEIGHT - 5)
+				printf("rgba = %i\n", rgba);
 			mlx_put_pixel(img_ptr, x, y, rgba);
 			x++;
 		}

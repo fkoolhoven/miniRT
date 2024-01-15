@@ -7,6 +7,10 @@
 # define IMAGE_HEIGHT WINDOW_HEIGHT
 # define ESCAPE 256
 
+# define SPHERE 1
+# define PLANE 2
+# define CYLINDER 3
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -22,5 +26,6 @@
 # include "errors.h"
 # include "arithmetic.h"
 # include "render.h"
+# include "hit_objects.h"
 
 #endif
