@@ -28,6 +28,7 @@ typedef struct s_hit_record
 	t_point		point;
 	t_vector	normal;
 	double		t;
+	t_color		color;
 }	t_hit_record;
 
 typedef struct s_camera
@@ -53,7 +54,7 @@ typedef struct s_light
 typedef struct s_plane
 {
 	t_point			point;
-	t_point			axis;
+	t_vector		normal;
 	t_color			color;
 	struct s_plane	*next;
 }	t_plane;

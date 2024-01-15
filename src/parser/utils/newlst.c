@@ -14,7 +14,7 @@ t_plane	*plane_new(char *data)
 	if (!new)
 		error("Malloc failure", errno);
 	if (store_xyz(items[0], &new->point) ||
-		store_xyz(items[1], &new->axis) ||
+		store_xyz(items[1], &new->normal) ||
 		store_xyz(items[2], &(new->color)))
 		error("Plane parameters are incorrect", 1);
 	new->next = NULL;
