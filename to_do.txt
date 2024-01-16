@@ -27,3 +27,6 @@ Questions:
 - Is there a difference between ambient and diffuse lighting?
 - What is meant by translation and rotation transformation?
 - Do they mean resize as the window is open? Like add key hooks for this?
+
+PARSER:
+- Spaces after a line give error, do we want this?

@@ -63,6 +63,7 @@ t_cylinder	*cylinder_new(char *data)
 		store_xyz(items[4], &(new->color)))
 		error("Cylinder parameters are incorrect", 1);
 	new->diameter = ft_atod(items[2]);
+	new->radius = new->diameter / 2;
 	new->height = ft_atod(items[3]);
 	new->next = NULL;
 	frdp(items);

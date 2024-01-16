@@ -71,8 +71,9 @@ typedef struct s_sphere
 typedef struct s_cylinder
 {
 	t_point				center;
-	t_point				axis;
+	t_vector			axis;
 	double				diameter;
+	double				radius;
 	double				height;
 	t_color				color;
 	struct s_cylinder	*next;

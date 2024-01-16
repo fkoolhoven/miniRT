@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-double find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec) 
+bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec) 
 {
 	t_vector offset_center;
 	double a;
@@ -27,6 +27,6 @@ double find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, dou
 			return (false); // both roots out of range, no sphere was hit
 		}
 	}
-	record_new_closer_hit(try_root, sphere, SPHERE, ray, rec); // a sphere was hit, record at which point
+	record_sphere_hit(try_root, sphere, ray, rec);
 	return (true);
 }

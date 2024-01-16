@@ -11,6 +11,11 @@
 # define PLANE 2
 # define CYLINDER 3
 
+# define A 0
+# define B 1
+# define C 2
+# define DISCRIMINANT 3
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
