@@ -51,27 +51,25 @@ bool try_to_hit_objects(t_data *data, t_ray *ray, double ray_tmin, double ray_tm
 // Gets the color of either the background or the object that was hit.
 t_color get_ray_color(t_data *data, t_ray ray) 
 {
-	t_hit_record *rec = get_hit_record();
+	t_hit_record *rec;
+	t_color		 color;
 
+	rec = get_hit_record();
 	if (try_to_hit_objects(data, &ray, 0.0, DBL_MAX, rec)) // an object was hit, color it
 	{
-		t_vector temp = get_point(rec->normal.x + 1, rec->normal.y + 1, rec->normal.z + 1);
-		free(rec);
-		return (multiply(&temp, 0.5));
-		// t_color color = rec->color;
+		// t_vector temp = get_point(rec->normal.x + 1, rec->normal.y + 1, rec->normal.z + 1);
 		// free(rec);
+		// color = multiply(&temp, 0.5);
+		// printf("color: %f %f %f\n", color.x, color.y, color.z);
 		// return (color);
+		color = apply_shading(data, &rec->color);
+		free(rec);
+		return (color);
 	}
 	else // no object was hit, color background with some gradient
 	{
-		free(rec);
-		t_vector unit_direction = normalize(&ray.direction);
-		double a = 0.5 * (unit_direction.y + 1.0);
-		t_color start_color = get_point(1.0, 1.0, 1.0);
-		t_color end_color = get_point(0.5, 0.7, 1.0);
-		start_color = multiply(&start_color, 1.0 - a);
-		end_color = multiply(&end_color, a);
-		return (vector_add(&start_color, &end_color));
+		color = get_point(0.0, 0.0, 0.0);
+		return (color);
 	}
 }
 

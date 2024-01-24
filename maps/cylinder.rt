@@ -4,7 +4,7 @@
 # Elements which are defined by a capital letter can only be declared once in the scene.
 
 # AMBIENT LIGHTING:
-A 0.2 255,255,255
+A 0.5 255,255,255
 # identifier: A
 # ambient lighting ratio in range [0.0,1.0]: 0.2
 # R,G,B colors in range [0-255]: 255, 255, 255
@@ -31,7 +31,8 @@ sp 0,0,-3 1 255,0,0
 # R,G,B colors in range [0-255]: 10, 0, 255
 
 # PLANE:
-# pl 0,0,-1 0,1,0.1 0,0,255
+pl 0,0,-20 0,0,1 255,255,255
+pl 0,-1,-1 0,1,0 0,255,0
 # identifier: pl
 # x,y,z coordinates of a point in the plane: 0.0,0.0,-10.0
 # 3d normalized normal vector. In range [-1,1] for each x,y,z axis: 0.0,1.0,0.0

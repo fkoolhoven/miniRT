@@ -6,8 +6,6 @@ GENERAL:
 - Leak checks
 
 NEXT STEPS:
-- Add cylinders
-- Add planes
 - Make camera adjustable, create viewport
 - Handle window resizing
 

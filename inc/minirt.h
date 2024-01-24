@@ -31,6 +31,7 @@
 # include "errors.h"
 # include "arithmetic.h"
 # include "render.h"
+# include "shading.h"
 # include "hit_objects.h"
 
 #endif
