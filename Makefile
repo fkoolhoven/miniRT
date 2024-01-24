@@ -30,7 +30,8 @@ SRC			= main.c \
 				hit_objects/plane.c \
 				hit_objects/sphere.c \
 				hit_objects/cylinder.c \
-				hit_objects/record_hit.c
+				hit_objects/record_hit.c \
+				hit_objects/trace_ray.c
 
 
 VPATH = $(SRCDIRS)

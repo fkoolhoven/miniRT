@@ -65,7 +65,7 @@ t_color get_ray_color(t_data *data, t_ray ray)
 	else // no object was hit, color background with some gradient
 	{
 		free(rec);
-		t_vector unit_direction = unit_vector(&ray.direction);
+		t_vector unit_direction = normalize(&ray.direction);
 		double a = 0.5 * (unit_direction.y + 1.0);
 		t_color start_color = get_point(1.0, 1.0, 1.0);
 		t_color end_color = get_point(0.5, 0.7, 1.0);
@@ -111,6 +111,7 @@ void	render_image(t_data *data, mlx_image_t *img_ptr)
 		{
 			t_vector total_offset = get_total_offset(x, y, &horizontal_offset, &vertical_offset);
 			ray.direction = vector_add(&upper_left_corner, &total_offset);
+			ray.direction = normalize(&ray.direction);
 			t_color pixel_color = get_ray_color(data, ray);
 			unsigned int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
 			mlx_put_pixel(img_ptr, x, y, rgba);

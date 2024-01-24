@@ -1,15 +1,5 @@
 #include "minirt.h"
 
-// INTERSECTION(t) = ORIGIN + tDIRECTION
-t_point	trace_ray(t_ray *ray, double t)
-{
-	t_point ray_location;
-
-	ray_location = multiply(&ray->direction, t);
-	ray_location = vector_add(&ray->origin, &ray_location);
-	return (ray_location);
-}
-
 void	record_sphere_hit(double t, t_sphere *sphere, t_ray *ray, t_hit_record *rec)
 {
 	rec->t = t;
@@ -23,6 +13,7 @@ void	record_plane_hit(double t, t_plane *plane, t_ray *ray, t_hit_record *rec)
 {
 	rec->t = t;
 	rec->point = trace_ray(ray, rec->t);
+	rec->normal = get_point(0, 0, 0);
 	rec->normal = plane->normal;
 	rec->color = plane->color;
 }
@@ -35,7 +26,7 @@ void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_
     double projection = dot(&vectorToCenter, &cylinder->axis);
     t_vector temp = multiply(&cylinder->axis, projection);
     t_vector normal = vector_subtract(&vectorToCenter, &temp);
-    rec->normal = unit_vector(&normal);
+    rec->normal = normalize(&normal);
 }
 
 void	record_cylinder_cap_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec)

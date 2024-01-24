@@ -9,9 +9,9 @@ bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, doubl
 	double discriminant;
 
 	offset_center = vector_subtract(&ray->origin, &sphere->center);
-	a = length_squared(&ray->direction);
+	a = dot(&ray->direction, &ray->direction);
 	half_b = dot(&offset_center, &ray->direction);
-	c = length_squared(&offset_center) - sphere->radius * sphere->radius;
+	c = dot(&offset_center, &offset_center) - sphere->radius * sphere->radius;
 	discriminant = half_b * half_b - a * c;
 	if (discriminant < 0) // no sphere was hit 
 		return (false);

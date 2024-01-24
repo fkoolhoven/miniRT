@@ -70,7 +70,7 @@ void	print_sphere(t_sphere *sp)
 	printf("spheres:\n");
 	while (sp)
 	{
-		printf("\t%.2f,%.2f,%.2f | %.2f | %.2f,%.2f,%.2f\n", sp->center.x, sp->center.y, sp->center.z, sp->diameter, sp->color.x,  sp->color.y, sp->color.z);
+		printf("\t%.2f,%.2f,%.2f | %.2f | %.2f,%.2f,%.2f\n", sp->center.x, sp->center.y, sp->center.z, sp->radius * 2, sp->color.x,  sp->color.y, sp->color.z);
 		sp = sp->next;
 	}
 }
@@ -79,7 +79,7 @@ void	print_cylinder(t_cylinder *cy)
 	printf("cylinders:\n");
 	while (cy)
 	{
-		printf("\t%.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %.2f | %.2f | %.2f,%.2f,%.2f\n", cy->center.x, cy->center.y, cy->center.z, cy->axis.x,  cy->axis.y, cy->axis.z, cy->diameter, cy->height, cy->color.x, cy->color.y, cy->color.z);
+		printf("\t%.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %.2f | %.2f | %.2f,%.2f,%.2f\n", cy->center.x, cy->center.y, cy->center.z, cy->axis.x,  cy->axis.y, cy->axis.z, cy->radius * 2, cy->height, cy->color.x, cy->color.y, cy->color.z);
 		cy = cy->next;
 	}
 }

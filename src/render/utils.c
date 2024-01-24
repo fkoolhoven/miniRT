@@ -10,17 +10,12 @@ unsigned int	get_rgba(int r, int g, int b, int a)
 	return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
 }
 
-double	length_squared(t_vector *v)
-{
-	return (v->x * v->x + v->y * v->y + v->z * v->z);
-}
-
 double	length(t_vector *v)
 {
-	return (sqrt(length_squared(v)));
+	return (sqrt(dot(v, v)));
 }
 
-t_vector	unit_vector(t_vector *v)
+t_vector	normalize(t_vector *v)
 {
 	return (divide(v, length(v)));
 }

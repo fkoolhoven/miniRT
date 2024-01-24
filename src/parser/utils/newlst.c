@@ -38,8 +38,7 @@ t_sphere	*sphere_new(char *data)
 	if (store_xyz(items[0], &new->center) ||
 		store_xyz(items[2], &(new->color)))
 		error("Sphere parameters are incorrect", 1);
-	new->diameter = ft_atod(items[1]);
-	new->radius = new->diameter / 2;
+	new->radius = ft_atod(items[1]) / 2;
 	new->next = NULL;
 	frdp(items);
 	return (new);
@@ -62,8 +61,7 @@ t_cylinder	*cylinder_new(char *data)
 		store_xyz(items[1], &new->axis) ||
 		store_xyz(items[4], &(new->color)))
 		error("Cylinder parameters are incorrect", 1);
-	new->diameter = ft_atod(items[2]);
-	new->radius = new->diameter / 2;
+	new->radius = ft_atod(items[2]) / 2;
 	new->height = ft_atod(items[3]);
 	new->next = NULL;
 	frdp(items);
