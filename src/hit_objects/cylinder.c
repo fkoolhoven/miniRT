@@ -32,8 +32,8 @@ void	create_cap_plane(t_plane *plane, t_cylinder *cylinder, t_point *center)
 // Calculates the center of the top and bottom cap.
 bool find_cap_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec)
 {
-	bool		hit_cap1;
-	bool		hit_cap2;
+	bool		hit_bottom_cap;
+	bool		hit_top_cap;
 	t_vector	top_offset;
 	t_vector	bottom_offset;
 	t_point		center_bottom_cap;
@@ -41,17 +41,17 @@ bool find_cap_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_
 	t_plane		bottom_cap;
 	t_plane		top_cap;
 
-	hit_cap1 = false;
-	hit_cap2 = false;
-	top_offset = multiply(&cylinder->axis, cylinder->height / 2.0);
+	hit_bottom_cap = false;
+	hit_top_cap = false;
 	bottom_offset = multiply(&cylinder->axis, -cylinder->height / 2.0);
-	center_top_cap = vector_add(&cylinder->center, &top_offset);
+	top_offset = multiply(&cylinder->axis, cylinder->height / 2.0);
 	center_bottom_cap = vector_add(&cylinder->center, &bottom_offset);
+	center_top_cap = vector_add(&cylinder->center, &top_offset);
 	create_cap_plane(&bottom_cap, cylinder, &center_bottom_cap);
 	create_cap_plane(&top_cap, cylinder, &center_top_cap);
-	hit_cap1 = hit_disk(&bottom_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
-	hit_cap2 = hit_disk(&top_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
-	if (hit_cap1 || hit_cap2)
+	hit_bottom_cap = hit_disk(&bottom_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
+	hit_top_cap = hit_disk(&top_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
+	if (hit_bottom_cap || hit_top_cap)
 		return (true);
 	return (false);
 }
