@@ -83,7 +83,7 @@ t_vector	get_total_offset(int x, int y, t_vector *horizontal_offset, t_vector *v
 	y_scaled = 1.0 * y / IMAGE_HEIGHT;
 	x_offset_vector = multiply(horizontal_offset, x_scaled);
 	y_offset_vector = multiply(vertical_offset, y_scaled);
-	total_offset = vector_add(&x_offset_vector, &y_offset_vector);
+	total_offset = add_vectors(&x_offset_vector, &y_offset_vector);
 	return (total_offset);
 }
 
@@ -107,7 +107,7 @@ void	render_image(t_data *data, mlx_image_t *img_ptr)
 		while (x < IMAGE_WIDTH)
 		{
 			t_vector total_offset = get_total_offset(x, y, &horizontal_offset, &vertical_offset);
-			ray.direction = vector_add(&upper_left_corner, &total_offset);
+			ray.direction = add_vectors(&upper_left_corner, &total_offset);
 			ray.direction = normalize(&ray.direction);
 			t_color pixel_color = get_ray_color(data, ray, rec);
 			unsigned int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);

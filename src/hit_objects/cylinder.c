@@ -12,7 +12,7 @@ bool	hit_disk(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, t_hi
 	if (hit_plane(plane, ray, ray_tmin, ray_tmax, &t))
 	{
 		intersection_point = trace_ray(ray, t);
-		center_to_intersection = vector_subtract(&intersection_point, &plane->point);
+		center_to_intersection = subtract_vectors(&intersection_point, &plane->point);
 		if (length(&center_to_intersection) > radius)
 			return (false);
 		record_plane_hit(t, plane, ray, rec);
@@ -22,9 +22,9 @@ bool	hit_disk(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, t_hi
 }
 
 // Creates a plane that is parallel to the cap and goes through the center of the cap.
-void	create_cap_plane(t_plane *plane, t_cylinder *cylinder, t_point *center, int mult)
+void	create_cap_plane(t_plane *plane, t_cylinder *cylinder, t_point *center)
 {
-	plane->normal = multiply(&cylinder->axis, mult);
+	plane->normal = cylinder->axis;
 	plane->color = cylinder->color;
 	plane->point = *center;
 }
@@ -45,11 +45,14 @@ bool find_cap_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_
 	hit_top_cap = false;
 	bottom_offset = multiply(&cylinder->axis, -cylinder->height / 2.0);
 	top_offset = multiply(&cylinder->axis, cylinder->height / 2.0);
-	center_bottom_cap = vector_add(&cylinder->center, &bottom_offset);
-	center_top_cap = vector_add(&cylinder->center, &top_offset);
-	create_cap_plane(&bottom_cap, cylinder, &center_bottom_cap, -1);
-	create_cap_plane(&top_cap, cylinder, &center_top_cap, 1);
+	center_bottom_cap = add_vectors(&cylinder->center, &bottom_offset);
+	center_top_cap = add_vectors(&cylinder->center, &top_offset);
+	create_cap_plane(&bottom_cap, cylinder, &center_bottom_cap);
+	bottom_cap.normal = multiply(&bottom_cap.normal, -1);
+	create_cap_plane(&top_cap, cylinder, &center_top_cap);
 	hit_bottom_cap = hit_disk(&bottom_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
+	if (hit_bottom_cap)
+		ray_tmax = rec->t;
 	hit_top_cap = hit_disk(&top_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
 	if (hit_bottom_cap || hit_top_cap)
 		return (true);
@@ -66,7 +69,7 @@ bool	intersection_point_is_within_cylinder_height(t_cylinder *cylinder, t_ray *r
 	double		y;
 
 	intersection_point = trace_ray(ray, t);
-	center_to_intersection = vector_subtract(&intersection_point, &cylinder->center);
+	center_to_intersection = subtract_vectors(&intersection_point, &cylinder->center);
 	y = dot(&center_to_intersection, &cylinder->axis);
 	if (y < -cylinder->height / 2.0 || y > cylinder->height / 2.0) 
 		return (false);
@@ -83,7 +86,7 @@ void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *abcd)
 	double		discriminant;
 
 	a = dot(&ray->direction, &ray->direction) - powf(dot(&ray->direction, &cylinder->axis), 2);
-    origin_minus_center = vector_subtract(&ray->origin, &cylinder->center);
+    origin_minus_center = subtract_vectors(&ray->origin, &cylinder->center);
     b = 2 * (dot(&ray->direction, &origin_minus_center) - dot(&ray->direction, &cylinder->axis) * dot(&origin_minus_center, &cylinder->axis));
     c = dot(&origin_minus_center, &origin_minus_center) - powf(dot(&origin_minus_center, &cylinder->axis), 2) - powf(cylinder->radius, 2);
 	discriminant = b * b - 4 * a * c;
@@ -94,6 +97,7 @@ void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *abcd)
 }
 
 // What if light source is inside cylinder? Should we also record the other side of the cylinder? (same goes for spheres)
+// handle insides
 bool	find_infinite_cylinder_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_tmax, double *t)
 {
 	double	abcd[4];

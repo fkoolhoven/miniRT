@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-t_vector	vector_divide(const t_vector *v1, const t_vector *v2)
+t_vector	divide_vectors(const t_vector *v1, const t_vector *v2)
 {
 	t_vector new;
 
@@ -10,7 +10,7 @@ t_vector	vector_divide(const t_vector *v1, const t_vector *v2)
 	return (new);
 }
 
-t_vector	vector_multiply(const t_vector *v1, const t_vector *v2)
+t_vector	multiply_vectors(const t_vector *v1, const t_vector *v2)
 {
 	t_vector new;
 
@@ -20,7 +20,7 @@ t_vector	vector_multiply(const t_vector *v1, const t_vector *v2)
 	return (new);
 }
 
-t_vector	vector_add(const t_vector *v1, const t_vector *v2)
+t_vector	add_vectors(const t_vector *v1, const t_vector *v2)
 {
 	t_vector new;
 
@@ -30,7 +30,7 @@ t_vector	vector_add(const t_vector *v1, const t_vector *v2)
 	return (new);
 }
 
-t_vector	vector_subtract(const t_vector *v1, const t_vector *v2)
+t_vector	subtract_vectors(const t_vector *v1, const t_vector *v2)
 {
 	t_vector new;
 

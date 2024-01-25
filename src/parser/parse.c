@@ -34,7 +34,8 @@ void	store_C(t_data *data, char *input)
 }
 void	store_A(t_data *data, char *input)
 {
-	char	**items;
+	t_vector	ambient;
+	char		**items;
 
 	items = ft_split(input, ' ');
 	if (!items)
@@ -44,6 +45,9 @@ void	store_A(t_data *data, char *input)
 	if (store_xyz(items[1], &(data->ambient.color)))
 		error("Ambient light parameters are incorrect", 1);
 	data->ambient.ratio = ft_atod(items[0]);
+	ambient = multiply(&data->ambient.color, data->ambient.ratio);
+	ambient = divide(&ambient, 255.0);
+	data->ambient.ambient_light = ambient;
 	frdp(items);
 }
 

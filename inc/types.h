@@ -42,6 +42,7 @@ typedef struct s_ambient_light
 {
 	double		ratio;
 	t_color		color;
+	t_vector	ambient_light;
 }	t_ambient_light;
 
 typedef struct s_light

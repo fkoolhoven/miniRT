@@ -8,7 +8,7 @@ bool	hit_plane(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, dou
 	double		numerator;
 	
 	denominator = dot(&plane->normal, &ray->direction);
-	offset_point = vector_subtract(&ray->origin, &plane->point);
+	offset_point = subtract_vectors(&ray->origin, &plane->point);
 	numerator = dot(&plane->normal, &offset_point);
 	*t = -numerator / denominator;
 	if (*t <= ray_tmin || *t >= ray_tmax)

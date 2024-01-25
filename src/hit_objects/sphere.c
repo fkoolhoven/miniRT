@@ -8,7 +8,7 @@ bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, doubl
 	double c;
 	double discriminant;
 
-	offset_center = vector_subtract(&ray->origin, &sphere->center);
+	offset_center = subtract_vectors(&ray->origin, &sphere->center);
 	a = dot(&ray->direction, &ray->direction);
 	half_b = dot(&offset_center, &ray->direction);
 	c = dot(&offset_center, &offset_center) - sphere->radius * sphere->radius;
