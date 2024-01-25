@@ -10,7 +10,7 @@ A 0.2 255,255,255
 # R,G,B colors in range [0-255]: 255, 255, 255
 
 # LIGHT:
-L -40.0,50.0,0.0 1 255,255,255
+L 3,2,-2 1 255,255,255
 # identifier: L
 # x,y,z coordinates of the light point: -40.0,50.0,0.0
 # the light brightness ratio in range [0.0,1.0]: 0.6
@@ -24,23 +24,24 @@ C 0,0,0 0,0,-1 90
 # FOV : Horizontal field of view in degrees in range [0,180]: 70
 
 # SPHERE:
-sp 0,0,-3 1 255,0,0
+sp 0,0,-3 1 45,110,39
+sp -1,0.5,-3 0.7 255,77,230
 # identifier: sp
 # x,y,z coordinates of the sphere center: 0.0,0.0,20.6
 # the sphere diameter: 12.6
 # R,G,B colors in range [0-255]: 10, 0, 255
 
 # PLANE:
-pl 0,0,-20 0,0,1 255,0,255
-pl 0,-1,-1 0,1,0 0,255,0
+pl 0,0,-20 0,0,1 255,255,255
+# pl 0,-1,-1 0,1,0 0,255,0
 # identifier: pl
 # x,y,z coordinates of a point in the plane: 0.0,0.0,-10.0
 # 3d normalized normal vector. In range [-1,1] for each x,y,z axis: 0.0,1.0,0.0
 # R,G,B colors in range [0-255]: 0,0,225
 
 # CYLINDER:
-cy 0,-0.8,-2 0,1,0 1 1 120,0,255
-# cy 50.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 10,0,255
+cy 0,-1,-2 0,1,0 1 1 255,20,20
+cy 2,0,-2 1,0,0 0.8 0.5 0,130,255
 # cy 40.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 10,0,255
 # identifier: cy
 # x,y,z coordinates of the center of the cylinder: 50.0,0.0,20.6

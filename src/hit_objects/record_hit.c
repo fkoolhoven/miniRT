@@ -28,12 +28,13 @@ void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_
 
 	rec->t = t;
 	rec->point = trace_ray(ray, rec->t);
-	point_to_center = vector_subtract(&cylinder->center, &rec->point);
+	point_to_center = vector_subtract(&rec->point, &cylinder->center);
 	projection = dot(&point_to_center, &cylinder->axis);
 	temp_normal = multiply(&cylinder->axis, projection);
 	temp_normal = vector_subtract(&point_to_center, &temp_normal);
 	rec->normal = normalize(&temp_normal);
 	rec->color = cylinder->color;
+
 }
 
 void	record_cylinder_cap_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec)

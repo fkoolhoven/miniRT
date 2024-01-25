@@ -22,9 +22,9 @@ bool	hit_disk(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, t_hi
 }
 
 // Creates a plane that is parallel to the cap and goes through the center of the cap.
-void	create_cap_plane(t_plane *plane, t_cylinder *cylinder, t_point *center)
+void	create_cap_plane(t_plane *plane, t_cylinder *cylinder, t_point *center, int mult)
 {
-	plane->normal = cylinder->axis;
+	plane->normal = multiply(&cylinder->axis, mult);
 	plane->color = cylinder->color;
 	plane->point = *center;
 }
@@ -47,8 +47,8 @@ bool find_cap_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_
 	top_offset = multiply(&cylinder->axis, cylinder->height / 2.0);
 	center_bottom_cap = vector_add(&cylinder->center, &bottom_offset);
 	center_top_cap = vector_add(&cylinder->center, &top_offset);
-	create_cap_plane(&bottom_cap, cylinder, &center_bottom_cap);
-	create_cap_plane(&top_cap, cylinder, &center_top_cap);
+	create_cap_plane(&bottom_cap, cylinder, &center_bottom_cap, -1);
+	create_cap_plane(&top_cap, cylinder, &center_top_cap, 1);
 	hit_bottom_cap = hit_disk(&bottom_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
 	hit_top_cap = hit_disk(&top_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
 	if (hit_bottom_cap || hit_top_cap)

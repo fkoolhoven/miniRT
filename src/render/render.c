@@ -49,12 +49,10 @@ bool try_to_hit_objects(t_data *data, t_ray *ray, double ray_tmin, double ray_tm
 }
 
 // Gets the color of either the background or the object that was hit.
-t_color get_ray_color(t_data *data, t_ray ray) 
+t_color get_ray_color(t_data *data, t_ray ray, t_hit_record *rec) 
 {
-	t_hit_record *rec;
 	t_color		 color;
 
-	rec = get_hit_record();
 	if (try_to_hit_objects(data, &ray, 0.0, DBL_MAX, rec)) // an object was hit, color it
 	{
 		// t_vector temp = get_point(rec->normal.x + 1, rec->normal.y + 1, rec->normal.z + 1);
@@ -62,8 +60,7 @@ t_color get_ray_color(t_data *data, t_ray ray)
 		// color = multiply(&temp, 0.5);
 		// printf("color: %f %f %f\n", color.x, color.y, color.z);
 		// return (color);
-		color = apply_shading(data, &rec->color);
-		free(rec);
+		color = apply_shading(data, rec);
 		return (color);
 	}
 	else // no object was hit, color background with some gradient
@@ -99,7 +96,9 @@ void	render_image(t_data *data, mlx_image_t *img_ptr)
 	int			y;
 	int			x;
 	t_ray 		ray;
+	t_hit_record *rec;
 
+	rec = get_hit_record();
 	ray.origin = data->camera.view_point;
 	y = 0;
 	while (y < IMAGE_HEIGHT)
@@ -110,11 +109,12 @@ void	render_image(t_data *data, mlx_image_t *img_ptr)
 			t_vector total_offset = get_total_offset(x, y, &horizontal_offset, &vertical_offset);
 			ray.direction = vector_add(&upper_left_corner, &total_offset);
 			ray.direction = normalize(&ray.direction);
-			t_color pixel_color = get_ray_color(data, ray);
+			t_color pixel_color = get_ray_color(data, ray, rec);
 			unsigned int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
 			mlx_put_pixel(img_ptr, x, y, rgba);
 			x++;
 		}
 		y++;
 	}
+	free(rec);
 }
