@@ -4,7 +4,7 @@
 # Elements which are defined by a capital letter can only be declared once in the scene.
 
 # AMBIENT LIGHTING:
-A 0.5 255,255,255
+A 0 255,0,0
 # identifier: A
 # ambient lighting ratio in range [0.0,1.0]: 0.2
 # R,G,B colors in range [0-255]: 255, 255, 255
