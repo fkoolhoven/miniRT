@@ -17,5 +17,6 @@ t_vector	subtract(const t_vector *v1, double d);
 double		length(t_vector *v);
 t_vector	normalize(t_vector *v);
 double		dot(const t_vector *u, const t_vector *v);
+t_vector	cross_vectors(const t_vector *u, const t_vector *v);
 
 #endif

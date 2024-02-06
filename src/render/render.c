@@ -87,17 +87,68 @@ t_vector	get_total_offset(int x, int y, t_vector *horizontal_offset, t_vector *v
 	return (total_offset);
 }
 
-// Loops through all pixels in the image and renders them.
-void	render_image(t_data *data, mlx_image_t *img_ptr)
+t_viewport set_up_viewport(t_camera *camera)
 {
-	t_vector	upper_left_corner = get_point(-2.0, 1.0, -1.0);
-	t_vector	horizontal_offset = get_point(4.0, 0.0, 0.0);
-	t_vector	vertical_offset = get_point(0.0, -2.0, 0.0);
-	int			y;
-	int			x;
-	t_ray 		ray;
-	t_hit_record *rec;
+	t_vector	upper_left_corner;
+	t_vector	horizontal_offset;
+	t_vector	vertical_offset;
+	double	aspect_ratio;
+	double	vertical_fov;
+	double	theta;
+	double	half_height;
+	double	half_width;
 
+	aspect_ratio = (double)IMAGE_WIDTH / (double)IMAGE_HEIGHT;
+	vertical_fov = camera->horizontal_field_of_view / aspect_ratio;
+	theta = vertical_fov * M_PI / 180.0;
+	half_height	= tan(theta / 2.0);
+	half_width = aspect_ratio * half_height;
+
+	t_vector negative_orientation = multiply(&camera->orientation, -1.0);
+	t_vector vup = get_point(0, 1.0, 0);
+	t_vector temp = cross_vectors(&vup, &negative_orientation);
+	t_vector horizontal = normalize(&temp);
+	t_vector vertical = cross_vectors(&negative_orientation, &horizontal);
+
+	double height_orientation = 2.0 * half_width;
+	double vertical_orientation = -2.0 * half_height;
+	horizontal_offset = multiply(&horizontal, height_orientation);
+	vertical_offset = multiply(&vertical, vertical_orientation);
+	
+	// *upper_left_corner = get_point(-half_width, half_height, -1.0);
+	
+	t_vector temp1 = multiply(&horizontal, half_width);
+	t_vector temp2 = multiply(&vertical, half_height);
+	t_vector temp3 = subtract_vectors(&temp1, &temp2);
+	t_vector temp4 = subtract_vectors(&camera->view_point, &temp3);
+	t_vector temp5 = subtract_vectors(&temp4, &negative_orientation);
+	upper_left_corner = temp5;
+	t_viewport viewport = {upper_left_corner, horizontal_offset, vertical_offset};
+	return (viewport);
+}
+
+t_vector	get_ray_direction(int x, int y, t_viewport *viewport, t_ray *ray)
+{
+	t_vector	ray_direction;
+	t_vector	total_offset;
+	
+	total_offset = get_total_offset(x, y, &viewport->horizontal_offset, &viewport->vertical_offset);
+	ray_direction = add_vectors(&viewport->upper_left_corner, &total_offset);
+	ray_direction = subtract_vectors(&ray_direction, &ray->origin);                   
+	ray_direction = normalize(&ray_direction);
+	return (ray_direction);
+}
+
+// Loops through all pixels in the image and renders them.
+void	render_image(t_data *data)
+{
+	t_viewport		viewport;
+	t_hit_record	*rec;
+	t_ray			ray;
+	int				y;
+	int				x;
+
+	viewport = set_up_viewport(&data->camera);
 	rec = get_hit_record();
 	ray.origin = data->camera.view_point;
 	y = 0;
@@ -106,12 +157,10 @@ void	render_image(t_data *data, mlx_image_t *img_ptr)
 		x = 0;
 		while (x < IMAGE_WIDTH)
 		{
-			t_vector total_offset = get_total_offset(x, y, &horizontal_offset, &vertical_offset);
-			ray.direction = add_vectors(&upper_left_corner, &total_offset);
-			ray.direction = normalize(&ray.direction);
-			t_color pixel_color = get_ray_color(data, ray, rec);
+			ray.direction = get_ray_direction(x, y, &viewport, &ray);
+			t_color pixel_color = get_ray_color(data, ray, rec);       
 			unsigned int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
-			mlx_put_pixel(img_ptr, x, y, rgba);
+			mlx_put_pixel(data->mlx_info->img_ptr, x, y, rgba);
 			x++;
 		}
 		y++;

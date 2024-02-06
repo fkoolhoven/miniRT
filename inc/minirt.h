@@ -6,6 +6,10 @@
 # define IMAGE_WIDTH WINDOW_WIDTH
 # define IMAGE_HEIGHT WINDOW_HEIGHT
 # define ESCAPE 256
+# define RIGHT_ARROW 262
+# define LEFT_ARROW 263
+# define UP_ARROW 265
+# define DOWN_ARROW 264
 
 # define SPHERE 1
 # define PLANE 2

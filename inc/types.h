@@ -13,8 +13,9 @@ typedef t_point	t_color;
 
 typedef struct s_viewport
 {
-	double	width;
-	double	height;
+	t_vector	upper_left_corner; 
+	t_vector	horizontal_offset;
+	t_vector	vertical_offset;
 }	t_viewport;
 
 typedef struct s_ray
@@ -78,6 +79,12 @@ typedef struct s_cylinder
 	struct s_cylinder	*next;
 }	t_cylinder;
 
+typedef struct s_mlx_info
+{
+	mlx_t		*mlx_ptr;
+	mlx_image_t	*img_ptr;
+}	t_mlx_info;
+
 typedef struct s_data
 {
 	t_camera		camera;
@@ -87,12 +94,8 @@ typedef struct s_data
 	t_plane			*plane;
 	t_cylinder		*cylinder;
 	t_sphere		*sphere;
-}	t_data;
 
-typedef struct s_mlx_info
-{
-	mlx_t		*mlx_ptr;
-	mlx_image_t	*img_ptr;
-}	t_mlx_info;
+	t_mlx_info		*mlx_info;
+}	t_data;
 
 #endif
