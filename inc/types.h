@@ -16,12 +16,14 @@ typedef struct s_viewport
 	t_vector	upper_left_corner; 
 	t_vector	horizontal_offset;
 	t_vector	vertical_offset;
+	double		half_height;
+	double		half_width;
 }	t_viewport;
 
 typedef struct s_ray
 {
-	t_point		origin; // = camera view point
-	t_vector	direction; // = a point on viewport
+	t_point		origin;
+	t_vector	direction;
 }	t_ray;
 
 typedef struct s_hit_record
@@ -34,9 +36,9 @@ typedef struct s_hit_record
 
 typedef struct s_camera
 {
-	t_point		view_point; // 0, 0, -1
-	t_vector	orientation; // 0, 0, 0
-	double		horizontal_field_of_view; // 90
+	t_point		view_point;
+	t_vector	orientation;
+	double		horizontal_fov;
 }	t_camera;
 
 typedef struct s_ambient_light

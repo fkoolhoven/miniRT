@@ -29,7 +29,7 @@ void	store_C(t_data *data, char *input)
 	if (store_xyz(items[0], &data->camera.view_point) ||
 		store_xyz(items[1], &data->camera.orientation))
 		error("Camera parameters are incorrect", 1);
-	data->camera.horizontal_field_of_view = ft_atod(items[2]);
+	data->camera.horizontal_fov = ft_atod(items[2]);
 	frdp(items);
 }
 void	store_A(t_data *data, char *input)
@@ -100,7 +100,7 @@ void	print_plane(t_plane *pl)
 void	print_info(t_data *data)
 {
 	printf("A: %.2f | %.2f,%.2f,%.2f\n", data->ambient.ratio, data->ambient.color.x,  data->ambient.color.y, data->ambient.color.z);
-	printf("C: %.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %.2f\n", data->camera.view_point.x, data->camera.view_point.y, data->camera.view_point.z, data->camera.orientation.x,  data->camera.orientation.y, data->camera.orientation.z, data->camera.horizontal_field_of_view);
+	printf("C: %.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %.2f\n", data->camera.view_point.x, data->camera.view_point.y, data->camera.view_point.z, data->camera.orientation.x,  data->camera.orientation.y, data->camera.orientation.z, data->camera.horizontal_fov);
 	printf("L: %.2f,%.2f,%.2f | %.2f | %.2f,%.2f,%.2f\n\n", data->light.point.x, data->light.point.y, data->light.point.z, data->light.brightness, data->light.color.x,  data->light.color.y, data->light.color.z);
 	print_sphere(data->sphere);
 	print_plane(data->plane);

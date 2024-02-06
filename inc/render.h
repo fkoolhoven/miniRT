@@ -2,7 +2,6 @@
 # define RENDER_H
 
 // get_objects.c
-t_viewport		get_viewport(void);
 t_hit_record *	get_hit_record(void);
 t_point			get_point(double x, double y, double z);
 

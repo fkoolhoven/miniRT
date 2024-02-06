@@ -5,7 +5,6 @@ void	key_press(mlx_key_data_t key_data, void *param)
 	t_data	*data;
 
 	data = (t_data *)param;
-	printf("keycode = %i\n", key_data.key);
 	if (key_data.key == ESCAPE)
 	{
 		exit(EXIT_SUCCESS);
@@ -76,14 +75,14 @@ void	key_press(mlx_key_data_t key_data, void *param)
 		printf("orientation = %f, %f, %f\n", data->camera.orientation.x, data->camera.orientation.y, data->camera.orientation.z);
 		render_image(data);
 	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_LEFT_BRACKET) && data->camera.horizontal_field_of_view > 0)
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_LEFT_BRACKET) && data->camera.horizontal_fov > 0)
 	{
-		data->camera.horizontal_field_of_view -= 10;
+		data->camera.horizontal_fov -= 10;
 		render_image(data);
 	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_RIGHT_BRACKET) && data->camera.horizontal_field_of_view < 180)
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_RIGHT_BRACKET) && data->camera.horizontal_fov < 180)
 	{
-		data->camera.horizontal_field_of_view += 10;
+		data->camera.horizontal_fov += 10;
 		render_image(data);
 	}
 }

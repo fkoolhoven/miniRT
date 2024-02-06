@@ -87,43 +87,40 @@ t_vector	get_total_offset(int x, int y, t_vector *horizontal_offset, t_vector *v
 	return (total_offset);
 }
 
-t_viewport set_up_viewport(t_camera *camera)
+t_vector	calculate_upper_left_corner(t_camera *camera, t_viewport *viewport, t_vector *horizontal, t_vector *vertical, t_vector *inverse_orientation)
 {
 	t_vector	upper_left_corner;
-	t_vector	horizontal_offset;
-	t_vector	vertical_offset;
-	double	aspect_ratio;
-	double	vertical_fov;
-	double	theta;
-	double	half_height;
-	double	half_width;
+
+	t_vector half_width_horizontal = multiply(horizontal, viewport->half_width);
+	t_vector half_height_vertical = multiply(vertical, viewport->half_height);
+	t_vector upper_left_corner_offset = subtract_vectors(&half_width_horizontal, &half_height_vertical);
+	t_vector viewport_origin = subtract_vectors(&camera->view_point, &upper_left_corner_offset);
+	upper_left_corner = subtract_vectors(&viewport_origin, inverse_orientation);
+	return (upper_left_corner);
+}
+
+t_viewport set_up_viewport(t_camera *camera)
+{
+	t_viewport	viewport;
+	double		aspect_ratio;
+	double		vertical_fov;
+	double		vertical_radians;
 
 	aspect_ratio = (double)IMAGE_WIDTH / (double)IMAGE_HEIGHT;
-	vertical_fov = camera->horizontal_field_of_view / aspect_ratio;
-	theta = vertical_fov * M_PI / 180.0;
-	half_height	= tan(theta / 2.0);
-	half_width = aspect_ratio * half_height;
+	vertical_fov = camera->horizontal_fov / aspect_ratio;
+	vertical_radians = vertical_fov * M_PI / 180.0;
+	viewport.half_height = tan(vertical_radians / 2.0);
+	viewport.half_width = aspect_ratio * viewport.half_height;
 
-	t_vector negative_orientation = multiply(&camera->orientation, -1.0);
-	t_vector vup = get_point(0, 1.0, 0);
-	t_vector temp = cross_vectors(&vup, &negative_orientation);
-	t_vector horizontal = normalize(&temp);
-	t_vector vertical = cross_vectors(&negative_orientation, &horizontal);
+	t_vector inverse_orientation = multiply(&camera->orientation, -1.0);
+	t_vector true_up = get_point(0, 1.0, 0);
+	t_vector horizontal_direction = cross_vectors(&true_up, &inverse_orientation);
+	horizontal_direction = normalize(&horizontal_direction);
+	t_vector vertical_direction = cross_vectors(&inverse_orientation, &horizontal_direction);
 
-	double height_orientation = 2.0 * half_width;
-	double vertical_orientation = -2.0 * half_height;
-	horizontal_offset = multiply(&horizontal, height_orientation);
-	vertical_offset = multiply(&vertical, vertical_orientation);
-	
-	// *upper_left_corner = get_point(-half_width, half_height, -1.0);
-	
-	t_vector temp1 = multiply(&horizontal, half_width);
-	t_vector temp2 = multiply(&vertical, half_height);
-	t_vector temp3 = subtract_vectors(&temp1, &temp2);
-	t_vector temp4 = subtract_vectors(&camera->view_point, &temp3);
-	t_vector temp5 = subtract_vectors(&temp4, &negative_orientation);
-	upper_left_corner = temp5;
-	t_viewport viewport = {upper_left_corner, horizontal_offset, vertical_offset};
+	viewport.horizontal_offset = multiply(&horizontal, 2.0 * viewport.half_width);
+	viewport.vertical_offset = multiply(&vertical, -2.0 * viewport.half_height);
+	viewport.upper_left_corner = calculate_upper_left_corner(camera, &viewport, &horizontal_direction, &vertical_direction, &inverse_orientation);
 	return (viewport);
 }
 
@@ -147,6 +144,8 @@ void	render_image(t_data *data)
 	t_ray			ray;
 	int				y;
 	int				x;
+	unsigned int	rgba;
+	t_color			pixel_color;
 
 	viewport = set_up_viewport(&data->camera);
 	rec = get_hit_record();
@@ -158,8 +157,8 @@ void	render_image(t_data *data)
 		while (x < IMAGE_WIDTH)
 		{
 			ray.direction = get_ray_direction(x, y, &viewport, &ray);
-			t_color pixel_color = get_ray_color(data, ray, rec);       
-			unsigned int rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
+			pixel_color = get_ray_color(data, ray, rec);       
+			rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
 			mlx_put_pixel(data->mlx_info->img_ptr, x, y, rgba);
 			x++;
 		}
