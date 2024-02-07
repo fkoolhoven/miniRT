@@ -1,6 +1,7 @@
 #include "minirt.h"
 
-t_vector	calculate_upper_left_corner(t_camera *camera, t_viewport *viewport, t_vector *inverse_orientation) // update
+// Calculate the upper left corner of the viewport based on the camera's orientation and the viewport's dimensions.
+t_vector	calculate_upper_left_corner(t_camera *camera, t_viewport *viewport, t_vector *inverse_orientation)
 {
 	t_vector	upper_left_corner;
 	t_vector	half_width_horizontal;
