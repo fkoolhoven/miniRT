@@ -9,3 +9,4 @@ To do:
 - Give parser some weird inputs
 - Check if MLX config in Makefile is correct / figure out how we want to do this on intra
 - Add maps for testing and eval
+- Optional? Legenda for camera keys
