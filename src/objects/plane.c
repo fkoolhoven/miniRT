@@ -1,7 +1,7 @@
 #include "minirt.h"
 
 // What if the plane is parallel to the ray?
-bool	hit_plane(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, double *t) 
+bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_params *params, double *t) 
 {
 	t_vector	offset_point;
 	double		denominator;
@@ -11,18 +11,18 @@ bool	hit_plane(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, dou
 	offset_point = subtract_vectors(&ray->origin, &plane->point);
 	numerator = dot(&plane->normal, &offset_point);
 	*t = -numerator / denominator;
-	if (*t <= ray_tmin || *t >= ray_tmax)
+	if (*t <= params->ray_tmin || *t >= params->closest_so_far)
 		return (false); // Didn't find a closer hit
 	return (true); // Found a closer hit
 }
 
-bool	find_closer_plane_hit(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec)
+bool	find_closer_plane_hit(t_plane *plane, t_ray *ray, t_hit_params *params)
 {
 	double	t;
 
-	if (hit_plane(plane, ray, ray_tmin, ray_tmax, &t))
+	if (hit_plane(plane, ray, params, &t))
 	{
-		record_plane_hit(t, plane, ray, rec);
+		record_plane_hit(t, plane, ray, params->temp_rec);
 		return (true);
 	}
 	return (false);

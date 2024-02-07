@@ -1,14 +1,58 @@
 #include "minirt.h"
 
-void	key_press(mlx_key_data_t key_data, void *param)
+// Defines the keys for changing the camera's field of view.
+void	camera_field_of_view_keys(t_data *data)
 {
-	t_data	*data;
-
-	data = (t_data *)param;
-	if (key_data.key == ESCAPE)
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_LEFT_BRACKET) && data->camera.horizontal_fov > 0)
 	{
-		exit(EXIT_SUCCESS);
+		data->camera.horizontal_fov -= 10;
+		render_image(data);
 	}
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_RIGHT_BRACKET) && data->camera.horizontal_fov < 180)
+	{
+		data->camera.horizontal_fov += 10;
+		render_image(data);
+	}
+}
+
+// Defines the keys for changing the camera's orientation.
+void	camera_orientation_keys(t_data *data)
+{
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_A) && data->camera.orientation.x >= -0.9)
+	{
+		data->camera.orientation.x -= 0.1;
+		render_image(data);
+	}
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_D) && data->camera.orientation.x <= 0.9)
+	{
+		data->camera.orientation.x += 0.1;
+		render_image(data);
+	}
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_W) && data->camera.orientation.y <= 0.9)
+	{
+		data->camera.orientation.y += 0.1;
+		render_image(data);
+	}
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_S) && data->camera.orientation.y >= -0.9)
+	{
+		data->camera.orientation.y -= 0.1;
+		render_image(data);
+	}
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_R) && data->camera.orientation.z >= -0.9)
+	{
+		data->camera.orientation.z -= 0.1;
+		render_image(data);
+	}
+	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_F) && data->camera.orientation.z <= 0.9)
+	{
+		data->camera.orientation.z += 0.1;
+		render_image(data);
+	}
+}
+
+// Defines the keys for moving the camera's view point.
+void	camera_view_point_keys(t_data *data)
+{
 	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_RIGHT))
 	{
 		data->camera.view_point.x += 0.5;
@@ -39,52 +83,20 @@ void	key_press(mlx_key_data_t key_data, void *param)
 		data->camera.view_point.z -= 0.5;
 		render_image(data);
 	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_A) && data->camera.orientation.x >= -0.9)
+}
+
+void	key_press(mlx_key_data_t key_data, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (key_data.key == ESCAPE)
 	{
-		data->camera.orientation.x -= 0.1;
-		printf("orientation = %f, %f, %f\n", data->camera.orientation.x, data->camera.orientation.y, data->camera.orientation.z);
-		render_image(data);
+		exit(EXIT_SUCCESS);
 	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_D) && data->camera.orientation.x <= 0.9)
-	{
-		data->camera.orientation.x += 0.1;
-		printf("orientation = %f, %f, %f\n", data->camera.orientation.x, data->camera.orientation.y, data->camera.orientation.z);
-		render_image(data);
-	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_W) && data->camera.orientation.y <= 0.9)
-	{
-		data->camera.orientation.y += 0.1;
-		printf("orientation = %f, %f, %f\n", data->camera.orientation.x, data->camera.orientation.y, data->camera.orientation.z);
-		render_image(data);
-	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_S) && data->camera.orientation.y >= -0.9)
-	{
-		data->camera.orientation.y -= 0.1;
-		printf("orientation = %f, %f, %f\n", data->camera.orientation.x, data->camera.orientation.y, data->camera.orientation.z);
-		render_image(data);
-	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_R) && data->camera.orientation.z >= -0.9)
-	{
-		data->camera.orientation.z -= 0.1;
-		printf("orientation = %f, %f, %f\n", data->camera.orientation.x, data->camera.orientation.y, data->camera.orientation.z);
-		render_image(data);
-	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_F) && data->camera.orientation.z <= 0.9)
-	{
-		data->camera.orientation.z += 0.1;
-		printf("orientation = %f, %f, %f\n", data->camera.orientation.x, data->camera.orientation.y, data->camera.orientation.z);
-		render_image(data);
-	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_LEFT_BRACKET) && data->camera.horizontal_fov > 0)
-	{
-		data->camera.horizontal_fov -= 10;
-		render_image(data);
-	}
-	if (mlx_is_key_down(data->mlx_info->mlx_ptr, MLX_KEY_RIGHT_BRACKET) && data->camera.horizontal_fov < 180)
-	{
-		data->camera.horizontal_fov += 10;
-		render_image(data);
-	}
+	camera_view_point_keys(data);
+	camera_orientation_keys(data);
+	camera_field_of_view_keys(data);
 }
 
 void	setup_mlx(t_data *data)

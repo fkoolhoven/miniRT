@@ -16,6 +16,8 @@ typedef struct s_viewport
 	t_vector	upper_left_corner; 
 	t_vector	horizontal_offset;
 	t_vector	vertical_offset;
+	t_vector	horizontal_direction;
+	t_vector	vertical_direction;
 	double		half_height;
 	double		half_width;
 }	t_viewport;
@@ -99,5 +101,13 @@ typedef struct s_data
 
 	t_mlx_info		*mlx_info;
 }	t_data;
+
+typedef struct s_hit_params
+{
+	t_hit_record	*temp_rec;
+	double			ray_tmin;
+	double			closest_so_far;
+	bool			hit_anything;
+}	t_hit_params;
 
 #endif

@@ -27,12 +27,12 @@ SRC			= main.c \
 				vector_math/vectors_arithmetic.c \
 				render/get_objects.c \
 				render/render.c \
-				render/utils.c \
-				hit_objects/plane.c \
-				hit_objects/sphere.c \
-				hit_objects/cylinder.c \
+				render/viewport.c \
+				hit_objects/hit_objects.c \
 				hit_objects/record_hit.c \
-				hit_objects/trace_ray.c \
+				objects/plane.c \
+				objects/sphere.c \
+				objects/cylinder.c \
 				shading/shading.c
 
 

@@ -21,6 +21,7 @@ t_vector	get_diffuse_light(t_data *data, t_hit_record *rec)
 	return (diffuse);
 }
 
+// Get the total light (diffuse + ambient)
 t_vector	get_all_light(t_data *data, t_hit_record *rec)
 {
 	t_vector	diffuse_light;
@@ -39,6 +40,7 @@ t_vector	get_all_light(t_data *data, t_hit_record *rec)
 	return (all_light);
 }
 
+// Apply the shading to the object that was hit, based on the light and the object's color
 t_color apply_shading(t_data *data, t_hit_record *rec)
 {
 	t_vector	all_light;

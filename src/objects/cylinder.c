@@ -3,19 +3,19 @@
 // Checks if the ray hits the plane that the cap is on.
 // Then checks if the intersection point is within the radius of the cap.
 // Records the hit if it is, because this means a cap was hit.
-bool	hit_disk(t_plane *plane, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec, double radius) 
+bool	hit_disk(t_plane *plane, t_ray *ray, t_hit_params *params, double radius) 
 {
 	double		t;
 	t_point		intersection_point;
 	t_vector	center_to_intersection;
 
-	if (hit_plane(plane, ray, ray_tmin, ray_tmax, &t))
+	if (hit_plane(plane, ray, params, &t))
 	{
 		intersection_point = trace_ray(ray, t);
 		center_to_intersection = subtract_vectors(&intersection_point, &plane->point);
 		if (length(&center_to_intersection) > radius)
 			return (false);
-		record_plane_hit(t, plane, ray, rec);
+		record_plane_hit(t, plane, ray, params->temp_rec);
 		return (true);
 	}
 	return (false);
@@ -30,7 +30,7 @@ void	create_cap_plane(t_plane *plane, t_cylinder *cylinder, t_point *center)
 }
 
 // Calculates the center of the top and bottom cap.
-bool find_cap_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec)
+bool find_cap_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params)
 {
 	bool		hit_bottom_cap;
 	bool		hit_top_cap;
@@ -50,10 +50,10 @@ bool find_cap_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_
 	create_cap_plane(&bottom_cap, cylinder, &center_bottom_cap);
 	bottom_cap.normal = multiply(&bottom_cap.normal, -1);
 	create_cap_plane(&top_cap, cylinder, &center_top_cap);
-	hit_bottom_cap = hit_disk(&bottom_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
+	hit_bottom_cap = hit_disk(&bottom_cap, ray, params, cylinder->radius);
 	if (hit_bottom_cap)
-		ray_tmax = rec->t;
-	hit_top_cap = hit_disk(&top_cap, ray, ray_tmin, ray_tmax, rec, cylinder->radius);
+		params->closest_so_far = params->temp_rec->t;
+	hit_top_cap = hit_disk(&top_cap, ray, params, cylinder->radius);
 	if (hit_bottom_cap || hit_top_cap)
 		return (true);
 	return (false);
@@ -98,7 +98,7 @@ void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *abcd)
 
 // What if light source is inside cylinder? Should we also record the other side of the cylinder? (same goes for spheres)
 // handle insides
-bool	find_infinite_cylinder_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_tmax, double *t)
+bool	find_infinite_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params, double *t)
 {
 	double	abcd[4];
 	double	t2;
@@ -113,30 +113,30 @@ bool	find_infinite_cylinder_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmi
 		double sqrtDiscriminant = sqrt(abcd[DISCRIMINANT]);
 		*t = (-abcd[B] + sqrtDiscriminant) / (2 * abcd[A]);
 		t2 = (-abcd[B] - sqrtDiscriminant) / (2 * abcd[A]);
-		if (t2 >= ray_tmin && t2 <= ray_tmax) 
+		if (t2 >= params->ray_tmin && t2 <= params->closest_so_far) 
 			*t = t2;
 	}
-	if (*t <= ray_tmin || *t >= ray_tmax) 
+	if (*t <= params->ray_tmin || *t >= params->closest_so_far) 
 		return (false);
 	return (true);
 }
 
-bool	find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record* rec) 
+bool	find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params) 
 {
 	double	t;
 	bool 	hit_side;
 	bool 	hit_cap;
 
-	hit_side = find_infinite_cylinder_hit(cylinder, ray, ray_tmin, ray_tmax, &t);
+	hit_side = find_infinite_cylinder_hit(cylinder, ray, params, &t);
 	if (!hit_side)
 		return (false);
 	hit_cap = false;
 	if (intersection_point_is_within_cylinder_height(cylinder, ray, t)) 
-		record_cylinder_tube_hit(t, cylinder, ray, rec);
+		record_cylinder_tube_hit(t, cylinder, ray, params->temp_rec);
 	else
 	{
 	    hit_side = false;
-		hit_cap = find_cap_hit(cylinder, ray, ray_tmin, ray_tmax, rec);
+		hit_cap = find_cap_hit(cylinder, ray, params);
 	}
 	if (!hit_cap && !hit_side)
 		return (false);

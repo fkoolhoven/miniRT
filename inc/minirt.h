@@ -37,5 +37,6 @@
 # include "render.h"
 # include "shading.h"
 # include "hit_objects.h"
+# include "objects.h"
 
 #endif

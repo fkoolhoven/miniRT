@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, double ray_tmax, t_hit_record *rec) 
+bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params) 
 {
 	t_vector offset_center;
 	double a;
@@ -19,14 +19,14 @@ bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, double ray_tmin, doubl
 	// continue to try to find the real point of intersection (if any)
     double discriminant_root = sqrt(discriminant);
     double try_root = (-half_b - discriminant_root) / a;
-    if (try_root <= ray_tmin || try_root >= ray_tmax)  // first root out of range
+    if (try_root <= params->ray_tmin || try_root >= params->closest_so_far)  // first root out of range
 	{
 		try_root = (-half_b + discriminant_root) / a; // try other root
-		if (try_root <= ray_tmin || try_root >= ray_tmax)
+		if (try_root <= params->ray_tmin || try_root >= params->closest_so_far)
 		{
 			return (false); // both roots out of range, no sphere was hit
 		}
 	}
-	record_sphere_hit(try_root, sphere, ray, rec);
+	record_sphere_hit(try_root, sphere, ray, params->temp_rec);
 	return (true);
 }

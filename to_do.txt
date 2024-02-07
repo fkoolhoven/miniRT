@@ -1,30 +1,11 @@
-GENERAL:
-- Improve libft?
-- Check if MLX config in Makefile is correct
-- Check if input validation handles everything
+To do:
+- Add shadows
+- Debug, edge cases
 - Norminette
+- Handle errors
+- Improve code readability in objects folder
 - Leak checks
-
-NEXT STEPS:
-- Make camera adjustable, create viewport
 - Handle window resizing
-
-AFTER THAT:
-- Add ambient light
-- Add lights
-
-From the subject:
-- Your program must be able to resize the object’s unique properties: diameter for a
-sphere and the width and height for a cylinder.
-- Your program must be able to apply translation and rotation transformation to
-objects, lights and cameras (except for spheres and lights that cannot be rotated).
-- Light management: spot brightness, hard shadows, ambiance lighting (objects are
-never completely in the dark). You must implement Ambient and diffuse lighting.
-
-Questions:
-- Is there a difference between ambient and diffuse lighting?
-- What is meant by translation and rotation transformation?
-- Do they mean resize as the window is open? Like add key hooks for this?
-
-PARSER:
-- Spaces after a line give error, do we want this?
+- Give parser some weird inputs
+- Check if MLX config in Makefile is correct / figure out how we want to do this on intra
+- Add maps for testing and eval
