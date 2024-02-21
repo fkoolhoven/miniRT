@@ -135,7 +135,7 @@ bool	find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *pa
 		record_cylinder_tube_hit(t, cylinder, ray, params->temp_rec);
 	else
 	{
-	    hit_side = false;
+		hit_side = false;
 		hit_cap = find_cap_hit(cylinder, ray, params);
 	}
 	if (!hit_cap && !hit_side)

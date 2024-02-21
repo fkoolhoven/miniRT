@@ -28,7 +28,10 @@ t_vector	get_all_light(t_data *data, t_hit_record *rec)
 	t_vector	ambient_light;
 	t_vector	all_light;
 
-	diffuse_light = get_diffuse_light(data, rec);
+	if (is_in_shadow(data, rec))
+		diffuse_light = get_point(0, 0, 0);
+	else
+		diffuse_light = get_diffuse_light(data, rec);
 	ambient_light = data->ambient.ambient_light; // Calculated during parsing
 	all_light = add_vectors(&diffuse_light, &ambient_light);
 	if (all_light.x > 1.0)
@@ -51,5 +54,5 @@ t_color apply_shading(t_data *data, t_hit_record *rec)
 	object_color = rec->color;
 	final_color = multiply_vectors(&object_color, &all_light);
 	final_color = divide(&final_color, 255.0);
-    return (final_color);
+	return (final_color);
 }

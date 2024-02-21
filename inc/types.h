@@ -34,6 +34,7 @@ typedef struct s_hit_record
 	t_vector	normal;
 	double		t;
 	t_color		color;
+	void		*object;
 }	t_hit_record;
 
 typedef struct s_camera

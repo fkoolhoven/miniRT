@@ -1,31 +1,51 @@
 #include "minirt.h"
 
+typedef enum
+{
+	a,
+	half_b,
+	c,
+	discriminant
+}	QUADRATIC_EQUATION;
+
+/*
+	this function takes in a sphere and a ray, it will determine
+	with a quadratic equation if there is any intersection in the ray's direction
+*/
+bool	sphere_hit(t_sphere *sphere, t_ray *ray, double qa[])
+{
+	t_vector	offset;
+
+	offset = subtract_vectors(&ray->origin, &sphere->center);
+	qa[a] = dot(&ray->direction, &ray->direction);
+	qa[half_b] = dot(&offset, &ray->direction);
+	qa[c] = dot(&offset, &offset) - sphere->radius * sphere->radius;
+	qa[discriminant] = qa[half_b] * qa[half_b] - qa[a] * qa[c];
+	if (qa[discriminant] < 0)
+		return (false);
+	return (true);
+}
+
 bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params) 
 {
-	t_vector offset_center;
-	double a;
-	double half_b;
-	double c;
-	double discriminant;
+	double		qa[4];
+	double		try_root;
+	double		discriminant_root;
 
-	offset_center = subtract_vectors(&ray->origin, &sphere->center);
-	a = dot(&ray->direction, &ray->direction);
-	half_b = dot(&offset_center, &ray->direction);
-	c = dot(&offset_center, &offset_center) - sphere->radius * sphere->radius;
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0) // no sphere was hit 
+	if (sphere_hit(sphere, ray, qa) == false)
 		return (false);
-
 	// continue to try to find the real point of intersection (if any)
-    double discriminant_root = sqrt(discriminant);
-    double try_root = (-half_b - discriminant_root) / a;
-    if (try_root <= params->ray_tmin || try_root >= params->closest_so_far)  // first root out of range
+	discriminant_root = sqrt(qa[discriminant]);
+	if (!qa[discriminant])
 	{
-		try_root = (-half_b + discriminant_root) / a; // try other root
+		printf("0: root 1: %f, root 2: %f\n", (-qa[half_b] - discriminant_root) / qa[a], (-qa[half_b] + discriminant_root) / qa[a]);
+	}
+	try_root = (-qa[half_b] - discriminant_root) / qa[a];
+	if (try_root <= params->ray_tmin || try_root >= params->closest_so_far) // first root out of range
+	{
+		try_root = (-qa[half_b] + discriminant_root) / qa[a];
 		if (try_root <= params->ray_tmin || try_root >= params->closest_so_far)
-		{
 			return (false); // both roots out of range, no sphere was hit
-		}
 	}
 	record_sphere_hit(try_root, sphere, ray, params->temp_rec);
 	return (true);

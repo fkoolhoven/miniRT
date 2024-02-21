@@ -65,3 +65,4 @@ bool hit_objects(t_data *data, t_ray *ray, t_hit_params *params, t_hit_record *r
 	free(params);
 	return (params->hit_anything);
 }
+

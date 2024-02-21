@@ -50,7 +50,7 @@ t_vector	get_ray_direction(int x, int y, t_viewport *viewport, t_ray *ray)
 	
 	total_offset = get_total_offset(x, y, viewport);
 	ray_direction = add_vectors(&viewport->upper_left_corner, &total_offset);
-	ray_direction = subtract_vectors(&ray_direction, &ray->origin);                   
+	ray_direction = subtract_vectors(&ray_direction, &ray->origin);
 	ray_direction = normalize(&ray_direction);
 	return (ray_direction);
 }
@@ -76,7 +76,7 @@ void	render_image(t_data *data)
 		while (x < IMAGE_WIDTH)
 		{
 			ray.direction = get_ray_direction(x, y, &viewport, &ray);
-			pixel_color = get_ray_color(data, ray, rec);       
+			pixel_color = get_ray_color(data, ray, rec);
 			rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
 			mlx_put_pixel(data->mlx_info->img_ptr, x, y, rgba);
 			x++;

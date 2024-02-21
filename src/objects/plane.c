@@ -7,8 +7,8 @@ bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_params *params, double *t)
 	double		denominator;
 	double		numerator;
 	
-	denominator = dot(&plane->normal, &ray->direction);
 	offset_point = subtract_vectors(&ray->origin, &plane->point);
+	denominator = dot(&plane->normal, &ray->direction);
 	numerator = dot(&plane->normal, &offset_point);
 	*t = -numerator / denominator;
 	if (*t <= params->ray_tmin || *t >= params->closest_so_far)

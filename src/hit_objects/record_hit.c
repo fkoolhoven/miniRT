@@ -19,6 +19,7 @@ void	record_sphere_hit(double t, t_sphere *sphere, t_ray *ray, t_hit_record *rec
 	intersection_to_center = subtract_vectors(&rec->point, &sphere->center);
 	rec->normal = divide(&intersection_to_center, sphere->radius);
 	rec->color = sphere->color;
+	rec->object = (void *)sphere;
 }
 
 void	record_plane_hit(double t, t_plane *plane, t_ray *ray, t_hit_record *rec)
@@ -45,10 +46,3 @@ void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_
 	rec->color = cylinder->color;
 }
 
-void	record_cylinder_cap_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec)
-{
-	rec->t = t;
-	rec->point = trace_ray(ray, rec->t);
-	rec->normal = cylinder->axis;
-	rec->color = cylinder->color;
-}

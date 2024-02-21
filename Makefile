@@ -28,6 +28,7 @@ SRC			= main.c \
 				render/get_objects.c \
 				render/render.c \
 				render/viewport.c \
+				render/shadow.c \
 				hit_objects/hit_objects.c \
 				hit_objects/record_hit.c \
 				objects/plane.c \
