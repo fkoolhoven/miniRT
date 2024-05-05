@@ -6,7 +6,7 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:22:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 20:06:14 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/05 23:20:07 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static t_matrix *set_rotation_matrix(double c, double s, double t, t_vector rota
 
     rotation_matrix = malloc(sizeof(t_matrix));
 	if (!rotation_matrix)
-		exit(1); // handle error
-    
+		error("malloc failure in set_rotation_matrix()", EXIT_FAILURE);
     rotation_matrix->m[0][0] = t * rotation_axis.x * rotation_axis.x + c;
     rotation_matrix->m[0][1] = t * rotation_axis.x * rotation_axis.y - s * rotation_axis.z;
     rotation_matrix->m[0][2] = t * rotation_axis.x * rotation_axis.z + s * rotation_axis.y;
@@ -40,13 +39,13 @@ static t_matrix *set_rotation_matrix(double c, double s, double t, t_vector rota
 
 t_matrix *calculate_rotation_matrix(t_vector cylinder_axis) 
 {
-    t_matrix *rotation_matrix;
-    t_vector y_axis;
-	t_vector rotation_axis;
-    double angle;
-    double cosine_angle;
-    double sine_angle;
-    double one_minus_cosine;
+    t_matrix    *rotation_matrix;
+    t_vector    y_axis;
+	t_vector    rotation_axis;
+    double      angle;
+    double      cosine_angle;
+    double      sine_angle;
+    double      one_minus_cosine;
 	
 	y_axis = get_point(0, 1, 0);
     rotation_axis = cross_vectors(&cylinder_axis, &y_axis);
@@ -59,17 +58,17 @@ t_matrix *calculate_rotation_matrix(t_vector cylinder_axis)
     return (rotation_matrix);
 }
 
-t_vector apply_rotation_matrix(t_vector *v, t_matrix *m) 
+t_vector apply_rotation_matrix(t_vector *vector, t_matrix *m) 
 {
     t_vector result;
 	t_vector matrix_row;
 
 	matrix_row = get_point(m->m[0][0], m->m[0][1], m->m[0][2]);
-	result.x = dot(&matrix_row, v);
+	result.x = dot(&matrix_row, vector);
 	matrix_row = get_point(m->m[1][0], m->m[1][1], m->m[1][2]);
-	result.y = dot(&matrix_row, v);
+	result.y = dot(&matrix_row, vector);
 	matrix_row = get_point(m->m[2][0], m->m[2][1], m->m[2][2]);
-	result.z = dot(&matrix_row, v);
+	result.z = dot(&matrix_row, vector);
     return (result);
 }
 
@@ -79,7 +78,7 @@ t_matrix *transpose_matrix(t_matrix *matrix)
 
     result = malloc(sizeof(t_matrix));
 	if (!result)
-		exit(1); // handle error
+		error("malloc failure in transpose_matrix()", EXIT_FAILURE);
     for (int i = 0; i < 3; i++) 
     {
         for (int j = 0; j < 3; j++) 

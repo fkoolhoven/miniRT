@@ -6,13 +6,13 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 20:06:42 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/05 23:46:16 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	intersection_point_is_within_cylinder_height(t_point *intersection_point, t_cylinder *cylinder)
+static bool	intersection_point_is_within_cylinder_height(t_point *intersection_point, t_cylinder *cylinder)
 {
 	t_vector	center_to_intersection;
 	double		y;
@@ -24,8 +24,7 @@ bool	intersection_point_is_within_cylinder_height(t_point *intersection_point, t
 	return (true);
 }
 
-// Quadratic formula for infinite cylinders
-void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *abcd)
+static void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *abcd)
 {
 	double		a;
 	t_vector	origin_minus_center;
@@ -44,14 +43,14 @@ void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *abcd)
 	abcd[3] = discriminant;
 }
 
-double find_cylinder_t(t_cylinder *cylinder, t_ray *ray, t_hit_params *params) 
+static double get_t_for_cylinder_tube(t_cylinder *cylinder, t_ray *ray, t_hit_params *params) 
 {
 	double t;
 	double abcd[4];
 	
     find_abc_and_discriminant(cylinder, ray, abcd);
 	if (abcd[DISCRIMINANT] < 0) 
-		return DBL_MIN;
+		return (DBL_MIN);
 	else if (abcd[DISCRIMINANT] == 0) 
 	    t = -abcd[B] / (2 * abcd[A]);
 	else 
@@ -62,10 +61,10 @@ double find_cylinder_t(t_cylinder *cylinder, t_ray *ray, t_hit_params *params)
 		if (t2 >= params->ray_tmin && t2 <= params->closest_so_far) 
 			t = t2;
 	}
-	return t;
+	return (t);
 }
 
-t_ray transform_ray(t_ray *ray, t_point cylinder_center, t_matrix *rotation_matrix) 
+static t_ray transform_ray(t_ray *ray, t_point cylinder_center, t_matrix *rotation_matrix) 
 {
 	t_ray transformed_ray;
 
@@ -75,7 +74,7 @@ t_ray transform_ray(t_ray *ray, t_point cylinder_center, t_matrix *rotation_matr
 	return (transformed_ray);
 }
 
-t_cylinder transform_cylinder(t_cylinder *cylinder) 
+static t_cylinder transform_cylinder(t_cylinder *cylinder) 
 {
 	t_cylinder transformed_cylinder;
 
@@ -89,12 +88,11 @@ t_cylinder transform_cylinder(t_cylinder *cylinder)
 	return (transformed_cylinder);
 }
 
-// Handle intersection with infinite cylinder
-bool find_cylinder_tube_hit(t_cylinder *transformed_cylinder, t_ray *transformed_ray, t_cylinder *cylinder, t_ray *ray, t_hit_params *params) 
+static bool	find_cylinder_tube_hit(t_cylinder *transformed_cylinder, t_ray *transformed_ray, t_cylinder *cylinder, t_ray *ray, t_hit_params *params) 
 {
 	double t;
 
-    t = find_cylinder_t(transformed_cylinder, transformed_ray, params);
+    t = get_t_for_cylinder_tube(transformed_cylinder, transformed_ray, params);
 	if (t == DBL_MIN)
 		return false;
     else if (t >= params->ray_tmin && t <= params->closest_so_far) 
@@ -113,14 +111,15 @@ bool find_cylinder_tube_hit(t_cylinder *transformed_cylinder, t_ray *transformed
 	return false;
 }
 
-// Find the closest intersection with the cylinder
 bool find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params)
 {
-    t_ray transformed_ray = transform_ray(ray, cylinder->center, cylinder->rotation_matrix);
-	t_cylinder transformed_cylinder = transform_cylinder(cylinder);
-    bool hit_side = false;
-    bool hit_cap = false;
-    
+	t_ray		transformed_ray;
+	t_cylinder	transformed_cylinder;
+	bool		hit_side;
+	bool		hit_cap;
+	
+    transformed_ray = transform_ray(ray, cylinder->center, cylinder->rotation_matrix);
+	transformed_cylinder = transform_cylinder(cylinder);
     hit_side = find_cylinder_tube_hit(&transformed_cylinder, &transformed_ray, cylinder, ray, params);
     hit_cap = find_cylinder_cap_hit(&transformed_cylinder, &transformed_ray, params, ray);
     if (hit_cap || hit_side)

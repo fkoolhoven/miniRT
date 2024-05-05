@@ -2,14 +2,9 @@
 
 void	error(char *message, int code)
 {
-	unsigned	i;
-
-	i = 0;
-	while (message[i])
-		i++;
-	write(STDERR_FILENO, "Error: ", 7);
-	write(STDERR_FILENO, message, i);
-	write(STDERR_FILENO, "\n", 1);
+	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	exit(code);
 }
 

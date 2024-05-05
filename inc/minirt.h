@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
+/*   Updated: 2024/05/06 00:00:51 by felicia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
-# define IMAGE_WIDTH WINDOW_WIDTH
-# define IMAGE_HEIGHT WINDOW_HEIGHT
 # define ESCAPE 256
 # define RIGHT_ARROW 262
 # define LEFT_ARROW 263
@@ -38,7 +48,6 @@
 # include "vector_math.h"
 # include "errors.h"
 # include "render.h"
-# include "shading.h"
 # include "hit_objects.h"
 # include "objects.h"
 

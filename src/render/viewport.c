@@ -1,7 +1,7 @@
 #include "minirt.h"
 
 // Calculate the upper left corner of the viewport based on the camera's orientation and the viewport's dimensions.
-t_vector	calculate_upper_left_corner(t_camera *camera, t_viewport *viewport, t_vector *inverse_orientation)
+static t_vector	calculate_upper_left_corner(t_camera *camera, t_viewport *viewport, t_vector *inverse_orientation)
 {
 	t_vector	upper_left_corner;
 	t_vector	half_width_horizontal;
@@ -18,7 +18,7 @@ t_vector	calculate_upper_left_corner(t_camera *camera, t_viewport *viewport, t_v
 }
 
 // Sets up the viewport for the camera. 
-t_viewport set_up_viewport(t_camera *camera)
+t_viewport set_up_viewport(t_camera *camera, int32_t image_width, int32_t image_height)
 {
 	t_viewport	viewport;
 	double		aspect_ratio;
@@ -27,7 +27,7 @@ t_viewport set_up_viewport(t_camera *camera)
 	t_vector	inverse_orientation;
 	t_vector	true_up;
 
-	aspect_ratio = (double)IMAGE_WIDTH / (double)IMAGE_HEIGHT;
+	aspect_ratio = (double)image_width / (double)image_height;
 	inverse_orientation = multiply(&camera->orientation, -1.0);
 	vertical_fov = camera->horizontal_fov / aspect_ratio;
 	vertical_radians = vertical_fov * M_PI / 180.0;

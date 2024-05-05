@@ -6,9 +6,7 @@ t_hit_record	*get_hit_record()
 
 	rec = malloc(sizeof(t_hit_record));
 	if (rec == NULL)
-	{
-		// handle error
-	}
+		error("malloc failure in get_hit_record()", EXIT_FAILURE);
 	rec->point = get_point(0, 0, 0);
 	rec->normal = get_point(0, 0, 0);
 	rec->t = 0;
@@ -21,9 +19,7 @@ t_hit_params	*get_hit_params()
 
 	params = malloc(sizeof(t_hit_params));
 	if (params == NULL)
-	{
-		// handle error
-	}
+		error("malloc failure in get_hit_params()", EXIT_FAILURE);
 	params->temp_rec = get_hit_record();
 	params->ray_tmin = 0.0;
 	params->closest_so_far = DBL_MAX;

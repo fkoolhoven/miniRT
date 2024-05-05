@@ -6,7 +6,7 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:53:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 19:59:53 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/05 23:49:11 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ static bool	hit_disk(t_plane *plane, t_ray *ray, t_hit_params *params, double ra
 
 static bool hit_caps(t_plane *cap_plane, t_ray *ray, t_hit_params *params, t_cylinder *cylinder, int cap, t_ray *normal_ray)
 {
-    bool hit_cap;
+    bool        hit_cap;
+    t_vector    local_normal;
+    t_vector    world_normal;
     
     hit_cap = hit_disk(cap_plane, ray, params, cylinder->radius);
     if (hit_cap)
     {
         params->closest_so_far = params->temp_rec->t;
-        t_vector local_normal = get_point(0, 1 * cap, 0);
-        t_vector world_normal = apply_rotation_matrix(&local_normal, cylinder->inverse_rotation_matrix);
+        local_normal = get_point(0, 1 * cap, 0);
+        world_normal = apply_rotation_matrix(&local_normal, cylinder->inverse_rotation_matrix);
         record_cylinder_cap_hit(params->temp_rec->t, cylinder, normal_ray, params->temp_rec, &world_normal);
         return true;
     }
@@ -53,9 +55,9 @@ static bool hit_caps(t_plane *cap_plane, t_ray *ray, t_hit_params *params, t_cyl
 // Creates a plane that is parallel to the cap and goes through the center of the cap.
 static t_plane    create_cap_plane(t_cylinder *cylinder, int cap)
 {
-    t_plane cap_plane;
-    t_vector center_offset; 
-	t_point cap_center;
+    t_plane     cap_plane;
+    t_vector    center_offset; 
+	t_point     cap_center;
     
 	center_offset = multiply(&cylinder->axis, (cylinder->height * cap) / 2.0);
 	cap_center = add_vectors(&cylinder->center, &center_offset);
@@ -67,8 +69,8 @@ static t_plane    create_cap_plane(t_cylinder *cylinder, int cap)
 
 int find_cylinder_cap_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params, t_ray *normal_ray)
 {
-	bool hit_top_cap;
-	bool hit_bottom_cap;
+	bool    hit_top_cap;
+	bool    hit_bottom_cap;
 	t_plane top_cap_plane;
     t_plane bottom_cap_plane;
     

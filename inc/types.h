@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   types.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
+/*   Updated: 2024/05/05 23:55:38 by felicia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TYPES_H
 # define TYPES_H
 
@@ -105,6 +117,9 @@ typedef struct s_data
 	t_plane			*plane;
 	t_cylinder		*cylinder;
 	t_sphere		*sphere;
+
+	int32_t			window_height;
+	int32_t			window_width; 
 
 	t_mlx_info		*mlx_info;
 }	t_data;

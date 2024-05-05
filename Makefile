@@ -28,14 +28,14 @@ SRC			= main.c \
 				render/get_objects.c \
 				render/render.c \
 				render/viewport.c \
+				render/shading.c \
 				hit_objects/hit_objects.c \
 				hit_objects/record_hit.c \
 				objects/plane.c \
 				objects/sphere.c \
 				objects/cylinder.c \
 				objects/cylinder_caps.c \
-				objects/cylinder_transformation.c \
-				shading/shading.c
+				objects/cylinder_transformation.c
 
 
 VPATH = $(SRCDIRS)

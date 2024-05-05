@@ -135,5 +135,7 @@ void	parse(t_data *data, char *file)
 		free(input);
 	}
 	close(fd);
+	data->window_width = WINDOW_WIDTH;
+	data->window_height = WINDOW_HEIGHT;
 	print_info(data);
 }

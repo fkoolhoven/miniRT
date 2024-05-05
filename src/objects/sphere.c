@@ -1,32 +1,40 @@
 #include "minirt.h"
 
-bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params) 
+static double get_t_for_sphere(double a, double half_b, double discriminant, t_hit_params *params)
 {
-	t_vector offset_center;
-	double a;
-	double half_b;
-	double c;
-	double discriminant;
+	double discriminant_root;
+	double t;
+
+	discriminant_root = sqrt(discriminant);
+	t = (-half_b - discriminant_root) / a;
+	if (t <= params->ray_tmin || t >= params->closest_so_far) 
+	{
+		t = (-half_b + discriminant_root) / a;
+		if (t <= params->ray_tmin || t >= params->closest_so_far)
+			return (DBL_MIN);
+	}
+	return (t);
+}
+
+bool find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params) 
+{
+	t_vector	offset_center;
+	double		a;
+	double		half_b;
+	double		c;
+	double		discriminant;
+	double		t;
 
 	offset_center = subtract_vectors(&ray->origin, &sphere->center);
 	a = dot(&ray->direction, &ray->direction);
 	half_b = dot(&offset_center, &ray->direction);
 	c = dot(&offset_center, &offset_center) - sphere->radius * sphere->radius;
 	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0) // no sphere was hit 
+	if (discriminant < 0)
 		return (false);
-
-	// continue to try to find the real point of intersection (if any)
-    double discriminant_root = sqrt(discriminant);
-    double try_root = (-half_b - discriminant_root) / a;
-    if (try_root <= params->ray_tmin || try_root >= params->closest_so_far)  // first root out of range
-	{
-		try_root = (-half_b + discriminant_root) / a; // try other root
-		if (try_root <= params->ray_tmin || try_root >= params->closest_so_far)
-		{
-			return (false); // both roots out of range, no sphere was hit
-		}
-	}
-	record_sphere_hit(try_root, sphere, ray, params->temp_rec);
+	t = get_t_for_sphere(a, half_b, discriminant, params);
+	if (t == DBL_MIN)
+		return (false);
+	record_sphere_hit(t, sphere, ray, params->temp_rec);
 	return (true);
 }
