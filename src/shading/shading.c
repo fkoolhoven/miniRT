@@ -14,7 +14,8 @@ t_vector	get_diffuse_light(t_data *data, t_hit_record *rec)
 	light = data->light;
 	light_direction = subtract_vectors(&light.point, &rec->point);
 	light_direction_normal = normalize(&light_direction);
-	diffuse_intensity = fmax(dot(&rec->normal, &light_direction_normal), 0.0);
+	diffuse_intensity = dot(&rec->normal, &light_direction_normal);
+	diffuse_intensity = fmax(diffuse_intensity, 0.0);
 	diffuse_intensity = light.brightness * diffuse_intensity;
 	diffuse = multiply(&light.color, diffuse_intensity);
 	diffuse = divide(&diffuse, 255.0);
@@ -31,6 +32,12 @@ t_vector	get_all_light(t_data *data, t_hit_record *rec)
 	diffuse_light = get_diffuse_light(data, rec);
 	ambient_light = data->ambient.ambient_light; // Calculated during parsing
 	all_light = add_vectors(&diffuse_light, &ambient_light);
+	
+	t_light light = data->light;
+	t_vector light_direction = subtract_vectors(&light.point, &rec->point);
+	double distance = length(&light_direction);
+
+	all_light = divide(&all_light, 1.0 + 0.05 * distance);
 	if (all_light.x > 1.0)
 		all_light.x = 1.0;
 	if (all_light.y > 1.0)

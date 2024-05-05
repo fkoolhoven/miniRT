@@ -8,6 +8,8 @@ bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_params *params, double *t)
 	double		numerator;
 	
 	denominator = dot(&plane->normal, &ray->direction);
+	if (denominator == 0)
+		return (false); // Ray is parallel to the plane
 	offset_point = subtract_vectors(&ray->origin, &plane->point);
 	numerator = dot(&plane->normal, &offset_point);
 	*t = -numerator / denominator;

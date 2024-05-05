@@ -29,26 +29,18 @@ void	record_plane_hit(double t, t_plane *plane, t_ray *ray, t_hit_record *rec)
 	rec->color = plane->color;
 }
 
-void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec)
+void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec, t_vector *normal)
 {
-	t_vector	point_to_center;
-	t_vector	temp_normal;
-	double		projection;
-
 	rec->t = t;
 	rec->point = trace_ray(ray, rec->t);
-	point_to_center = subtract_vectors(&rec->point, &cylinder->center);
-	projection = dot(&point_to_center, &cylinder->axis);
-	temp_normal = multiply(&cylinder->axis, projection);
-	temp_normal = subtract_vectors(&point_to_center, &temp_normal);
-	rec->normal = normalize(&temp_normal);
+	rec->normal = *normal;
 	rec->color = cylinder->color;
 }
 
-void	record_cylinder_cap_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec)
+void	record_cylinder_cap_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec, t_vector *normal)
 {
 	rec->t = t;
 	rec->point = trace_ray(ray, rec->t);
-	rec->normal = cylinder->axis;
 	rec->color = cylinder->color;
+	rec->normal = *normal;
 }

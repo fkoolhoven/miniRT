@@ -61,6 +61,7 @@ bool hit_objects(t_data *data, t_ray *ray, t_hit_params *params, t_hit_record *r
 	params->hit_anything = check_all_spheres(data, ray, params, rec);
 	params->hit_anything = check_all_planes(data, ray, params, rec);
 	params->hit_anything = check_all_cylinders(data, ray, params, rec);
+
 	free(params->temp_rec);
 	free(params);
 	return (params->hit_anything);

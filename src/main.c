@@ -137,5 +137,6 @@ int	main(int argc, char **argv)
 	mlx_key_hook(data.mlx_info->mlx_ptr, key_press, &data);
 	render_image(&data);
 	mlx_loop(data.mlx_info->mlx_ptr);
-	return (EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
+	// return (EXIT_SUCCESS);
 }

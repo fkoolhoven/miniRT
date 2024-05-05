@@ -73,6 +73,11 @@ typedef struct s_sphere
 	struct s_sphere	*next;
 }	t_sphere;
 
+typedef struct s_matrix
+{
+    double m[3][3];
+}	t_matrix;
+
 typedef struct s_cylinder
 {
 	t_point				center;
@@ -80,6 +85,8 @@ typedef struct s_cylinder
 	double				radius;
 	double				height;
 	t_color				color;
+	t_matrix			*rotation_matrix;
+	t_matrix			*inverse_rotation_matrix;
 	struct s_cylinder	*next;
 }	t_cylinder;
 

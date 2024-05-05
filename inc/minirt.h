@@ -1,8 +1,8 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WINDOW_WIDTH 1800
-# define WINDOW_HEIGHT 900
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 # define IMAGE_WIDTH WINDOW_WIDTH
 # define IMAGE_HEIGHT WINDOW_HEIGHT
 # define ESCAPE 256
@@ -19,6 +19,9 @@
 # define B 1
 # define C 2
 # define DISCRIMINANT 3
+
+# define TOP_CAP 1
+# define BOTTOM_CAP -1
 
 # include <stdio.h>
 # include <stdlib.h>

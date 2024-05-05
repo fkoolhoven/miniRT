@@ -33,6 +33,8 @@ SRC			= main.c \
 				objects/plane.c \
 				objects/sphere.c \
 				objects/cylinder.c \
+				objects/cylinder_caps.c \
+				objects/cylinder_transformation.c \
 				shading/shading.c
 
 

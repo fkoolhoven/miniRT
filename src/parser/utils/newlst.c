@@ -63,6 +63,8 @@ t_cylinder	*cylinder_new(char *data)
 		error("Cylinder parameters are incorrect", 1);
 	new->radius = ft_atod(items[2]) / 2;
 	new->height = ft_atod(items[3]);
+	new->rotation_matrix = calculate_rotation_matrix(new->axis);
+	new->inverse_rotation_matrix = transpose_matrix(new->rotation_matrix);
 	new->next = NULL;
 	frdp(items);
 	return (new);
