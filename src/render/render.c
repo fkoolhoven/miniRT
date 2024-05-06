@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 16:09:15 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:58:37 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static bool	object_is_in_shadow(t_data *data, t_hit_record *light_rec, t_hit_rec
 
 static t_color	get_pixel_color(t_data *data, t_ray ray, t_hit_record *light_rec, t_hit_record *shadow_rec)
 {
+	bool			object_was_hit;
 	t_hit_params	*light_params;
 	bool			inside_object;
 	t_color			color;
@@ -52,7 +53,8 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, t_hit_record *light_rec,
 
 	black = get_point(0, 0, 0);
 	light_params = get_hit_params();
-	if (hit_objects(data, &ray, light_params, light_rec))
+	object_was_hit = hit_objects(data, &ray, light_params, light_rec);
+	if (object_was_hit)
 	{
 		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
 		if (inside_object)
@@ -64,7 +66,6 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, t_hit_record *light_rec,
 	else
 		return (black);
 }
-
 
 void	render_image(t_data *data)
 {

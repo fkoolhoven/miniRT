@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:22 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/06 13:58:06 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:58:02 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ void		parse(t_data *data, char *file);
 
 // print_info.c
 void		print_info(t_data *data);
+
+// store_data.c
+void		store_data(t_data *data, char *input);
 
 #endif

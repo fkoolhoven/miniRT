@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:12 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 13:15:36 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:18:51 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_hit_params	*get_hit_params(void)
 	params->temp_rec = get_hit_record();
 	params->ray_tmin = 0.0;
 	params->closest_so_far = DBL_MAX;
-	params->hit_anything = false;
 	return (params);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/06 16:05:40 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:18:40 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ typedef struct s_hit_params
 	t_hit_record	*temp_rec;
 	double			ray_tmin;
 	double			closest_so_far;
-	bool			hit_anything;
 }	t_hit_params;
 
 #endif

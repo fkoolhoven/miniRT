@@ -1,6 +1,6 @@
 NAME		= miniRT
 COMP		= cc
-FLAGS		= -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror #-g
 LEAK_CHECK	= -fsanitize=address -g -fsanitize=leak
 RM			= rm -f
 INC			= -I inc -I libft
@@ -20,9 +20,10 @@ SRC			= main.c \
 				mlx/setup.c \
 				mlx/hooks.c \
 				parser/parse.c \
-				parser/utils/addlst.c \
-				parser/utils/newlst.c \
-				parser/utils/utils.c \
+				parser/add_node.c \
+				parser/new_node.c \
+				parser/store_data.c \
+				parser/utils.c \
 				parser/print_info.c \
 				errors/error.c \
 				vector_math/vector_math.c \
@@ -48,7 +49,7 @@ VPATH = $(SRCDIRS)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBMLXBUILD) $(LIBFT)
-	$(COMP) $(OBJ) $(LIBS) -o $(NAME)
+	$(COMP) $(LEAK_CHECK) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
@@ -58,7 +59,7 @@ $(LIBMLXBUILD):
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(COMP) $(INC) $(FLAGS) -c $< -o $@
+	$(COMP) $(INC) $(FLAGS) $(LEAK_CHECK) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir $@
