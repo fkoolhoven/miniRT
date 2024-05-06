@@ -17,10 +17,13 @@ SRC_DIR		= src
 SUBDIR		= . parser errors vector_math setup render hit_objects lighting
 SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
 SRC			= main.c \
+				mlx/setup.c \
+				mlx/hooks.c \
 				parser/parse.c \
 				parser/utils/addlst.c \
 				parser/utils/newlst.c \
 				parser/utils/utils.c \
+				parser/print_info.c \
 				errors/error.c \
 				vector_math/vector_math.c \
 				vector_math/double_arithmetic.c \
@@ -28,6 +31,7 @@ SRC			= main.c \
 				render/get_objects.c \
 				render/render.c \
 				render/viewport.c \
+				render/ray_direction.c \
 				render/shading.c \
 				hit_objects/hit_objects.c \
 				hit_objects/record_hit.c \
@@ -35,6 +39,7 @@ SRC			= main.c \
 				objects/sphere.c \
 				objects/cylinder.c \
 				objects/cylinder_caps.c \
+				objects/cylinder_rotate.c \
 				objects/cylinder_transformation.c
 
 

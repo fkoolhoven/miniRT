@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:22 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 23:09:23 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/06 13:58:06 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ void		add_cylinder(t_cylinder **head, t_cylinder *new);
 // parse.c
 int			store_xyz(char *s, t_point *xyz);
 void		parse(t_data *data, char *file);
+
+// print_info.c
+void		print_info(t_data *data);
 
 #endif

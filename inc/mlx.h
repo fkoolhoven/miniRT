@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   mlx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 11:54:14 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 13:05:52 by fkoolhov         ###   ########.fr       */
+/*   Created: 2024/05/06 12:44:30 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/06 12:47:16 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef MLX_H
+# define MLX_H
 
-void	error(char *message, int code)
-{
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	exit(code);
-}
+// setup.c
+void	setup_mlx(t_data *data);
+
+// hooks.c
+void	key_press(mlx_key_data_t key_data, void *param);
+void	resize(int32_t new_width, int32_t new_height, void *param);
+
+
+#endif

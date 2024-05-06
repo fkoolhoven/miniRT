@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/06 11:53:58 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/06 14:51:44 by fkoolhov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-static double get_t_for_sphere(double a, double half_b, double discriminant, t_hit_params *params)
+static double	get_t_for_sphere(double a, double half_b, double discriminant, t_hit_params *params)
 {
-	double discriminant_root;
-	double t;
+	double	discriminant_root;
+	double	t;
 
 	discriminant_root = sqrt(discriminant);
 	t = (-half_b - discriminant_root) / a;
-	if (t <= params->ray_tmin || t >= params->closest_so_far) 
+	if (t <= params->ray_tmin || t >= params->closest_so_far)
 	{
 		t = (-half_b + discriminant_root) / a;
 		if (t <= params->ray_tmin || t >= params->closest_so_far)
@@ -16,7 +28,7 @@ static double get_t_for_sphere(double a, double half_b, double discriminant, t_h
 	return (t);
 }
 
-bool find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params) 
+bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params)
 {
 	t_vector	offset_center;
 	double		a;

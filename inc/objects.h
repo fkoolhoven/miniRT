@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:26 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 23:09:28 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:14:35 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ int			find_cylinder_cap_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *para
 
 // cylinder_transformation.c
 t_matrix	*transpose_matrix(t_matrix *m);
-t_vector	apply_rotation_matrix(t_vector *v, t_matrix *m);
 t_matrix	*calculate_rotation_matrix(t_vector cylinder_axis);
+
+// cylinder_rotate.c
+t_ray		rotate_ray(t_ray *ray, t_point cylinder_center, t_matrix *rotation);
+t_cylinder	rotate_cylinder(t_cylinder *cylinder);
+t_vector	rotate(t_vector *vector, t_matrix *m);
 
 #endif

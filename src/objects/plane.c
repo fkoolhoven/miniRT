@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/06 11:53:55 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/06 12:49:36 by fkoolhov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_params *params, double *t) 
+bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_params *params, double *t)
 {
 	t_vector	offset_point;
 	double		denominator;
 	double		numerator;
-	
+
 	denominator = dot(&plane->normal, &ray->direction);
 	if (denominator == 0)
 		return (false);

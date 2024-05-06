@@ -8,3 +8,7 @@ To do:
 - Check if MLX config in Makefile is correct / figure out how we want to do this on intra
 - Add maps for testing and eval
 - Make resize more efficient?
+- Make Makefile pretty
+- Adjust hooks for round look
+- Ratio -> brightness
+- if no ACL? if multiple ACL?

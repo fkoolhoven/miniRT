@@ -3,39 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 23:46:16 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:16:40 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool	intersection_point_is_within_cylinder_height(t_point *intersection_point, t_cylinder *cylinder)
+static bool	within_cylinder_height(t_point *hit_point, t_cylinder *cylinder)
 {
 	t_vector	center_to_intersection;
 	double		y;
 
-	center_to_intersection = subtract_vectors(intersection_point, &cylinder->center);
+	center_to_intersection = subtract_vectors(hit_point, &cylinder->center);
 	y = dot(&center_to_intersection, &cylinder->axis);
-	if (y <= -cylinder->height / 2.0 || y >= cylinder->height / 2.0) 
+	if (y <= -cylinder->height / 2.0 || y >= cylinder->height / 2.0)
 		return (false);
 	return (true);
 }
 
-static void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *abcd)
+static void	solve_quadratic(t_cylinder *cylinder, t_ray *ray, double *abcd)
 {
 	double		a;
-	t_vector	origin_minus_center;
+	t_vector	to_origin;
 	double		b;
 	double		c;
 	double		discriminant;
 
-	a = dot(&ray->direction, &ray->direction) - powf(dot(&ray->direction, &cylinder->axis), 2);
-    origin_minus_center = subtract_vectors(&ray->origin, &cylinder->center);
-    b = 2 * (dot(&ray->direction, &origin_minus_center) - dot(&ray->direction, &cylinder->axis) * dot(&origin_minus_center, &cylinder->axis));
-    c = dot(&origin_minus_center, &origin_minus_center) - powf(dot(&origin_minus_center, &cylinder->axis), 2) - powf(cylinder->radius, 2);
+	a = dot(&ray->direction, &ray->direction);
+	a -= powf(dot(&ray->direction, &cylinder->axis), 2);
+	to_origin = subtract_vectors(&ray->origin, &cylinder->center);
+	b = dot(&to_origin, &cylinder->axis);
+	b = dot(&ray->direction, &cylinder->axis) * b;
+	b = 2 * (dot(&ray->direction, &to_origin) - b);
+	c = dot(&to_origin, &to_origin);
+	c -= powf(dot(&to_origin, &cylinder->axis), 2);
+	c -= powf(cylinder->radius, 2);
 	discriminant = b * b - 4 * a * c;
 	abcd[0] = a;
 	abcd[1] = b;
@@ -43,86 +48,66 @@ static void	find_abc_and_discriminant(t_cylinder *cylinder, t_ray *ray, double *
 	abcd[3] = discriminant;
 }
 
-static double get_t_for_cylinder_tube(t_cylinder *cylinder, t_ray *ray, t_hit_params *params) 
+static double	get_t_for_cylinder_tube(t_cylinder *cylinder, t_ray *ray, t_hit_params *params)
 {
-	double t;
-	double abcd[4];
-	
-    find_abc_and_discriminant(cylinder, ray, abcd);
-	if (abcd[DISCRIMINANT] < 0) 
+	double	t;
+	double	abcd[4];
+	double	sqrt_discriminant;
+	double	t2;
+
+	solve_quadratic(cylinder, ray, abcd);
+	if (abcd[DISCRIMINANT] < 0)
 		return (DBL_MIN);
-	else if (abcd[DISCRIMINANT] == 0) 
-	    t = -abcd[B] / (2 * abcd[A]);
-	else 
+	else if (abcd[DISCRIMINANT] == 0)
+		t = -abcd[B] / (2 * abcd[A]);
+	else
 	{
-		double sqrtDiscriminant = sqrt(abcd[DISCRIMINANT]);
-		t = (-abcd[B] + sqrtDiscriminant) / (2 * abcd[A]);
-		double t2 = (-abcd[B] - sqrtDiscriminant) / (2 * abcd[A]);
-		if (t2 >= params->ray_tmin && t2 <= params->closest_so_far) 
+		sqrt_discriminant = sqrt(abcd[DISCRIMINANT]);
+		t = (-abcd[B] + sqrt_discriminant) / (2 * abcd[A]);
+		t2 = (-abcd[B] - sqrt_discriminant) / (2 * abcd[A]);
+		if (t2 >= params->ray_tmin && t2 <= params->closest_so_far)
 			t = t2;
 	}
 	return (t);
 }
 
-static t_ray transform_ray(t_ray *ray, t_point cylinder_center, t_matrix *rotation_matrix) 
+static bool	find_cylinder_tube_hit(t_cylinder *rotated_cylinder, t_ray *rotated_ray, t_cylinder *cylinder, t_ray *ray, t_hit_params *params)
 {
-	t_ray transformed_ray;
+	double		t;
+	t_vector	local_normal;
+	t_vector	hit_point;
 
-	transformed_ray.origin = subtract_vectors(&ray->origin, &cylinder_center);
-	transformed_ray.origin = apply_rotation_matrix(&transformed_ray.origin, rotation_matrix);
-	transformed_ray.direction = apply_rotation_matrix(&ray->direction, rotation_matrix);
-	return (transformed_ray);
-}
-
-static t_cylinder transform_cylinder(t_cylinder *cylinder) 
-{
-	t_cylinder transformed_cylinder;
-
-	transformed_cylinder.center = get_point(0, 0, 0);
-	transformed_cylinder.axis = get_point(0, 1, 0);
-	transformed_cylinder.radius = cylinder->radius;
-	transformed_cylinder.height = cylinder->height;
-	transformed_cylinder.color = cylinder->color;
-    transformed_cylinder.rotation_matrix = cylinder->rotation_matrix;
-    transformed_cylinder.inverse_rotation_matrix = cylinder->inverse_rotation_matrix;
-	return (transformed_cylinder);
-}
-
-static bool	find_cylinder_tube_hit(t_cylinder *transformed_cylinder, t_ray *transformed_ray, t_cylinder *cylinder, t_ray *ray, t_hit_params *params) 
-{
-	double t;
-
-    t = get_t_for_cylinder_tube(transformed_cylinder, transformed_ray, params);
+	t = get_t_for_cylinder_tube(rotated_cylinder, rotated_ray, params);
 	if (t == DBL_MIN)
-		return false;
-    else if (t >= params->ray_tmin && t <= params->closest_so_far) 
-    {
-        t_vector intersection_point = trace_ray(transformed_ray, t);
-        if (!intersection_point_is_within_cylinder_height(&intersection_point, transformed_cylinder))
-            return false;
-        t_vector local_normal = subtract_vectors(&intersection_point, &transformed_cylinder->center);
-        local_normal.y = 0;
-        local_normal = normalize(&local_normal);
-        local_normal = apply_rotation_matrix(&local_normal, cylinder->inverse_rotation_matrix);
-		record_cylinder_tube_hit(t, cylinder, ray, params->temp_rec, &local_normal);
-        params->closest_so_far = t;
-		return true;
-    }
-	return false;
+		return (false);
+	else if (t >= params->ray_tmin && t <= params->closest_so_far)
+	{
+		hit_point = trace_ray(rotated_ray, t);
+		if (!within_cylinder_height(&hit_point, rotated_cylinder))
+			return (false);
+		local_normal = subtract_vectors(&hit_point, &rotated_cylinder->center);
+		local_normal.y = 0;
+		local_normal = normalize(&local_normal);
+		local_normal = rotate(&local_normal, cylinder->inverse_rotation);
+		record_cylinder_hit(t, cylinder, ray, params->temp_rec, &local_normal);
+		params->closest_so_far = t;
+		return (true);
+	}
+	return (false);
 }
 
-bool find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params)
+bool	find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params)
 {
-	t_ray		transformed_ray;
-	t_cylinder	transformed_cylinder;
+	t_ray		rotated_ray;
+	t_cylinder	rotated_cylinder;
 	bool		hit_side;
 	bool		hit_cap;
-	
-    transformed_ray = transform_ray(ray, cylinder->center, cylinder->rotation_matrix);
-	transformed_cylinder = transform_cylinder(cylinder);
-    hit_side = find_cylinder_tube_hit(&transformed_cylinder, &transformed_ray, cylinder, ray, params);
-    hit_cap = find_cylinder_cap_hit(&transformed_cylinder, &transformed_ray, params, ray);
-    if (hit_cap || hit_side)
-        return true;
-    return false;
+
+	rotated_ray = rotate_ray(ray, cylinder->center, cylinder->rotation);
+	rotated_cylinder = rotate_cylinder(cylinder);
+	hit_side = find_cylinder_tube_hit(&rotated_cylinder, &rotated_ray, cylinder, ray, params);
+	hit_cap = find_cylinder_cap_hit(&rotated_cylinder, &rotated_ray, params, ray);
+	if (hit_cap || hit_side)
+		return (true);
+	return (false);
 }

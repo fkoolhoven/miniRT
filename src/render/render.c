@@ -1,8 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/06 16:09:15 by fkoolhov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-static unsigned int	get_rgba(int r, int g, int b, int a)
+static void	color_pixel(t_color *pixel_color, t_viewport *viewport, mlx_image_t *image)
 {
-	return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
+	unsigned int	rgba;
+
+	rgba = 0;
+	rgba |= ((int)(255.999 * pixel_color->x) & 0xFF) << 24;
+	rgba |= ((int)(255.999 * pixel_color->y) & 0xFF) << 16;
+	rgba |= ((int)(255.999 * pixel_color->z) & 0xFF) << 8;
+	rgba |= (255 & 0xFF);
+	mlx_put_pixel(image, viewport->pixel_x, viewport->pixel_y, rgba);
 }
 
 static bool	object_is_in_shadow(t_data *data, t_hit_record *light_rec, t_hit_record *shadow_rec)
@@ -24,56 +43,28 @@ static bool	object_is_in_shadow(t_data *data, t_hit_record *light_rec, t_hit_rec
 	return (in_shadow);
 }
 
-t_color get_pixel_color(t_data *data, t_ray ray, t_hit_record *light_rec, t_hit_record *shadow_rec) 
+static t_color	get_pixel_color(t_data *data, t_ray ray, t_hit_record *light_rec, t_hit_record *shadow_rec)
 {
 	t_hit_params	*light_params;
 	bool			inside_object;
-	bool			in_shadow;
 	t_color			color;
 	t_color			black;
-	
-	black = get_point(0.0, 0.0, 0.0);
+
+	black = get_point(0, 0, 0);
 	light_params = get_hit_params();
 	if (hit_objects(data, &ray, light_params, light_rec))
 	{
 		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
-		if (inside_object) 
+		if (inside_object)
 			return (black);
-		in_shadow = object_is_in_shadow(data, light_rec, shadow_rec);
-		color = apply_shading(data, light_rec, in_shadow);
+		light_rec->in_shadow = object_is_in_shadow(data, light_rec, shadow_rec);
+		color = apply_shading(data, light_rec);
 		return (color);
 	}
 	else
 		return (black);
 }
 
-static t_vector	get_total_offset(int x, int y, t_viewport *viewport, t_data *data)
-{
-	double		x_scaled;
-	double		y_scaled;
-	t_vector	x_offset_vector;
-	t_vector	y_offset_vector;
-	t_vector	total_offset;
-
-	x_scaled = 1.0 * x / data->window_width;
-	y_scaled = 1.0 * y / data->window_height;
-	x_offset_vector = multiply(&viewport->horizontal_offset, x_scaled);
-	y_offset_vector = multiply(&viewport->vertical_offset, y_scaled);
-	total_offset = add_vectors(&x_offset_vector, &y_offset_vector);
-	return (total_offset);
-}
-
-static t_vector	get_ray_direction(int x, int y, t_viewport *viewport, t_ray *ray, t_data *data)
-{
-	t_vector	ray_direction;
-	t_vector	total_offset;
-	
-	total_offset = get_total_offset(x, y, viewport, data);
-	ray_direction = add_vectors(&viewport->upper_left_corner, &total_offset);
-	ray_direction = subtract_vectors(&ray_direction, &ray->origin);                   
-	ray_direction = normalize(&ray_direction);
-	return (ray_direction);
-}
 
 void	render_image(t_data *data)
 {
@@ -81,28 +72,24 @@ void	render_image(t_data *data)
 	t_hit_record	*light_rec;
 	t_hit_record	*shadow_rec;
 	t_ray			light_ray;
-	int				y;
-	int				x;
-	unsigned int	rgba;
 	t_color			pixel_color;
 
-	viewport = set_up_viewport(&data->camera, data->window_width, data->window_height);
+	viewport = set_up_viewport(data);
 	light_rec = get_hit_record();
 	shadow_rec = get_hit_record();
 	light_ray.origin = data->camera.view_point;
-	y = 0;
-	while (y < data->window_height)
+	viewport.pixel_y = 0;
+	while (viewport.pixel_y < data->window_height)
 	{
-		x = 0;
-		while (x < data->window_width)
+		viewport.pixel_x = 0;
+		while (viewport.pixel_x < data->window_width)
 		{
-			light_ray.direction = get_ray_direction(x, y, &viewport, &light_ray, data);
-			pixel_color = get_pixel_color(data, light_ray, light_rec, shadow_rec);       
-			rgba = get_rgba((int)(255.999 * pixel_color.x), (int)(255.999 * pixel_color.y), (int)(255.999 * pixel_color.z), 255);
-			mlx_put_pixel(data->mlx_info->img_ptr, x, y, rgba);
-			x++;
+			light_ray.direction = get_ray_direction(&viewport, &light_ray, data);
+			pixel_color = get_pixel_color(data, light_ray, light_rec, shadow_rec);
+			color_pixel(&pixel_color, &viewport, data->mlx_info->img_ptr);
+			viewport.pixel_x++;
 		}
-		y++;
+		viewport.pixel_y++;
 	}
 	free(light_rec);
 	free(shadow_rec);

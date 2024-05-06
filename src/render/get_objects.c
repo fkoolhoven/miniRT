@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_objects.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/06 11:53:12 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/06 13:15:36 by fkoolhov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-t_hit_record	*get_hit_record()
+t_hit_record	*get_hit_record(void)
 {
 	t_hit_record	*rec;
 
@@ -13,7 +25,7 @@ t_hit_record	*get_hit_record()
 	return (rec);
 }
 
-t_hit_params	*get_hit_params()
+t_hit_params	*get_hit_params(void)
 {
 	t_hit_params	*params;
 

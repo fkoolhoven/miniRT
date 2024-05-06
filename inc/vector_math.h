@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_math.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:48 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 23:09:49 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/06 13:14:24 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ t_vector	subtract(const t_vector *v1, double d);
 double		length(t_vector *v);
 t_vector	normalize(t_vector *v);
 double		dot(const t_vector *u, const t_vector *v);
-t_vector	cross_vectors(const t_vector *u, const t_vector *v);
+t_vector	cross(const t_vector *u, const t_vector *v);
 
 #endif

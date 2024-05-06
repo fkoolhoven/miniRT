@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 23:55:38 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:05:40 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ typedef t_point	t_color;
 
 typedef struct s_viewport
 {
-	t_vector	upper_left_corner; 
+	t_vector	upper_left_corner;
 	t_vector	horizontal_offset;
 	t_vector	vertical_offset;
-	t_vector	horizontal_direction;
-	t_vector	vertical_direction;
+	t_vector	horizontal;
+	t_vector	vertical;
 	double		half_height;
 	double		half_width;
+	int			pixel_x;
+	int			pixel_y;
 }	t_viewport;
 
 typedef struct s_ray
@@ -46,12 +48,14 @@ typedef struct s_hit_record
 	t_vector	normal;
 	double		t;
 	t_color		color;
+	bool		in_shadow;
 }	t_hit_record;
 
 typedef struct s_camera
 {
 	t_point		view_point;
 	t_vector	orientation;
+	t_vector	inverse_orientation;
 	double		horizontal_fov;
 }	t_camera;
 
@@ -87,7 +91,7 @@ typedef struct s_sphere
 
 typedef struct s_matrix
 {
-    double m[3][3];
+	double	m[3][3];
 }	t_matrix;
 
 typedef struct s_cylinder
@@ -97,8 +101,8 @@ typedef struct s_cylinder
 	double				radius;
 	double				height;
 	t_color				color;
-	t_matrix			*rotation_matrix;
-	t_matrix			*inverse_rotation_matrix;
+	t_matrix			*rotation;
+	t_matrix			*inverse_rotation;
 	struct s_cylinder	*next;
 }	t_cylinder;
 
@@ -119,7 +123,7 @@ typedef struct s_data
 	t_sphere		*sphere;
 
 	int32_t			window_height;
-	int32_t			window_width; 
+	int32_t			window_width;
 
 	t_mlx_info		*mlx_info;
 }	t_data;

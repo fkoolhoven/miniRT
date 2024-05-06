@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector_math.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/06 11:52:38 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/06 13:14:18 by fkoolhov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 double	length(t_vector *v)
@@ -15,7 +27,7 @@ double	dot(const t_vector *u, const t_vector *v)
 	return (u->x * v->x + u->y * v->y + u->z * v->z);
 }
 
-t_vector	cross_vectors(const t_vector *u, const t_vector *v)
+t_vector	cross(const t_vector *u, const t_vector *v)
 {
 	t_vector	cross;
 
