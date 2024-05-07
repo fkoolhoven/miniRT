@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/06 15:16:40 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:22:15 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ static bool	find_cylinder_tube_hit(t_cylinder *rotated_cylinder, t_ray *rotated_
 		local_normal.y = 0;
 		local_normal = normalize(&local_normal);
 		local_normal = rotate(&local_normal, cylinder->inverse_rotation);
-		record_cylinder_hit(t, cylinder, ray, params->temp_rec, &local_normal);
+		hit_point = trace_ray(ray, t);
+		record_cylinder_hit(hit_point, cylinder, params->temp_rec, &local_normal);
 		params->closest_so_far = t;
 		return (true);
 	}

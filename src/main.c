@@ -6,15 +6,35 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:41:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 16:58:45 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:24:08 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 // static bool	hit_disk(t_plane *plane, t_ray *ray, t_hit_params *params, t_cylinder *cylinder, int cap, t_ray *normal_ray);
+// // plane
+// // ray
+// // params
+// // cylinder
+// // cap
+// // normal_ray
+
 // static bool	find_cylinder_tube_hit(t_cylinder *rotated_cylinder, t_ray *rotated_ray, t_cylinder *cylinder, t_ray *ray, t_hit_params *params);
-// void		record_cylinder_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec, t_vector *normal);
+// // rotated_cylinder
+// // rotated_ray
+// // cylinder
+// // ray
+// // params
+
+// void			record_cylinder_hit(double t, t_cylinder *cylinder, t_ray *ray, t_hit_record *rec, t_vector *normal);
+// // t
+// // cylinder
+// // ray
+// // rec
+// // normal
+
+
 static void	free_planes(t_plane *plane)
 {
 	t_plane	*next_plane;

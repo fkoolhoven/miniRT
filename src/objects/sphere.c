@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 14:51:44 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:23:24 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static double	get_t_for_sphere(double a, double half_b, double discriminant, t_h
 
 bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params)
 {
+	t_point		hit_point;
 	t_vector	offset_center;
 	double		a;
 	double		half_b;
@@ -47,6 +48,7 @@ bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params)
 	t = get_t_for_sphere(a, half_b, discriminant, params);
 	if (t == DBL_MIN)
 		return (false);
-	record_sphere_hit(t, sphere, ray, params->temp_rec);
+	hit_point = trace_ray(ray, t);
+	record_sphere_hit(hit_point, sphere, params->temp_rec);
 	return (true);
 }
