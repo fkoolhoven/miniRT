@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/07 19:34:43 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:21:33 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ typedef struct s_ray
 	t_vector	direction;
 }	t_ray;
 
-typedef struct s_hit_record
+typedef struct s_hit
 {
 	t_point		point;
 	t_vector	normal;
-	// double		t;
+	double		t;
 	t_color		color;
 	bool		in_shadow;
-}	t_hit_record;
+}	t_hit;
 
 typedef struct s_camera
 {
@@ -61,14 +61,14 @@ typedef struct s_camera
 
 typedef struct s_ambient_light
 {
-	double		ratio;
+	double		brightness;
 	t_color		color;
 	t_vector	ambient_light;
 }	t_ambient_light;
 
 typedef struct s_light
 {
-	t_point		point;
+	t_point		origin;
 	double		brightness;
 	t_color		color;
 }	t_light;
@@ -89,6 +89,14 @@ typedef struct s_sphere
 	struct s_sphere	*next;
 }	t_sphere;
 
+typedef struct s_sphere_params
+{
+	double	a;
+	double	half_b;
+	double	c;
+	double	discriminant;
+}	t_sphere_params;
+
 typedef struct s_matrix
 {
 	double	m[3][3];
@@ -105,6 +113,19 @@ typedef struct s_cylinder
 	t_matrix			*inverse_rotation;
 	struct s_cylinder	*next;
 }	t_cylinder;
+
+typedef struct s_cyl_params
+{
+	double		a;
+	double		b;
+	double		c;
+	double		discriminant;
+	t_cylinder	rotated_cylinder;
+	t_ray		normal_ray;
+	t_ray		rotated_ray;
+	t_point		local_normal;
+	t_point		world_normal;
+}	t_cyl_params;
 
 typedef struct s_mlx_info
 {
@@ -130,9 +151,10 @@ typedef struct s_data
 
 typedef struct s_hit_params
 {
-	t_hit_record	*temp_rec;
-	double			ray_tmin;
-	double			closest_so_far;
+	t_hit	*temp_rec;
+	double	ray_tmin;
+	double	closest_so_far;
+	bool	hit_anything;
 }	t_hit_params;
 
 #endif

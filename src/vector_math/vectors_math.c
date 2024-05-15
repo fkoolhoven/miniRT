@@ -6,15 +6,20 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:52:38 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 13:14:18 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:23:33 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+float	square(float x)
+{
+	return (x * x);
+}
+
 double	length(t_vector *v)
 {
-	return (sqrt(dot(v, v)));
+	return (sqrt(length_squared(v)));
 }
 
 t_vector	normalize(t_vector *v)
@@ -25,6 +30,11 @@ t_vector	normalize(t_vector *v)
 double	dot(const t_vector *u, const t_vector *v)
 {
 	return (u->x * v->x + u->y * v->y + u->z * v->z);
+}
+
+double	length_squared(const t_vector *v)
+{
+	return (dot(v, v));
 }
 
 t_vector	cross(const t_vector *u, const t_vector *v)

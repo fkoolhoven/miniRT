@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newlst.c                                           :+:      :+:    :+:   */
+/*   new_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:43 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 13:01:21 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:26:45 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_plane	*plane_new(char *data)
 	if (store_xyz(items[0], &new->point) || \
 		store_xyz(items[1], &new->normal) || \
 		store_xyz(items[2], &(new->color)))
-		error("Plane parameters are incorrect", 1);
+		error("Plane parameters are incorrect", EXIT_FAILURE);
 	new->next = NULL;
 	frdp(items);
 	return (new);

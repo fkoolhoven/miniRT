@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:26 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/06 15:14:35 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:27:44 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 # define OBJECTS_H
 
 // sphere.c
-bool		find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params);
+bool		find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, \
+				t_hit_params *params);
 
 // plane.c
-bool		hit_plane(t_plane *plane, t_ray *ray, t_hit_params *params, double *t);
-bool		find_closer_plane_hit(t_plane *plane, t_ray *ray, t_hit_params *params);
+bool		hit_plane(t_plane *plane, t_ray *ray, t_hit_params *params, \
+				double *t);
+bool		find_closer_plane_hit(t_plane *plane, t_ray *ray, \
+				t_hit_params *params);
 
 // cylinder.c
-bool		find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params);
+bool		find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, \
+				t_hit_params *hit_params);
 
 // cylinder_caps.c
-int			find_cylinder_cap_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *params, t_ray *normal_ray);
+int			find_cylinder_cap_hit(t_hit_params *hit_params, \
+				t_cyl_params *cyl_params);
 
 // cylinder_transformation.c
 t_matrix	*transpose_matrix(t_matrix *m);

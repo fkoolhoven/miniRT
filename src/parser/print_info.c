@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:50:22 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 16:33:18 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:21:43 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	print_acl(t_ambient_light ambient, t_camera camera, t_light light)
 
 	color = ambient.color;
 	printf(GREEN BOLD"AMBIENT\n"OFF);
-	printf("brightness: %.2f\n", ambient.ratio);
+	printf("brightness: %.2f\n", ambient.brightness);
 	printf("color: %.2f, %.2f, %.2f\n", color.x, color.y, color.z);
 	printf(BOLD"CAMERA\n"OFF);
 	point = camera.view_point;
@@ -85,7 +85,7 @@ static void	print_acl(t_ambient_light ambient, t_camera camera, t_light light)
 	printf("orientation: %.2f, %.2f, %.2f\n", point.x, point.y, point.z);
 	printf("horizontal fov: %.2f\n", camera.horizontal_fov);
 	printf(YELLOW"LIGHT\n"OFF);
-	point = light.point;
+	point = light.origin;
 	printf("point: %.2f, %.2f, %.2f\n", point.x, point.y, point.z);
 	printf("brightness: %.2f\n", light.brightness);
 	color = light.color;

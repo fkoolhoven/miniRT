@@ -1,77 +1,66 @@
-NAME		= miniRT
-COMP		= cc
-FLAGS		= -Wall -Wextra -Werror #-g
-LEAK_CHECK	= #-fsanitize=address -g -fsanitize=leak
-RM			= rm -f
-INC			= -I inc -I libft
-OBJ_DIR		= obj
-OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+NAME			:= miniRT
+COMP			:= cc
+FLAGS			:= -Wall -Wextra -Werror -O3 
+LEAK_CHECK		:= #-fsanitize=address -g -fsanitize=leak
+REMOVE			:= rm -f
+INC				:= -I inc -I libft
 
-LIBFT_DIR	= libft
-LIBFT		= $(addprefix $(LIBFT_DIR)/,libft.a)
-LIBMLX		= ./MLX42
-LIBMLXBUILD	= ./MLX42/build
-LIBS		= $(LIBMLXBUILD)/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm $(LIBFT)
+LIBFT_DIR		:= libft
+LIBFT			:= $(LIBFT_DIR)/libft.a
 
-SRC_DIR		= src
-SUBDIR		= . parser errors vector_math setup render hit_objects lighting
-SRC_SUBDIR	:= $(foreach dir, $(SUBDIR),$(addprefix $(SRC_DIR)/,$(dir)))
-SRC			= main.c \
-				mlx/setup.c \
-				mlx/hooks.c \
-				parser/parse.c \
-				parser/add_node.c \
-				parser/new_node.c \
-				parser/store_data.c \
-				parser/utils.c \
-				parser/print_info.c \
-				errors/error.c \
-				vector_math/vector_math.c \
-				vector_math/double_arithmetic.c \
-				vector_math/vectors_arithmetic.c \
-				render/get_objects.c \
-				render/render.c \
-				render/viewport.c \
-				render/ray_direction.c \
-				render/shading.c \
-				hit_objects/hit_objects.c \
-				hit_objects/record_hit.c \
-				objects/plane.c \
-				objects/sphere.c \
-				objects/cylinder.c \
-				objects/cylinder_caps.c \
-				objects/cylinder_rotate.c \
-				objects/cylinder_transformation.c
+LIBMLX_DIR		:= ./MLX42
+LIBMLX_BUILD 	:= $(LIBMLX_DIR)/build
+LIBMLX			:= $(LIBMLX_BUILD)/libmlx42.a
+LIBS			:= $(LIBMLX) -Iinclude -ldl -lglfw -pthread -lm $(LIBFT)
 
+SRC_DIR			:= src
+OBJ_DIR			:= obj
 
-VPATH = $(SRCDIRS)
+SRC				:= $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
+OBJ				:= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+DISCARD			:= /dev/null 2>&1
+
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBMLXBUILD) $(LIBFT)
-	$(COMP) $(LEAK_CHECK) $(OBJ) $(LIBS) -o $(NAME)
+$(NAME): $(OBJ) $(LIBMLX_BUILD) $(LIBFT)
+	@echo "$(GREEN)$(BOLD)COMPILING:  $(RESET)$(GREEN)$(NAME)$(RESET)"
+	@$(COMP) $(LEAK_CHECK) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR)
+	@echo "$(CYAN)$(BOLD)COMPILING:  $(RESET)$(CYAN)$(LIBFT)$(RESET)"
+	@make -s -C $(LIBFT_DIR)
 
-$(LIBMLXBUILD):
-	@cmake $(LIBMLX) -B $(LIBMLXBUILD) && make -C $(LIBMLXBUILD) -j4
+$(LIBMLX_BUILD):
+	@echo "$(YELLOW)$(BOLD)COMPILING:  $(RESET)$(YELLOW)$(LIBMLX_BUILD)$(RESET)"
+	@cmake $(LIBMLX_DIR) -B $(LIBMLX_BUILD) > $(DISCARD) && make -C $(LIBMLX_BUILD) -j4 > $(DISCARD)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(@D)
-	$(COMP) $(INC) $(FLAGS) $(LEAK_CHECK) -c $< -o $@
-
-$(OBJ_DIR):
-	@mkdir $@
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
+	@echo "$(BLUE)$(BOLD)COMPILING:  $(RESET)$(BLUE)$(notdir $<)$(RESET)"
+	@mkdir -p $(@D)
+	@$(COMP) $(INC) $(FLAGS) $(LEAK_CHECK) -c $< -o $@
 
 clean:
-	$(RM)r $(OBJ_DIR)
-	@make clean -C $(LIBFT_DIR)
-	@rm -rf $(LIBMLXBUILD)
-	@echo Removed MLX42 build directory
+	@echo "$(RED)$(BOLD)REMOVING:   $(RESET)$(RED)obj$(RESET)"
+	@$(REMOVE)r $(OBJ_DIR)
+	@echo "$(RED)$(BOLD)REMOVING:   $(RESET)$(RED)libft obj$(RESET)"
+	@make clean -s -C $(LIBFT_DIR) 
+	@echo "$(RED)$(BOLD)REMOVING:   $(RESET)$(RED)$(LIBMLX_BUILD)$(RESET)"
+	@$(REMOVE)r $(LIBMLX_BUILD)
 
 fclean: clean
-	$(RM) $(NAME)
-	@make fclean -C $(LIBFT_DIR)
+	@echo "$(RED)$(BOLD)REMOVING:   $(RESET)$(RED)$(NAME)$(RESET)"
+	@$(REMOVE) $(NAME)
+	@echo "$(RED)$(BOLD)REMOVING:   $(RESET)$(RED)$(LIBFT)$(RESET)"
+	@make fclean -s -C $(LIBFT_DIR)
 
 re: fclean all
+
+BOLD      := \033[1m
+RESET     := \033[0m
+BLUE      := \033[34m
+YELLOW    := \033[33m
+GREEN     := \033[32m
+RED    	  := \033[31m
+CYAN      := \033[36m

@@ -6,50 +6,47 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/07 19:32:57 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:20:14 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static double	get_t_for_sphere(double a, double half_b, double discriminant, t_hit_params *params)
+static double	get_t_for_sphere(t_sphere_params *sphere_params, \
+	t_hit_params *hit_params)
 {
 	double	discriminant_root;
 	double	t;
 
-	discriminant_root = sqrt(discriminant);
-	t = (-half_b - discriminant_root) / a;
-	if (t <= params->ray_tmin || t >= params->closest_so_far)
+	discriminant_root = sqrt(sphere_params->discriminant);
+	t = (-sphere_params->half_b - discriminant_root) / sphere_params->a;
+	if (t <= hit_params->ray_tmin || t >= hit_params->closest_so_far)
 	{
-		t = (-half_b + discriminant_root) / a;
-		if (t <= params->ray_tmin || t >= params->closest_so_far)
-			return (DBL_MIN);
+		t = (-sphere_params->half_b + discriminant_root) / sphere_params->a;
+		if (t <= hit_params->ray_tmin || t >= hit_params->closest_so_far)
+			return (-__DBL_MAX__);
 	}
 	return (t);
 }
 
-bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params)
+bool	find_closer_sphere_hit(t_sphere *sphere, \
+	t_ray *ray, t_hit_params *hit_params)
 {
-	t_point		hit_point;
-	t_vector	offset_center;
-	double		a;
-	double		half_b;
-	double		c;
-	double		discriminant;
-	double		t;
+	t_vector		offset_center;
+	t_sphere_params	sphere_params;
+	double			t;
 
 	offset_center = subtract_vectors(&ray->origin, &sphere->center);
-	a = dot(&ray->direction, &ray->direction);
-	half_b = dot(&offset_center, &ray->direction);
-	c = dot(&offset_center, &offset_center) - sphere->radius * sphere->radius;
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
+	sphere_params.a = length_squared(&ray->direction);
+	sphere_params.half_b = dot(&offset_center, &ray->direction);
+	sphere_params.c = length_squared(&offset_center) - square(sphere->radius);
+	sphere_params.discriminant = square(sphere_params.half_b) - \
+		sphere_params.a * sphere_params.c;
+	if (sphere_params.discriminant < 0)
 		return (false);
-	t = get_t_for_sphere(a, half_b, discriminant, params);
-	if (t == DBL_MIN)
+	t = get_t_for_sphere(&sphere_params, hit_params);
+	if (t == -__DBL_MAX__)
 		return (false);
-	hit_point = trace_ray(ray, t);
-	record_sphere_hit(hit_point, sphere, params->temp_rec);
-	params->closest_so_far = t;
+	record_sphere_hit(t, sphere, ray, hit_params->temp_rec);
 	return (true);
 }

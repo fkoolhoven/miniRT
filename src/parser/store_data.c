@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:55:38 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 16:57:32 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:21:50 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	store_light(t_data *data, char *input)
 		error(strerror(errno), errno);
 	if (ft_count_items(items) != 3)
 		error(input, 1);
-	if (store_xyz(items[0], &data->light.point) || \
+	if (store_xyz(items[0], &data->light.origin) || \
 		store_xyz(items[2], &(data->light.color)))
 		error("Light parameters are incorrect", 1);
 	data->light.brightness = ft_atod(items[1]);
@@ -56,8 +56,8 @@ static void	store_ambient(t_data *data, char *input)
 		error(input, 1);
 	if (store_xyz(items[1], &(data->ambient.color)))
 		error("Ambient light parameters are incorrect", 1);
-	data->ambient.ratio = ft_atod(items[0]);
-	ambient = multiply(&data->ambient.color, data->ambient.ratio);
+	data->ambient.brightness = ft_atod(items[0]);
+	ambient = multiply(&data->ambient.color, data->ambient.brightness);
 	ambient = divide(&ambient, 255.0);
 	data->ambient.ambient_light = ambient;
 	frdp(items);
