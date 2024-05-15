@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/07 13:23:24 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:32:57 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ bool	find_closer_sphere_hit(t_sphere *sphere, t_ray *ray, t_hit_params *params)
 		return (false);
 	hit_point = trace_ray(ray, t);
 	record_sphere_hit(hit_point, sphere, params->temp_rec);
+	params->closest_so_far = t;
 	return (true);
 }

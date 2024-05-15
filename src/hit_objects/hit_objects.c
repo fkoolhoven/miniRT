@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:54:02 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 16:18:28 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:33:56 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	check_all_spheres(t_data *data, t_ray *ray, t_hit_params *params, t_
 		if (find_closer_sphere_hit(current_sphere, ray, params))
 		{
 			hit_anything = true;
-			params->closest_so_far = params->temp_rec->t;
+			// params->closest_so_far = params->temp_rec->t;
 			*rec = *params->temp_rec;
 		}
 		current_sphere = current_sphere->next;
@@ -42,7 +42,7 @@ static bool	check_all_planes(t_data *data, t_ray *ray, t_hit_params *params, t_h
 		if (find_closer_plane_hit(current_plane, ray, params))
 		{
 			hit_anything = true;
-			params->closest_so_far = params->temp_rec->t;
+			// params->closest_so_far = params->temp_rec->t;
 			*rec = *params->temp_rec;
 		}
 		current_plane = current_plane->next;
@@ -61,7 +61,7 @@ static bool	check_all_cylinders(t_data *data, t_ray *ray, t_hit_params *params, 
 		if (find_closer_cylinder_hit(current_cylinder, ray, params))
 		{
 			hit_anything = true;
-			params->closest_so_far = params->temp_rec->t;
+			// params->closest_so_far = params->temp_rec->t;
 			*rec = *params->temp_rec;
 		}
 		current_cylinder = current_cylinder->next;

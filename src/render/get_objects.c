@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:12 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 16:18:51 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:34:52 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_hit_record	*get_hit_record(void)
 		error("malloc failure in get_hit_record()", EXIT_FAILURE);
 	rec->point = get_point(0, 0, 0);
 	rec->normal = get_point(0, 0, 0);
-	rec->t = 0;
+	// rec->t = 0;
 	return (rec);
 }
 

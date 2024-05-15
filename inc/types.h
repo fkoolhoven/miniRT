@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/06 16:18:40 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:34:43 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_hit_record
 {
 	t_point		point;
 	t_vector	normal;
-	double		t;
+	// double		t;
 	t_color		color;
 	bool		in_shadow;
 }	t_hit_record;

@@ -1,7 +1,7 @@
 NAME		= miniRT
 COMP		= cc
 FLAGS		= -Wall -Wextra -Werror #-g
-LEAK_CHECK	= -fsanitize=address -g -fsanitize=leak
+LEAK_CHECK	= #-fsanitize=address -g -fsanitize=leak
 RM			= rm -f
 INC			= -I inc -I libft
 OBJ_DIR		= obj
