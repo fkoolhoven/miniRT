@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:53:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/15 16:36:52 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:05:53 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
 			world_normal = rotate(&local_normal, \
 				cyl_params->rotated_cylinder.inverse_rotation);
 			plane->normal = world_normal;
-			record_plane_hit(t, plane, &cyl_params->normal_ray, \
+			record_cylinder_cap_hit(t, plane, &cyl_params->normal_ray, \
 				hit_params->temp_rec);
+			hit_params->closest_so_far = t;
 			return (true);
 		}
 	}

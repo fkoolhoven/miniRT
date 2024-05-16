@@ -1,4 +1,6 @@
+# Ambient light
 A 0.2 255,255,255
+# Diffuse light
 L 0,0,1.6 0.6 255,255,255
 
 # front view

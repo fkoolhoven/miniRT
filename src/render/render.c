@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 17:07:42 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:35:30 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	color_pixel(t_color *pixel_color, \
 	mlx_put_pixel(image, viewport->pixel_x, viewport->pixel_y, rgba);
 }
 
-static bool	object_is_in_shadow(t_data *data, \
-	t_hit *light_rec, t_hit *shadow_rec)
+static void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 {
 	t_vector		rounding_correction;
 	t_ray			shadow_ray;
@@ -34,16 +33,55 @@ static bool	object_is_in_shadow(t_data *data, \
 	bool			in_shadow;
 	t_hit_params	shadow_params;
 
-	rounding_correction = multiply(&light_rec->normal, 0.0001);
+
+	if (light_rec->object_type == PLANE)
+	{
+		t_vector plane_to_light = subtract_vectors(&light_rec->point, &data->light.origin);
+		double dot_product = dot(&plane_to_light, &light_rec->normal);
+
+		if (dot_product < 0) {
+			rounding_correction = multiply(&light_rec->normal, 0.0001);
+		} else {
+			t_vector inverse_normal = multiply(&light_rec->normal, -1);
+			rounding_correction = multiply(&inverse_normal, 0.0001);
+		}
+	}
+	else
+		rounding_correction = multiply(&light_rec->normal, 0.0001);
 	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
 	shadow_ray.direction = subtract_vectors(&data->light.origin, \
 		&light_rec->point);
 	distance_to_light = length(&shadow_ray.direction);
 	shadow_ray.direction = normalize(&shadow_ray.direction);
-	shadow_params = get_hit_params();
+	shadow_params = get_hit_params(SHADOW_RAY);
 	shadow_params.closest_so_far = distance_to_light;
 	in_shadow = hit_objects(data, &shadow_ray, &shadow_params, shadow_rec);
-	return (in_shadow);
+	light_rec->in_shadow = in_shadow;
+}
+
+static bool	no_light_can_reach(t_hit *light_rec, t_data *data, t_ray ray) // check for cylinder caps?
+{
+	bool no_light_can_reach;
+
+	no_light_can_reach = false;
+	if (light_rec->object_type != PLANE)
+		no_light_can_reach = dot(&light_rec->normal, &ray.direction) > 0;
+	else if (light_rec->object_type == PLANE)
+	{
+		t_vector plane_to_camera = subtract_vectors(&light_rec->point, &data->camera.view_point);
+		t_vector plane_to_light = subtract_vectors(&light_rec->point, &data->light.origin);
+		double dot_product = dot(&plane_to_light, &light_rec->normal);
+		if (dot_product < 0) 
+		{
+			no_light_can_reach = dot(&light_rec->normal, &plane_to_camera) > 0;
+		} 
+		else 
+		{
+			t_vector inverse_normal = multiply(&light_rec->normal, -1);
+			no_light_can_reach = dot(&inverse_normal, &plane_to_camera) > 0;
+		}
+	}
+	return (no_light_can_reach);
 }
 
 static t_color	get_pixel_color(t_data *data, t_ray ray, \
@@ -55,16 +93,17 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, \
 	t_color			color;
 	t_color			black;
 
+	inside_object = false;
 	black = get_point(0, 0, 0);
-	light_params = get_hit_params();
+	light_params = get_hit_params(LIGHT_RAY);
 	object_was_hit = hit_objects(data, &ray, &light_params, light_rec);
+
 	if (object_was_hit)
 	{
-		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
-		if (inside_object)
+		if (no_light_can_reach(light_rec, data, ray))
 			return (black);
-		light_rec->in_shadow = object_is_in_shadow(data, light_rec, shadow_rec);
-		color = apply_shading(data, light_rec);
+		check_if_shadow(data, light_rec, shadow_rec);
+		color = apply_shading(data, light_rec, shadow_rec);
 		return (color);
 	}
 	else
@@ -104,4 +143,5 @@ void	render_image(t_data *data)
 		viewport.pixel_y++;
 	}
 	free_render_data(light_rec, shadow_rec);
+	printf("Rendering complete\n");
 }

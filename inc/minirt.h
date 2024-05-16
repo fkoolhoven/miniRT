@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/15 18:24:55 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:18:51 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 
 # define TOP 1
 # define BOTTOM -1
+
+# define LIGHT_RAY 0
+# define SHADOW_RAY 1
 
 # include <stdio.h>
 # include <stdlib.h>

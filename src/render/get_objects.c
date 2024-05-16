@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:12 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 19:25:36 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:56:33 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ t_hit	*get_hit_record(void)
 	rec->point = get_point(0, 0, 0);
 	rec->normal = get_point(0, 0, 0);
 	rec->t = 0;
+	rec->object_type = 0;
 	return (rec);
 }
 
-t_hit_params	get_hit_params(void)
+t_hit_params	get_hit_params(int ray_type)
 {
 	t_hit_params	params;
 
@@ -33,6 +34,7 @@ t_hit_params	get_hit_params(void)
 	params.ray_tmin = 0.0;
 	params.closest_so_far = __DBL_MAX__;
 	params.hit_anything = false;
+	params.ray_type = ray_type;
 	return (params);
 }
 

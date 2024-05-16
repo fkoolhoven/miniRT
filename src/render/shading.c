@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:23 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 16:43:59 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:27:45 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,16 @@ static t_vector	get_all_light(t_data *data, t_hit *rec)
 	return (all_light);
 }
 
-t_color	apply_shading(t_data *data, t_hit *rec)
+t_color	apply_shading(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 {
 	t_vector	all_light;
 	t_color		object_color;
 	t_color		final_color;
 
-	all_light = get_all_light(data, rec);
-	object_color = rec->color;
+	if (light_rec->in_shadow && shadow_rec->object_type == PLANE)
+		return (get_point(0.0, 0.0, 0.0));
+	all_light = get_all_light(data, light_rec);
+	object_color = light_rec->color;
 	final_color = multiply_vectors(&object_color, &all_light);
 	final_color = divide(&final_color, 255.0);
 	return (final_color);

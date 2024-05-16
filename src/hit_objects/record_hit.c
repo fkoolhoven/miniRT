@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:42:11 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 16:31:30 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:08:23 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	record_sphere_hit(double t, t_sphere *sphere, t_ray *ray, t_hit *rec)
 	intersection_to_center = subtract_vectors(&rec->point, &sphere->center);
 	rec->normal = divide(&intersection_to_center, sphere->radius);
 	rec->color = sphere->color;
+	rec->object_type = SPHERE;
 }
 
 void	record_plane_hit(double t, t_plane *plane, t_ray *ray, t_hit *rec)
@@ -38,13 +39,24 @@ void	record_plane_hit(double t, t_plane *plane, t_ray *ray, t_hit *rec)
 	rec->point = trace_ray(ray, rec->t);
 	rec->normal = plane->normal;
 	rec->color = plane->color;
+	rec->object_type = PLANE;
 }
 
-void	record_cylinder_hit(double t, t_cylinder *cylinder, \
+void	record_cylinder_cap_hit(double t, t_plane *cap, t_ray *ray, t_hit *rec)
+{
+	rec->t = t;
+	rec->point = trace_ray(ray, rec->t);
+	rec->normal = cap->normal;
+	rec->color = cap->color;
+	rec->object_type = CYLINDER;
+}
+
+void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, \
 	t_hit *rec, t_cyl_params *cyl_params)
 {
 	rec->t = t;
 	rec->point = trace_ray(&cyl_params->normal_ray, rec->t);
 	rec->normal = cyl_params->local_normal;
 	rec->color = cylinder->color;
+	rec->object_type = CYLINDER;
 }
