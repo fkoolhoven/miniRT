@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:17 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/16 19:24:29 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:49:29 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void			set_ray_direction(t_viewport *view, t_ray *ray, t_data *data);
 // viewport.c
 t_viewport		set_up_viewport(t_data *data);
 
-// shading.c
-t_color	        apply_shading(t_data *data, t_hit *light_rec, t_hit *shadow_rec);
+// shadows.c
+t_color			apply_shading(t_data *data, t_hit *light_rec, t_hit *shadow_rec);
+void			check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:50:22 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 19:21:43 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:37:42 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	print_acl(t_ambient_light ambient, t_camera camera, t_light light)
 	point = camera.orientation;
 	printf("orientation: %.2f, %.2f, %.2f\n", point.x, point.y, point.z);
 	printf("horizontal fov: %.2f\n", camera.horizontal_fov);
-	printf(YELLOW"LIGHT\n"OFF);
+	printf(YELLOW BOLD"LIGHT\n"OFF);
 	point = light.origin;
 	printf("point: %.2f, %.2f, %.2f\n", point.x, point.y, point.z);
 	printf("brightness: %.2f\n", light.brightness);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:23 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/16 20:27:45 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:48:53 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,43 @@ t_color	apply_shading(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 	final_color = multiply_vectors(&object_color, &all_light);
 	final_color = divide(&final_color, 255.0);
 	return (final_color);
+}
+
+static t_vector	get_rounding_correction(t_data *data, t_hit *light_rec)
+{
+	t_vector	rounding_correction;
+	t_vector	plane_to_light;
+	t_vector	plane_normal;
+	double		dot_product;
+
+	if (light_rec->object_type == PLANE)
+	{
+		plane_to_light = subtract_vectors(&light_rec->point, &data->light.origin);
+		dot_product = dot(&plane_to_light, &light_rec->normal);
+		plane_normal = dot_product < 0 ? light_rec->normal : multiply(&light_rec->normal, -1);
+		rounding_correction = multiply(&plane_normal, 0.0001);
+	}
+	else
+		rounding_correction = multiply(&light_rec->normal, 0.0001);
+	return (rounding_correction);
+}
+
+void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
+{
+	t_vector		rounding_correction;
+	t_ray			shadow_ray;
+	double			distance_to_light;
+	bool			in_shadow;
+	t_hit_params	shadow_params;
+
+	rounding_correction = get_rounding_correction(data, light_rec);
+	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
+	shadow_ray.direction = subtract_vectors(&data->light.origin, \
+		&light_rec->point);
+	distance_to_light = length(&shadow_ray.direction);
+	shadow_ray.direction = normalize(&shadow_ray.direction);
+	shadow_params = get_hit_params(SHADOW_RAY);
+	shadow_params.closest_so_far = distance_to_light;
+	in_shadow = hit_objects(data, &shadow_ray, &shadow_params, shadow_rec);
+	light_rec->in_shadow = in_shadow;
 }

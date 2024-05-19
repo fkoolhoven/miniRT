@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/16 20:35:30 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:48:38 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,63 +25,35 @@ static void	color_pixel(t_color *pixel_color, \
 	mlx_put_pixel(image, viewport->pixel_x, viewport->pixel_y, rgba);
 }
 
-static void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
-{
-	t_vector		rounding_correction;
-	t_ray			shadow_ray;
-	double			distance_to_light;
-	bool			in_shadow;
-	t_hit_params	shadow_params;
-
-
-	if (light_rec->object_type == PLANE)
-	{
-		t_vector plane_to_light = subtract_vectors(&light_rec->point, &data->light.origin);
-		double dot_product = dot(&plane_to_light, &light_rec->normal);
-
-		if (dot_product < 0) {
-			rounding_correction = multiply(&light_rec->normal, 0.0001);
-		} else {
-			t_vector inverse_normal = multiply(&light_rec->normal, -1);
-			rounding_correction = multiply(&inverse_normal, 0.0001);
-		}
-	}
-	else
-		rounding_correction = multiply(&light_rec->normal, 0.0001);
-	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
-	shadow_ray.direction = subtract_vectors(&data->light.origin, \
-		&light_rec->point);
-	distance_to_light = length(&shadow_ray.direction);
-	shadow_ray.direction = normalize(&shadow_ray.direction);
-	shadow_params = get_hit_params(SHADOW_RAY);
-	shadow_params.closest_so_far = distance_to_light;
-	in_shadow = hit_objects(data, &shadow_ray, &shadow_params, shadow_rec);
-	light_rec->in_shadow = in_shadow;
-}
-
 static bool	no_light_can_reach(t_hit *light_rec, t_data *data, t_ray ray) // check for cylinder caps?
 {
-	bool no_light_can_reach;
+	bool		wrong_side_of_plane;
+	bool		inside_object;
+	t_vector	camera_to_plane;
+	t_vector	light_to_plane;
+	t_vector	inverse_normal;
+	double		dot_product;
 
-	no_light_can_reach = false;
+	inside_object = false;
+	wrong_side_of_plane = false;
 	if (light_rec->object_type != PLANE)
-		no_light_can_reach = dot(&light_rec->normal, &ray.direction) > 0;
+		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
 	else if (light_rec->object_type == PLANE)
 	{
-		t_vector plane_to_camera = subtract_vectors(&light_rec->point, &data->camera.view_point);
-		t_vector plane_to_light = subtract_vectors(&light_rec->point, &data->light.origin);
-		double dot_product = dot(&plane_to_light, &light_rec->normal);
+		camera_to_plane = subtract_vectors(&light_rec->point, &data->camera.view_point);
+		light_to_plane = subtract_vectors(&light_rec->point, &data->light.origin);
+		dot_product = dot(&light_to_plane, &light_rec->normal);
 		if (dot_product < 0) 
-		{
-			no_light_can_reach = dot(&light_rec->normal, &plane_to_camera) > 0;
-		} 
+			wrong_side_of_plane = dot(&light_rec->normal, &camera_to_plane) > 0;
 		else 
 		{
-			t_vector inverse_normal = multiply(&light_rec->normal, -1);
-			no_light_can_reach = dot(&inverse_normal, &plane_to_camera) > 0;
+			inverse_normal = multiply(&light_rec->normal, -1);
+			wrong_side_of_plane = dot(&inverse_normal, &camera_to_plane) > 0;
 		}
 	}
-	return (no_light_can_reach);
+	if (inside_object || wrong_side_of_plane)
+		return (true);
+	return (false);
 }
 
 static t_color	get_pixel_color(t_data *data, t_ray ray, \
@@ -143,5 +115,4 @@ void	render_image(t_data *data)
 		viewport.pixel_y++;
 	}
 	free_render_data(light_rec, shadow_rec);
-	printf("Rendering complete\n");
 }
