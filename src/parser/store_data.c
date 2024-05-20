@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:55:38 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 19:21:50 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:14:56 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	store_data(t_data *data, char *input)
 	else if (!ft_strncmp("L ", input, 2))
 		store_light(data, input + 2);
 	else if (!ft_strncmp("sp ", input, 3))
-		add_sphere(&(data->sphere), sphere_new(input + 3));
+		add_sphere(&(data->sphere), sphere_new(input + 3), data);
 	else if (!ft_strncmp("pl ", input, 3))
-		add_plane(&(data->plane), plane_new(input + 3));
+		add_plane(&(data->plane), plane_new(input + 3), data);
 	else if (!ft_strncmp("cy ", input, 3))
-		add_cylinder(&(data->cylinder), cylinder_new(input + 3));
+		add_cylinder(&(data->cylinder), cylinder_new(input + 3), data);
 	else if (*input != '\n')
 		printf("line: -> %s\twas ignored\n", input);
 }

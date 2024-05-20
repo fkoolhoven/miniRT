@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shading.c                                          :+:      :+:    :+:   */
+/*   shadows.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:23 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/19 15:48:53 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/20 14:05:43 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ static t_vector	get_rounding_correction(t_data *data, t_hit *light_rec)
 {
 	t_vector	rounding_correction;
 	t_vector	plane_to_light;
-	t_vector	plane_normal;
 	double		dot_product;
 
 	if (light_rec->object_type == PLANE)
 	{
 		plane_to_light = subtract_vectors(&light_rec->point, &data->light.origin);
 		dot_product = dot(&plane_to_light, &light_rec->normal);
-		plane_normal = dot_product < 0 ? light_rec->normal : multiply(&light_rec->normal, -1);
-		rounding_correction = multiply(&plane_normal, 0.0001);
+		if (dot_product >= 0)
+			light_rec->normal = multiply(&light_rec->normal, -1);
+		rounding_correction = multiply(&light_rec->normal, 0.0001);
 	}
 	else
 		rounding_correction = multiply(&light_rec->normal, 0.0001);

@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   addlst.c                                           :+:      :+:    :+:   */
+/*   add_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:39 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 13:01:35 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:54:43 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	add_plane(t_plane **head, t_plane *new)
+bool	no_light_or_camera(t_data *data)
+{
+	// if (data->light == NULL || data->ambient == NULL || data->camera == NULL)
+	// 	return (true);
+	return (false);
+}
+
+void	add_plane(t_plane **head, t_plane *new, t_data *data)
 {
 	t_plane	*tmp;
 
+	if (no_light_or_camera(data))
+		error("No light, camera or ambient light", EXIT_FAILURE);
 	tmp = *head;
 	if (*head == NULL)
 	{
@@ -27,10 +36,12 @@ void	add_plane(t_plane **head, t_plane *new)
 	tmp->next = new;
 }
 
-void	add_sphere(t_sphere **head, t_sphere *new)
+void	add_sphere(t_sphere **head, t_sphere *new, t_data *data)
 {
 	t_sphere	*tmp;
 
+	if (no_light_or_camera(data))
+		error("No light, camera or ambient light", EXIT_FAILURE);
 	tmp = *head;
 	if (*head == NULL)
 	{
@@ -42,10 +53,12 @@ void	add_sphere(t_sphere **head, t_sphere *new)
 	tmp->next = new;
 }
 
-void	add_cylinder(t_cylinder **head, t_cylinder *new)
+void	add_cylinder(t_cylinder **head, t_cylinder *new, t_data *data)
 {
 	t_cylinder	*tmp;
 
+	if (no_light_or_camera(data))
+		error("No light, camera or ambient light", EXIT_FAILURE);
 	tmp = *head;
 	if (*head == NULL)
 	{
