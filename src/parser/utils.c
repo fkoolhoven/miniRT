@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:47 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 11:53:48 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:57:32 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	store_xyz(char *s, t_point *xyz)
 	if (ft_count_items(arg) != 3)
 	{
 		frdp(arg);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	xyz->x = ft_atod(arg[0]);
 	xyz->y = ft_atod(arg[1]);
 	xyz->z = ft_atod(arg[2]);
 	frdp(arg);
-	return (0);
+	return (EXIT_SUCCESS);
 }

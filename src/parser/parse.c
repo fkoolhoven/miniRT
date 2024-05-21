@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:34 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/20 14:10:55 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:36:51 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static void	initialize_data_struct(t_data *data)
 	data->sphere = NULL;
 	data->window_width = WINDOW_WIDTH;
 	data->window_height = WINDOW_HEIGHT;
+	data->camera.is_initialized = false;
+	data->light.is_initialized = false;
+	data->ambient.is_initialized = false;
 }
 
 void	parse(t_data *data, char *file)

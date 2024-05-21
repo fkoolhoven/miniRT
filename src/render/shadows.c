@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:23 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/20 14:05:43 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:45:58 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,6 @@ t_color	apply_shading(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 	return (final_color);
 }
 
-static t_vector	get_rounding_correction(t_data *data, t_hit *light_rec)
-{
-	t_vector	rounding_correction;
-	t_vector	plane_to_light;
-	double		dot_product;
-
-	if (light_rec->object_type == PLANE)
-	{
-		plane_to_light = subtract_vectors(&light_rec->point, &data->light.origin);
-		dot_product = dot(&plane_to_light, &light_rec->normal);
-		if (dot_product >= 0)
-			light_rec->normal = multiply(&light_rec->normal, -1);
-		rounding_correction = multiply(&light_rec->normal, 0.0001);
-	}
-	else
-		rounding_correction = multiply(&light_rec->normal, 0.0001);
-	return (rounding_correction);
-}
-
 void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 {
 	t_vector		rounding_correction;
@@ -98,7 +79,7 @@ void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 	bool			in_shadow;
 	t_hit_params	shadow_params;
 
-	rounding_correction = get_rounding_correction(data, light_rec);
+	rounding_correction = multiply(&light_rec->normal, 0.0001);
 	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
 	shadow_ray.direction = subtract_vectors(&data->light.origin, \
 		&light_rec->point);

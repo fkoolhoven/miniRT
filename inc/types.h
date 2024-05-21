@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/16 19:03:21 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:36:24 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_hit
 
 typedef struct s_camera
 {
+	bool		is_initialized;
 	t_point		view_point;
 	t_vector	orientation;
 	t_vector	inverse_orientation;
@@ -62,6 +63,7 @@ typedef struct s_camera
 
 typedef struct s_ambient_light
 {
+	bool		is_initialized;
 	double		brightness;
 	t_color		color;
 	t_vector	ambient_light;
@@ -69,6 +71,7 @@ typedef struct s_ambient_light
 
 typedef struct s_light
 {
+	bool		is_initialized;
 	t_point		origin;
 	double		brightness;
 	t_color		color;

@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/20 14:01:20 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:50:46 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,14 @@ static void	color_pixel(t_color *pixel_color, \
 
 static bool	light_is_on_other_side(t_hit *light_rec, t_data *data)
 {
+	t_point		view_point;
 	t_vector	camera_to_plane;
 	t_vector	light_to_plane;
-	t_vector	inverse_normal;
-	double		dot_product;
 
-	camera_to_plane = subtract_vectors(&light_rec->point, &data->camera.view_point);
+	view_point = data->camera.view_point;
+	camera_to_plane = subtract_vectors(&light_rec->point, &view_point);
 	light_to_plane = subtract_vectors(&light_rec->point, &data->light.origin);
-	dot_product = dot(&light_to_plane, &light_rec->normal);
-	if (dot_product < 0)
-		return (dot(&light_rec->normal, &camera_to_plane) > 0);
-	else
-	{
-		inverse_normal = multiply(&light_rec->normal, -1);
-		return (dot(&inverse_normal, &camera_to_plane) > 0);
-	}
+	return (dot(&light_rec->normal, &camera_to_plane) > 0);
 }
 
 static bool	no_light_can_reach(t_hit *light_rec, t_data *data, t_ray ray)

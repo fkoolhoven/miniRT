@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:55:38 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/20 14:14:56 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:44:19 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	store_light(t_data *data, char *input)
 {
 	char	**items;
 
+	if (data->light.is_initialized)
+		error("Light is already initialized", EXIT_FAILURE);
 	items = ft_split(input, ' ');
 	if (!items)
 		error(strerror(errno), errno);
@@ -23,8 +25,9 @@ static void	store_light(t_data *data, char *input)
 		error(input, 1);
 	if (store_xyz(items[0], &data->light.origin) || \
 		store_xyz(items[2], &(data->light.color)))
-		error("Light parameters are incorrect", 1);
+		error("Light parameters are incorrect", EXIT_FAILURE);
 	data->light.brightness = ft_atod(items[1]);
+	data->light.is_initialized = true;
 	frdp(items);
 }
 
@@ -32,6 +35,8 @@ static void	store_camera(t_data *data, char *input)
 {
 	char	**items;
 
+	if (data->camera.is_initialized)
+		error("Camera is already initialized", EXIT_FAILURE);
 	items = ft_split(input, ' ');
 	if (!items)
 		error(strerror(errno), errno);
@@ -39,8 +44,9 @@ static void	store_camera(t_data *data, char *input)
 		error(input, 1);
 	if (store_xyz(items[0], &data->camera.view_point) || \
 		store_xyz(items[1], &data->camera.orientation))
-		error("Camera parameters are incorrect", 1);
+		error("Camera parameters are incorrect", EXIT_FAILURE);
 	data->camera.horizontal_fov = ft_atod(items[2]);
+	data->camera.is_initialized = true;
 	frdp(items);
 }
 
@@ -49,17 +55,20 @@ static void	store_ambient(t_data *data, char *input)
 	t_vector	ambient;
 	char		**items;
 
+	if (data->ambient.is_initialized)
+		error("Ambient light is already initialized", EXIT_FAILURE);
 	items = ft_split(input, ' ');
 	if (!items)
 		error(strerror(errno), errno);
 	if (ft_count_items(items) != 2)
 		error(input, 1);
 	if (store_xyz(items[1], &(data->ambient.color)))
-		error("Ambient light parameters are incorrect", 1);
+		error("Ambient light parameters are incorrect", EXIT_FAILURE);
 	data->ambient.brightness = ft_atod(items[0]);
 	ambient = multiply(&data->ambient.color, data->ambient.brightness);
 	ambient = divide(&ambient, 255.0);
 	data->ambient.ambient_light = ambient;
+	data->ambient.is_initialized = true;
 	frdp(items);
 }
 
@@ -74,7 +83,7 @@ void	store_data(t_data *data, char *input)
 	else if (!ft_strncmp("sp ", input, 3))
 		add_sphere(&(data->sphere), sphere_new(input + 3), data);
 	else if (!ft_strncmp("pl ", input, 3))
-		add_plane(&(data->plane), plane_new(input + 3), data);
+		add_plane(&(data->plane), plane_new(input + 3, data), data);
 	else if (!ft_strncmp("cy ", input, 3))
 		add_cylinder(&(data->cylinder), cylinder_new(input + 3), data);
 	else if (*input != '\n')

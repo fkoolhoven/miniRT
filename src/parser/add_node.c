@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:39 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/20 14:54:43 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:37:39 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 bool	no_light_or_camera(t_data *data)
 {
-	// if (data->light == NULL || data->ambient == NULL || data->camera == NULL)
-	// 	return (true);
+	if (!data->light.is_initialized)
+		return (true);
+	else if (!data->camera.is_initialized)
+		return (true);
+	else if (!data->ambient.is_initialized)
+		return (true);
 	return (false);
 }
 

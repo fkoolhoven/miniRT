@@ -6,23 +6,21 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:43 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/20 14:56:05 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:58:15 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vector	get_true_plane_normal(t_plane *new, t_data *point)
+void	get_true_plane_normal(t_plane *new, t_data *data)
 {
 	t_vector	plane_to_light;
-	t_vector	true_normal;
 	double		dot_product;
 
 	plane_to_light = subtract_vectors(&new->point, &data->light.origin);
 	dot_product = dot(&plane_to_light, &new->normal);
 	if (dot_product >= 0)
 		new->normal = multiply(&new->normal, -1);
-	return (true_normal);
 }
 
 t_plane	*plane_new(char *data, t_data *data_struct)
@@ -42,8 +40,8 @@ t_plane	*plane_new(char *data, t_data *data_struct)
 		store_xyz(items[1], &new->normal) || \
 		store_xyz(items[2], &(new->color)))
 		error("Plane parameters are incorrect", EXIT_FAILURE);
+	get_true_plane_normal(new, data_struct);
 	new->next = NULL;
-	new->normal = get_true_plane_normal(new->normal, data_struct);
 	frdp(items);
 	return (new);
 }
@@ -63,7 +61,7 @@ t_sphere	*sphere_new(char *data)
 		error("Malloc failure", errno);
 	if (store_xyz(items[0], &new->center) || \
 		store_xyz(items[2], &(new->color)))
-		error("Sphere parameters are incorrect", 1);
+		error("Sphere parameters are incorrect", EXIT_FAILURE);
 	new->radius = ft_atod(items[1]) / 2;
 	new->next = NULL;
 	frdp(items);
@@ -86,7 +84,7 @@ t_cylinder	*cylinder_new(char *data)
 	if (store_xyz(items[0], &new->center) || \
 		store_xyz(items[1], &new->axis) || \
 		store_xyz(items[4], &(new->color)))
-		error("Cylinder parameters are incorrect", 1);
+		error("Cylinder parameters are incorrect", EXIT_FAILURE);
 	new->radius = ft_atod(items[2]) / 2;
 	new->height = ft_atod(items[3]);
 	new->rotation = calculate_rotation_matrix(new->axis);
