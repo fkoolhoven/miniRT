@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 17:04:17 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:18:01 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@ static void	color_pixel(t_color *pixel_color, \
 	rgba |= ((int)(255.999 * pixel_color->z) & 0xFF) << 8;
 	rgba |= (255 & 0xFF);
 	mlx_put_pixel(image, viewport->pixel_x, viewport->pixel_y, rgba);
+}
+
+static void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
+{
+	t_vector		rounding_correction;
+	t_ray			shadow_ray;
+	double			distance_to_light;
+	bool			in_shadow;
+	t_hit_params	shadow_params;
+
+	rounding_correction = multiply(&light_rec->normal, 0.0001);
+	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
+	shadow_ray.direction = subtract_vectors(&data->light.origin, \
+		&light_rec->point);
+	distance_to_light = length(&shadow_ray.direction);
+	shadow_ray.direction = normalize(&shadow_ray.direction);
+	shadow_params = get_hit_params(SHADOW_RAY);
+	shadow_params.closest_so_far = distance_to_light;
+	in_shadow = hit_objects(data, &shadow_ray, &shadow_params, shadow_rec);
+	light_rec->in_shadow = in_shadow;
 }
 
 static t_color	get_pixel_color(t_data *data, t_ray ray, \

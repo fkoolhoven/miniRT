@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   square.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/05 23:09:38 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/05 23:09:39 by felicia          ###   ########.fr       */
+/*   Created: 2024/05/22 17:15:04 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/22 17:17:27 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#include "minirt.h"
 
-// for strerror()
-# include <string.h>
-
-// error.c
-void	error(char *message, int code);
-
-#endif
+float	square(float x)
+{
+	return (x * x);
+}

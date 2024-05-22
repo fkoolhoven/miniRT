@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/22 16:57:05 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:19:39 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # include <unistd.h>
 # include <sys/errno.h>
 # include <math.h>
+# include <string.h>
 
 # include "libft.h"
 
@@ -49,10 +50,9 @@
 # include "types.h"
 # include "mlx.h"
 # include "parser.h"
-# include "vectors_math.h"
-# include "errors.h"
+# include "maths.h"
 # include "render.h"
-# include "hit_objects.h"
+# include "hit.h"
 # include "objects.h"
 
 // free_data.c
@@ -60,5 +60,8 @@ void	free_planes(t_plane *plane);
 void	free_spheres(t_sphere *sphere);
 void	free_cylinders(t_cylinder *cylinder);
 void	free_all_data(t_data *data);
+
+// error.c
+void	error(char *message, int code);
 
 #endif

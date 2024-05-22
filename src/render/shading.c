@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:23 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/21 18:45:58 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:13:22 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,4 @@ t_color	apply_shading(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 	final_color = multiply_vectors(&object_color, &all_light);
 	final_color = divide(&final_color, 255.0);
 	return (final_color);
-}
-
-void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
-{
-	t_vector		rounding_correction;
-	t_ray			shadow_ray;
-	double			distance_to_light;
-	bool			in_shadow;
-	t_hit_params	shadow_params;
-
-	rounding_correction = multiply(&light_rec->normal, 0.0001);
-	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
-	shadow_ray.direction = subtract_vectors(&data->light.origin, \
-		&light_rec->point);
-	distance_to_light = length(&shadow_ray.direction);
-	shadow_ray.direction = normalize(&shadow_ray.direction);
-	shadow_params = get_hit_params(SHADOW_RAY);
-	shadow_params.closest_so_far = distance_to_light;
-	in_shadow = hit_objects(data, &shadow_ray, &shadow_params, shadow_rec);
-	light_rec->in_shadow = in_shadow;
 }

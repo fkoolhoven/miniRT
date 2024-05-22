@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit_objects.c                                      :+:      :+:    :+:   */
+/*   check_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 11:54:02 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/16 20:04:43 by fkoolhov         ###   ########.fr       */
+/*   Created: 2024/05/22 17:18:37 by fkoolhov          #+#    #+#             */
+/*   Updated: 2024/05/22 17:21:13 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	copy_rec_values(t_hit *source, t_hit *dest)
 	dest->object_type = source->object_type;
 }
 
-static bool	check_all_spheres(t_data *data, t_ray *ray, \
+bool	check_all_spheres(t_data *data, t_ray *ray, \
 	t_hit_params *params, t_hit *rec)
 {
 	t_sphere	*current_sphere;
@@ -42,7 +42,7 @@ static bool	check_all_spheres(t_data *data, t_ray *ray, \
 	return (params->hit_anything);
 }
 
-static bool	check_all_planes(t_data *data, t_ray *ray, \
+bool	check_all_planes(t_data *data, t_ray *ray, \
 	t_hit_params *params, t_hit *rec)
 {
 	t_plane	*current_plane;
@@ -63,7 +63,7 @@ static bool	check_all_planes(t_data *data, t_ray *ray, \
 	return (params->hit_anything);
 }
 
-static bool	check_all_cylinders(t_data *data, t_ray *ray, \
+bool	check_all_cylinders(t_data *data, t_ray *ray, \
 	t_hit_params *params, t_hit *rec)
 {
 	t_cylinder	*current_cylinder;
@@ -82,30 +82,4 @@ static bool	check_all_cylinders(t_data *data, t_ray *ray, \
 		current_cylinder = current_cylinder->next;
 	}
 	return (params->hit_anything);
-}
-
-static bool	free_mem_and_return(t_hit *temp_rec, bool hit_anything)
-{
-	free(temp_rec);
-	return (hit_anything);
-}
-
-bool	hit_objects(t_data *data, t_ray *ray, t_hit_params *params, t_hit *rec)
-{
-	bool	hit_anything;
-	int		ray_type;
-
-	ray_type = params->ray_type;
-	hit_anything = false;
-	if (data->plane != NULL)
-		hit_anything = check_all_planes(data, ray, params, rec);
-	if (ray_type == SHADOW_RAY && hit_anything)
-		return (free_mem_and_return(params->temp_rec, hit_anything));
-	if (data->sphere != NULL)
-		hit_anything = check_all_spheres(data, ray, params, rec);
-	if (ray_type == SHADOW_RAY && hit_anything)
-		return (free_mem_and_return(params->temp_rec, hit_anything));
-	if (data->cylinder != NULL)
-		hit_anything = check_all_cylinders(data, ray, params, rec);
-	return (free_mem_and_return(params->temp_rec, hit_anything));
 }
