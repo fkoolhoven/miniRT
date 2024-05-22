@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:28 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 16:39:16 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:34:58 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_viewport	set_up_viewport(t_data *data)
 	t_camera	*camera;
 
 	camera = &data->camera;
+	camera->inverse_orientation = multiply(&camera->orientation, -1.0);
 	aspect_ratio = (double)data->window_width / (double)data->window_height;
 	vertical_radians = camera->horizontal_fov / aspect_ratio;
 	vertical_radians = vertical_radians * M_PI / 180.0;

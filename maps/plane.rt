@@ -1,0 +1,16 @@
+# Ambient light
+A 0.1 255,255,255
+# Camera
+C 0.0,0.0,10    0,0,-1  100
+
+# white light
+L 0,1,0 1.0 255,255,255
+# red light
+# L 0,1,0 1.0 255,0,0
+# blue light
+# L 0,1,0 1.0 0,0,255
+# green light (only ambient)
+# L 0,1,0 1.0 0,255,0
+
+# one purple tilted plane
+pl 0,0,0   0,1,1   255,0,255

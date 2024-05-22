@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math.h                                             :+:      :+:    :+:   */
+/*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:48 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/22 17:15:27 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:22:22 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTORS_MATH_H
-# define VECTORS_MATH_H
+#ifndef MATHS_H
+# define MATHS_H
 
 // vectors_arithmetic.c
 t_vector	divide_vectors(const t_vector *v1, const t_vector *v2);

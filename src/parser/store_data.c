@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:55:38 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 16:54:29 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:34:33 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	store_camera(t_data *data, char *input)
 	data->camera.horizontal_fov = ft_atod(items[2]);
 	if (!camera_parameters_are_valid(data->camera))
 		error("Camera parameters are incorrect", EXIT_FAILURE);
-	data->camera.inverse_orientation = multiply(&data->camera.orientation, -1);
 	data->camera.is_initialized = true;
 	frdp(items);
 }

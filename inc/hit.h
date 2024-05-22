@@ -6,12 +6,12 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:34 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/22 17:20:05 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:22:38 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HIT_OBJECTS_H
-# define HIT_OBJECTS_H
+#ifndef HIT_H
+# define HIT_H
 
 // hit_objects.c
 bool	hit_objects(t_data *data, t_ray *ray, t_hit_params *params, t_hit *rec);
@@ -20,6 +20,7 @@ bool	hit_objects(t_data *data, t_ray *ray, t_hit_params *params, t_hit *rec);
 bool	check_all_spheres(t_data *data, t_ray *ray, t_hit_params *params, t_hit *rec);
 bool	check_all_planes(t_data *data, t_ray *ray, t_hit_params *params, t_hit *rec);
 bool	check_all_cylinders(t_data *data, t_ray *ray, t_hit_params *params, t_hit *rec);
+
 // record_hit.c
 void	record_sphere_hit(double t, t_sphere *sphere, t_ray *ray, t_hit *rec);
 void	record_plane_hit(double t, t_plane *plane, t_ray *ray, t_hit *rec);

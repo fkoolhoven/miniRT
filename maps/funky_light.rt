@@ -3,7 +3,7 @@ A 0.3               255,255,255
 # Diffuse light
 L 4,1,0     0.8     199,34,255
 # Camera
-C 0,0,3 0,0,-1 90
+C 0,0,3     0,0,-1  90
 
 # 7 spheres, randomly places
 sp -3,0.5,-20   10      10,10,80
