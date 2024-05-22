@@ -6,16 +6,20 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:11:40 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/06 15:12:36 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:06:46 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_ray	rotate_ray(t_ray *ray, t_point cylinder_center, t_matrix *rotation)
+t_ray	rotate_ray(t_ray *ray, t_cylinder *cylinder)
 {
-	t_ray	rotated_ray;
+	t_ray		rotated_ray;
+	t_point		cylinder_center;
+	t_matrix	*rotation;
 
+	cylinder_center = cylinder->center;
+	rotation = cylinder->rotation;
 	rotated_ray.origin = subtract_vectors(&ray->origin, &cylinder_center);
 	rotated_ray.origin = rotate(&rotated_ray.origin, rotation);
 	rotated_ray.direction = rotate(&ray->direction, rotation);

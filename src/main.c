@@ -6,59 +6,13 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:41:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/21 18:55:54 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:57:13 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void	free_planes(t_plane *plane)
-{
-	t_plane	*next_plane;
-
-	while (plane != NULL)
-	{
-		next_plane = plane->next;
-		free(plane);
-		plane = next_plane;
-	}
-}
-
-static void	free_spheres(t_sphere *sphere)
-{
-	t_sphere	*next_sphere;
-
-	while (sphere != NULL)
-	{
-		next_sphere = sphere->next;
-		free(sphere);
-		sphere = next_sphere;
-	}
-}
-
-static void	free_cylinders(t_cylinder *cylinder)
-{
-	t_cylinder	*next_cylinder;
-
-	while (cylinder != NULL)
-	{
-		next_cylinder = cylinder->next;
-		free(cylinder->rotation);
-		free(cylinder->inverse_rotation);
-		free(cylinder);
-		cylinder = next_cylinder;
-	}
-}
-
-static void	free_all_data(t_data *data)
-{
-	free_cylinders(data->cylinder);
-	free_spheres(data->sphere);
-	free_planes(data->plane);
-	free(data->mlx_info);
-}
-
-bool	scene_is_valid(t_data *data)
+static bool	scene_is_valid(t_data *data)
 {
 	if (!data->camera.is_initialized)
 		error("No camera", EXIT_FAILURE);

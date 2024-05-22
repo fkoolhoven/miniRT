@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/16 19:06:15 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:07:12 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,7 @@ bool	find_closer_cylinder_hit(t_cylinder *cylinder,
 	bool			hit_cap;
 
 	cyl_params.normal_ray = *ray;
-	cyl_params.rotated_ray = rotate_ray(ray, \
-		cylinder->center, cylinder->rotation);
+	cyl_params.rotated_ray = rotate_ray(ray, cylinder);
 	cyl_params.rotated_cylinder = rotate_cylinder(cylinder);
 	hit_side = find_cylinder_tube_hit(cylinder, hit_params, &cyl_params);
 	hit_cap = find_cylinder_cap_hit(hit_params, &cyl_params);

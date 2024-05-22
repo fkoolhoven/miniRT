@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:26 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/15 17:27:44 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:07:34 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_matrix	*transpose_matrix(t_matrix *m);
 t_matrix	*calculate_rotation_matrix(t_vector cylinder_axis);
 
 // cylinder_rotate.c
-t_ray		rotate_ray(t_ray *ray, t_point cylinder_center, t_matrix *rotation);
+t_ray		rotate_ray(t_ray *ray, t_cylinder *cylinder);
 t_cylinder	rotate_cylinder(t_cylinder *cylinder);
 t_vector	rotate(t_vector *vector, t_matrix *m);
 

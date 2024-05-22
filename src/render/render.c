@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/21 18:50:46 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:04:17 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,6 @@ static void	color_pixel(t_color *pixel_color, \
 	mlx_put_pixel(image, viewport->pixel_x, viewport->pixel_y, rgba);
 }
 
-static bool	light_is_on_other_side(t_hit *light_rec, t_data *data)
-{
-	t_point		view_point;
-	t_vector	camera_to_plane;
-	t_vector	light_to_plane;
-
-	view_point = data->camera.view_point;
-	camera_to_plane = subtract_vectors(&light_rec->point, &view_point);
-	light_to_plane = subtract_vectors(&light_rec->point, &data->light.origin);
-	return (dot(&light_rec->normal, &camera_to_plane) > 0);
-}
-
-static bool	no_light_can_reach(t_hit *light_rec, t_data *data, t_ray ray)
-{
-	bool	light_on_other_side;
-	bool	inside_object;
-
-	inside_object = false;
-	light_on_other_side = false;
-	if (light_rec->object_type != PLANE)
-		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
-	else if (light_rec->object_type == PLANE)
-		light_on_other_side = light_is_on_other_side(light_rec, data);
-	if (inside_object || light_on_other_side)
-		return (true);
-	return (false);
-}
-
 static t_color	get_pixel_color(t_data *data, t_ray ray, \
 	t_hit *light_rec, t_hit *shadow_rec)
 {
@@ -68,7 +40,8 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, \
 	object_was_hit = hit_objects(data, &ray, &light_params, light_rec);
 	if (object_was_hit)
 	{
-		if (no_light_can_reach(light_rec, data, ray))
+		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
+		if (inside_object)
 			return (black);
 		check_if_shadow(data, light_rec, shadow_rec);
 		color = apply_shading(data, light_rec, shadow_rec);

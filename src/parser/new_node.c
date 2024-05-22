@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:43 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/21 18:58:15 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:52:38 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_plane	*plane_new(char *data, t_data *data_struct)
 		store_xyz(items[1], &new->normal) || \
 		store_xyz(items[2], &(new->color)))
 		error("Plane parameters are incorrect", EXIT_FAILURE);
+	if (!plane_parameters_are_valid(*new))
+		error("Plane parameters are incorrect", EXIT_FAILURE);
 	get_true_plane_normal(new, data_struct);
 	new->next = NULL;
 	frdp(items);
@@ -63,6 +65,8 @@ t_sphere	*sphere_new(char *data)
 		store_xyz(items[2], &(new->color)))
 		error("Sphere parameters are incorrect", EXIT_FAILURE);
 	new->radius = ft_atod(items[1]) / 2;
+	if (!sphere_parameters_are_valid(*new))
+		error("Sphere parameters are incorrect", EXIT_FAILURE);
 	new->next = NULL;
 	frdp(items);
 	return (new);
@@ -87,6 +91,8 @@ t_cylinder	*cylinder_new(char *data)
 		error("Cylinder parameters are incorrect", EXIT_FAILURE);
 	new->radius = ft_atod(items[2]) / 2;
 	new->height = ft_atod(items[3]);
+	if (!cylinder_parameters_are_valid(*new))
+		error("Cylinder parameters are incorrect", EXIT_FAILURE);
 	new->rotation = calculate_rotation_matrix(new->axis);
 	new->inverse_rotation = transpose_matrix(new->rotation);
 	new->next = NULL;

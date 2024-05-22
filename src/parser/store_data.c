@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:55:38 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/21 18:44:19 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:54:29 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	store_light(t_data *data, char *input)
 		store_xyz(items[2], &(data->light.color)))
 		error("Light parameters are incorrect", EXIT_FAILURE);
 	data->light.brightness = ft_atod(items[1]);
+	if (!light_parameters_are_valid(data->light))
+		error("Light parameters are incorrect", EXIT_FAILURE);
 	data->light.is_initialized = true;
 	frdp(items);
 }
@@ -46,6 +48,9 @@ static void	store_camera(t_data *data, char *input)
 		store_xyz(items[1], &data->camera.orientation))
 		error("Camera parameters are incorrect", EXIT_FAILURE);
 	data->camera.horizontal_fov = ft_atod(items[2]);
+	if (!camera_parameters_are_valid(data->camera))
+		error("Camera parameters are incorrect", EXIT_FAILURE);
+	data->camera.inverse_orientation = multiply(&data->camera.orientation, -1);
 	data->camera.is_initialized = true;
 	frdp(items);
 }
@@ -65,6 +70,8 @@ static void	store_ambient(t_data *data, char *input)
 	if (store_xyz(items[1], &(data->ambient.color)))
 		error("Ambient light parameters are incorrect", EXIT_FAILURE);
 	data->ambient.brightness = ft_atod(items[0]);
+	if (!ambient_parameters_are_valid(data->ambient))
+		error("Ambient light parameters are incorrect", EXIT_FAILURE);
 	ambient = multiply(&data->ambient.color, data->ambient.brightness);
 	ambient = divide(&ambient, 255.0);
 	data->ambient.ambient_light = ambient;

@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/16 17:18:51 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:57:05 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
+
 # define ESCAPE 256
 
 # define SPHERE 1
@@ -53,5 +54,11 @@
 # include "render.h"
 # include "hit_objects.h"
 # include "objects.h"
+
+// free_data.c
+void	free_planes(t_plane *plane);
+void	free_spheres(t_sphere *sphere);
+void	free_cylinders(t_cylinder *cylinder);
+void	free_all_data(t_data *data);
 
 #endif
