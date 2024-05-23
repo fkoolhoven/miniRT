@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:41:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 16:57:13 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:16:25 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static bool	scene_is_valid(t_data *data)
 {
 	if (!data->camera.is_initialized)
 		error("No camera", EXIT_FAILURE);
-	if (!data->light.is_initialized)
+	else if (!data->light.is_initialized)
 		error("No light", EXIT_FAILURE);
-	if (!data->ambient.is_initialized)
+	else if (!data->ambient.is_initialized)
 		error("No ambient light", EXIT_FAILURE);
 	else if (data->window_width <= 0 || data->window_height <= 0)
 		error("Invalid window size", EXIT_FAILURE);
