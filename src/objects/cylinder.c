@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/22 17:07:12 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:29:05 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static bool	find_cylinder_tube_hit(t_cylinder *cylinder, \
 		local_normal = normalize(&local_normal);
 		local_normal = rotate(&local_normal, cylinder->inverse_rotation);
 		cyl_params->local_normal = local_normal;
-		record_cylinder_tube_hit(t, cylinder, hit_params->temp_rec, cyl_params);
+		record_cylinder_tube_hit(t, cylinder, hit_params->rec, cyl_params);
 		hit_params->closest_so_far = t;
 		return (true);
 	}

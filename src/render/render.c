@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 17:18:01 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:30:48 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 		&light_rec->point);
 	distance_to_light = length(&shadow_ray.direction);
 	shadow_ray.direction = normalize(&shadow_ray.direction);
-	shadow_params = get_hit_params(SHADOW_RAY);
+	shadow_params = get_hit_params(SHADOW_RAY, shadow_rec);
 	shadow_params.closest_so_far = distance_to_light;
-	in_shadow = hit_objects(data, &shadow_ray, &shadow_params, shadow_rec);
+	in_shadow = hit_objects(data, &shadow_ray, &shadow_params);
 	light_rec->in_shadow = in_shadow;
 }
 
@@ -56,8 +56,8 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, \
 
 	inside_object = false;
 	black = get_point(0, 0, 0);
-	light_params = get_hit_params(LIGHT_RAY);
-	object_was_hit = hit_objects(data, &ray, &light_params, light_rec);
+	light_params = get_hit_params(LIGHT_RAY, light_rec);
+	object_was_hit = hit_objects(data, &ray, &light_params);
 	if (object_was_hit)
 	{
 		inside_object = dot(&light_rec->normal, &ray.direction) > 0;

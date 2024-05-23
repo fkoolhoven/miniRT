@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 18:20:14 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:28:36 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ bool	find_closer_sphere_hit(t_sphere *sphere, \
 	t = get_t_for_sphere(&sphere_params, hit_params);
 	if (t == -__DBL_MAX__)
 		return (false);
-	record_sphere_hit(t, sphere, ray, hit_params->temp_rec);
+	record_sphere_hit(t, sphere, ray, hit_params->rec);
 	return (true);
 }
