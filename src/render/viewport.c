@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:28 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 16:39:16 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/23 22:15:03 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ static t_vector	get_upper_left_corner(t_camera *camera, t_viewport *view)
 	return (upper_left);
 }
 
+static bool	camera_aligned_with_y(t_camera *camera)
+{
+	return (camera->orientation.x == 0 && (camera->orientation.y == 1 || \
+		camera->orientation.y == -1) && camera->orientation.z == 0);
+}
+
 t_viewport	set_up_viewport(t_data *data)
 {
 	t_viewport	view;
@@ -43,9 +49,17 @@ t_viewport	set_up_viewport(t_data *data)
 	view.half_height = tan(vertical_radians / 2.0);
 	view.half_width = aspect_ratio * view.half_height;
 	true_up = get_point(0, 1, 0);
-	view.horizontal = cross(&true_up, &camera->inverse_orientation);
-	view.horizontal = normalize(&view.horizontal);
-	view.vertical = cross(&camera->inverse_orientation, &view.horizontal);
+	if (camera_aligned_with_y(camera))
+	{
+		view.horizontal = get_point(-1, 0, 0);
+		view.vertical = get_point(0, 0, -1);
+	}
+	else
+	{
+		view.horizontal = cross(&true_up, &camera->inverse_orientation);
+		view.horizontal = normalize(&view.horizontal);
+		view.vertical = cross(&camera->inverse_orientation, &view.horizontal);
+	}
 	view.horizontal_offset = multiply(&view.horizontal, 2.0 * view.half_width);
 	view.vertical_offset = multiply(&view.vertical, -2.0 * view.half_height);
 	view.upper_left_corner = get_upper_left_corner(camera, &view);
