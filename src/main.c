@@ -6,11 +6,72 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:41:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/23 21:16:25 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:28:50 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static bool	inside_sphere(t_data *data, t_ray *ray, t_hit_params *params)
+{
+	t_sphere *current_sphere;
+
+	current_sphere = data->sphere;
+	while (current_sphere != NULL)
+	{
+		if (find_closer_sphere_hit(current_sphere, ray, params))
+		{
+			if (dot(&params->rec->normal, &ray->direction) > 0)
+			{
+				return (true);
+			}
+		}
+		current_sphere = current_sphere->next;
+	}
+	return (false);
+}
+
+static bool	inside_cylinder(t_data *data, t_ray *ray, t_hit_params *params)
+{
+	t_cylinder *current_cylinder;
+
+	current_cylinder = data->cylinder;
+	while (current_cylinder != NULL)
+	{
+		if (find_closer_cylinder_hit(current_cylinder, ray, params))
+		{
+			if (dot(&params->rec->normal, &ray->direction) > 0)
+			{
+				return (true);
+			}
+		}
+		current_cylinder = current_cylinder->next;
+	}
+	return (false);
+}
+
+static bool light_is_inside_object(t_data *data) 
+{
+	t_hit_params	params;
+    t_ray			ray;
+	t_hit			*rec;
+
+    ray.origin = data->light.origin;
+    ray.direction = get_point(1, 1, 1);
+	rec = get_hit_record();
+    params = get_hit_params(LIGHT_RAY, rec);
+	if (inside_sphere(data, &ray, &params))
+	{
+		free(rec);
+		return true;
+	}
+	if (inside_cylinder(data, &ray, &params))
+	{
+		free(rec);
+		return true;
+	}
+    return false;
+}
 
 static bool	scene_is_valid(t_data *data)
 {
@@ -25,6 +86,8 @@ static bool	scene_is_valid(t_data *data)
 	else if (data->plane == NULL && data->sphere == NULL
 		&& data->cylinder == NULL)
 		error("No objects", EXIT_FAILURE);
+	else if (light_is_inside_object(data))
+		error("Light is inside object", EXIT_FAILURE);
 	return (true);
 }
 

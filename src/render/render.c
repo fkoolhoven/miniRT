@@ -6,7 +6,7 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/24 18:37:21 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:29:39 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,10 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, \
 
 	inside_object = false;
 	black = get_point(0, 0, 0);
-	light_params = get_hit_params(LIGHT_RAY, light_rec);
+	light_params = get_hit_params(LIGHT_RAY, light_rec); // ray type necessary?
 	object_was_hit = hit_objects(data, &ray, &light_params);
-	if (light_params.inside_object)
+	if (light_params.inside_object) // make this better?
 	{
-		printf("Error: Inside object\n");
 		render_image_black(data, viewport);
 		return (black);
 	}
@@ -129,6 +128,5 @@ void	render_image(t_data *data)
 		}
 		viewport.pixel_y++;
 	}
-	printf("Rendering complete\n");
 	free_render_data(light_rec, shadow_rec);
 }

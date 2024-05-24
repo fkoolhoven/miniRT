@@ -7,7 +7,7 @@ To do:
 - No light can reach: cylinder caps?
 - Adjust hooks for round look?
 - Check object parameters in parser
-- What if light inside object?
+- ray type necessary?
 
 Final:
 - Leak
