@@ -6,7 +6,7 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/23 21:30:48 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:37:21 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,28 @@ static void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 	light_rec->in_shadow = in_shadow;
 }
 
+static void	render_image_black(t_data *data, t_viewport *viewport)
+{
+	t_color	black;
+
+	black = get_point(0, 0, 0);
+	viewport->pixel_y = 0;
+	while (viewport->pixel_y < data->window_height)
+	{
+		viewport->pixel_x = 0;
+		while (viewport->pixel_x < data->window_width)
+		{
+			color_pixel(&black, viewport, data->mlx_info->img_ptr);
+			viewport->pixel_x++;
+		}
+		viewport->pixel_y++;
+	}
+	viewport->pixel_y--;
+	viewport->pixel_x--;
+}
+
 static t_color	get_pixel_color(t_data *data, t_ray ray, \
-	t_hit *light_rec, t_hit *shadow_rec)
+	t_hit *light_rec, t_hit *shadow_rec, t_viewport *viewport)
 {
 	bool			object_was_hit;
 	t_hit_params	light_params;
@@ -58,6 +78,12 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, \
 	black = get_point(0, 0, 0);
 	light_params = get_hit_params(LIGHT_RAY, light_rec);
 	object_was_hit = hit_objects(data, &ray, &light_params);
+	if (light_params.inside_object)
+	{
+		printf("Error: Inside object\n");
+		render_image_black(data, viewport);
+		return (black);
+	}
 	if (object_was_hit)
 	{
 		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
@@ -97,11 +123,12 @@ void	render_image(t_data *data)
 		{
 			set_ray_direction(&viewport, &light_ray, data);
 			pixel_color = get_pixel_color(data, light_ray, \
-				light_rec, shadow_rec);
+				light_rec, shadow_rec, &viewport);
 			color_pixel(&pixel_color, &viewport, data->mlx_info->img_ptr);
 			viewport.pixel_x++;
 		}
 		viewport.pixel_y++;
 	}
+	printf("Rendering complete\n");
 	free_render_data(light_rec, shadow_rec);
 }

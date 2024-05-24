@@ -1,0 +1,15 @@
+# # Camera and light outside the object
+# A 0.3 255,255,255
+# L 0,0,-2 0.9 255,255,255
+# C 0,0,-4     0,0,1          90
+# # 1 big cylinder
+# cy 0,0,15    0,0,1   7 30   255,0,0
+
+
+# Light inside the object
+A 0.3 255,255,255
+L 0,0,15 0.9 255,255,255
+C 0,0,-4     0,0,1          90
+# 1 big cylinder
+cy 0,0,15    0,0,1   7 30   255,0,0
+

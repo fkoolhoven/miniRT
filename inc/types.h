@@ -6,7 +6,7 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/23 21:26:53 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:16:05 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ typedef struct s_hit_params
 	double	closest_so_far;
 	bool	hit_anything;
 	int		ray_type;
+	bool	inside_object;
 }	t_hit_params;
 
 #endif

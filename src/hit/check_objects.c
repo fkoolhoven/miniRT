@@ -6,7 +6,7 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:18:37 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/23 21:27:56 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:23:54 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ bool	check_all_spheres(t_data *data, t_ray *ray, t_hit_params *params)
 	{
 		if (find_closer_sphere_hit(current_sphere, ray, params))
 		{
-			if (params->ray_type == SHADOW_RAY)
-				return (true);
 			params->hit_anything = true;
+			if (dot(&params->rec->normal, &ray->direction) > 0)
+			{
+				params->inside_object = true;
+				return (true);
+			}
 			params->closest_so_far = params->rec->t;
 		}
 		current_sphere = current_sphere->next;
@@ -40,9 +43,12 @@ bool	check_all_planes(t_data *data, t_ray *ray, t_hit_params *params)
 	{
 		if (find_closer_plane_hit(current_plane, ray, params))
 		{
-			if (params->ray_type == SHADOW_RAY)
-				return (true);
 			params->hit_anything = true;
+			if (dot(&params->rec->normal, &ray->direction) > 0)
+			{
+				params->inside_object = true;
+				return (true);
+			}
 			params->closest_so_far = params->rec->t;
 		}
 		current_plane = current_plane->next;
@@ -59,9 +65,12 @@ bool	check_all_cylinders(t_data *data, t_ray *ray, t_hit_params *params)
 	{
 		if (find_closer_cylinder_hit(current_cylinder, ray, params))
 		{
-			if (params->ray_type == SHADOW_RAY)
-				return (true);
 			params->hit_anything = true;
+			if (dot(&params->rec->normal, &ray->direction) > 0)
+			{
+				params->inside_object = true;
+				return (true);
+			}
 			params->closest_so_far = params->rec->t;
 		}
 		current_cylinder = current_cylinder->next;

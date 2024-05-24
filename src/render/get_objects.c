@@ -6,7 +6,7 @@
 /*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:12 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/23 21:30:08 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:24:08 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_hit_params	get_hit_params(int ray_type, t_hit *rec)
 	params.closest_so_far = __DBL_MAX__;
 	params.hit_anything = false;
 	params.ray_type = ray_type;
+	params.inside_object = false;
 	return (params);
 }
 
