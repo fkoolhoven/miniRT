@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/27 12:09:05 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:36:18 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 
 # define SPHERE 1
 # define PLANE 2
-# define CYLINDER 3
+# define CYLINDER_TUBE 3
+# define CYLINDER_CAP 4
 
 # define TOP 1
 # define BOTTOM -1

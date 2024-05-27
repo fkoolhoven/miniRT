@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:42:11 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/16 19:08:23 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:36:27 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	record_cylinder_cap_hit(double t, t_plane *cap, t_ray *ray, t_hit *rec)
 	rec->point = trace_ray(ray, rec->t);
 	rec->normal = cap->normal;
 	rec->color = cap->color;
-	rec->object_type = CYLINDER;
+	rec->object_type = CYLINDER_TUBE;
 }
 
 void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, \
@@ -58,5 +58,5 @@ void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, \
 	rec->point = trace_ray(&cyl_params->normal_ray, rec->t);
 	rec->normal = cyl_params->local_normal;
 	rec->color = cylinder->color;
-	rec->object_type = CYLINDER;
+	rec->object_type = CYLINDER_CAP;
 }
