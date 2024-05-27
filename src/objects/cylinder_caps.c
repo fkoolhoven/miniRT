@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_caps.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:53:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/16 19:05:53 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:29:25 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
 				cyl_params->rotated_cylinder.inverse_rotation);
 			plane->normal = world_normal;
 			record_cylinder_cap_hit(t, plane, &cyl_params->normal_ray, \
-				hit_params->temp_rec);
+				hit_params->rec);
 			hit_params->closest_so_far = t;
 			return (true);
 		}

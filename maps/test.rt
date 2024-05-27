@@ -1,0 +1,97 @@
+
+# looking down
+# Ambient light
+A 0.3           255,255,255
+# Diffuse light
+L 0,4,-2   0.9 255,255,255
+
+# front view
+# C 0,0,4     0,0,-1          90
+# top view
+C 0,4,-2     0,-1,0.0         90
+
+# 6 cylinders that form a grid
+cy 0,0,0    0,1,0   0.5 2   255,0,0
+cy 0,0,-2    0,1,0   0.5 2   255,0,0
+cy 0,0,-4    0,1,0   0.5 2   255,0,0
+
+pl 0,0,0    0,1,0     255,255,255
+
+
+
+
+# # looking up
+# # Ambient light
+# A 0.3           255,255,255
+# # Diffuse light
+# L 0,-4,-2   0.9 255,255,255
+
+# # front view
+# # C 0,0,4     0,0,-1          90
+# # top view
+# C 0,-4,-2     0,1,0.00001         90
+
+# # 6 cylinders that form a grid
+# cy 0,0,0    0,1,0   0.5 2   255,0,0
+# cy 0,0,-2    0,1,0   0.5 2   255,0,0
+# cy 0,0,-4    0,1,0   0.5 2   255,0,0
+
+# pl 0,0,0    0,1,0     255,255,255
+
+
+# # looking from side
+# # Ambient light
+# A 0.3           255,255,255
+# # Diffuse light
+# L 0,4,-2   0.9 255,255,255
+
+# # front view
+# # C 0,0,4     0,0,-1          90
+# # top view
+# C 3,1,-2     -1,0,0         90
+
+# # 6 cylinders that form a grid
+# cy 0,0,0    0,1,0   0.5 2   255,0,0
+# cy 0,0,-2    0,1,0   0.5 2   255,0,0
+# cy 0,0,-4    0,1,0   0.5 2   255,0,0
+
+# pl 0,0,0    0,1,0     255,255,255
+
+
+# # looking from other side
+# # Ambient light
+# A 0.3           255,255,255
+# # Diffuse light
+# L 0,4,-2   0.9 255,255,255
+
+# # front view
+# # C 0,0,4     0,0,-1          90
+# # top view
+# C -3,1,-2     1,0,0         90
+
+# # 6 cylinders that form a grid
+# cy 0,0,0    0,1,0   0.5 2   255,0,0
+# cy 0,0,-2    0,1,0   0.5 2   255,0,0
+# cy 0,0,-4    0,1,0   0.5 2   255,0,0
+
+# pl 0,0,0    0,1,0     255,255,255
+
+
+# # looking from front
+# # Ambient light
+# A 0.3           255,255,255
+# # Diffuse light
+# L 0,4,-2   0.9 255,255,255
+
+# # front view
+# # C 0,0,4     0,0,-1          90
+# # top view
+# C 0,1,2     0,0,-1         90
+
+# # 6 cylinders that form a grid
+# cy 0,0,0    0,1,0   0.5 2   255,0,0
+# cy 0,0,-2    0,1,0   0.5 2   255,0,0
+# cy 0,0,-4    0,1,0   0.5 2   255,0,0
+
+# pl 0,0,0    0,1,0     255,255,255
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_objects.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:12 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/16 19:56:33 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:24:08 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ t_hit	*get_hit_record(void)
 	return (rec);
 }
 
-t_hit_params	get_hit_params(int ray_type)
+t_hit_params	get_hit_params(int ray_type, t_hit *rec)
 {
 	t_hit_params	params;
 
-	params.temp_rec = get_hit_record();
+	params.rec = rec;
 	params.ray_tmin = 0.0;
 	params.closest_so_far = __DBL_MAX__;
 	params.hit_anything = false;
 	params.ray_type = ray_type;
+	params.inside_object = false;
 	return (params);
 }
 

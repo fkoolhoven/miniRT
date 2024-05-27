@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/22 16:33:48 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:16:05 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,12 @@ typedef struct s_data
 
 typedef struct s_hit_params
 {
-	t_hit	*temp_rec;
+	t_hit	*rec;
 	double	ray_tmin;
 	double	closest_so_far;
 	bool	hit_anything;
 	int		ray_type;
+	bool	inside_object;
 }	t_hit_params;
 
 #endif

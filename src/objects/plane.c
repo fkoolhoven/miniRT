@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:55 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/15 15:22:44 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:28:55 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	find_closer_plane_hit(t_plane *plane, t_ray *ray, t_hit_params *params)
 
 	if (hit_plane(plane, ray, params, &t))
 	{
-		record_plane_hit(t, plane, ray, params->temp_rec);
+		record_plane_hit(t, plane, ray, params->rec);
 		return (true);
 	}
 	return (false);
