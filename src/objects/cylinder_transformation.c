@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:22:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/06 15:11:39 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:16:27 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,15 @@ t_matrix	*calculate_rotation_matrix(t_vector cylinder_axis)
 
 	y_axis = get_point(0, 1, 0);
 	rotation_axis = cross(&cylinder_axis, &y_axis);
-	normalize(&rotation_axis);
+	// if (rotation_axis.x == 0 && rotation_axis.y == 0 && rotation_axis.z == 0) 
+	// {
+	// 	printf("cylinder axis is parallel to y-axis\n");
+    //     rotation_axis = get_point(1, 0, 0);  // or any other vector orthogonal to y-axis
+    // } 
+	// else 
+	// {
+        normalize(&rotation_axis);
+    // }
 	angle = get_angle(&cylinder_axis, &y_axis);
 	rotation_matrix = set_rotation_matrix(angle, rotation_axis);
 	return (rotation_matrix);

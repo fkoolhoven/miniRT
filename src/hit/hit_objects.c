@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:54:02 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/27 13:14:25 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:41:30 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	check_all_spheres(t_data *data, t_ray *ray, t_hit_params *params)
 		if (find_closer_sphere_hit(current_sphere, ray, params))
 		{
 			params->hit_anything = true;
-			if (dot(&params->rec->normal, &ray->direction) > 0.0001)
+			if (dot(&params->rec->normal, &ray->direction) > ROUNDING_CORRECTION)
 			{
 				params->inside_object = true;
 				return (params->hit_anything);
@@ -44,7 +44,7 @@ static bool	check_all_planes(t_data *data, t_ray *ray, t_hit_params *params)
 		if (find_closer_plane_hit(current_plane, ray, params))
 		{
 			params->hit_anything = true;
-			if (dot(&params->rec->normal, &ray->direction) > 0.0001)
+			if (dot(&params->rec->normal, &ray->direction) > ROUNDING_CORRECTION)
 			{
 				params->inside_object = true;
 				return (params->hit_anything);
@@ -66,7 +66,7 @@ static bool	check_all_cylinders(t_data *data, t_ray *ray, t_hit_params *params)
 		if (find_closer_cylinder_hit(current_cylinder, ray, params))
 		{
 			params->hit_anything = true;
-			if (dot(&params->rec->normal, &ray->direction) > 0.0001)
+			if (dot(&params->rec->normal, &ray->direction) > ROUNDING_CORRECTION)
 			{
 				params->inside_object = true;
 				return (params->hit_anything);

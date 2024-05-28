@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:22 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/22 16:59:19 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:24:03 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void		frdp(char **s);
 // new_node.c
 t_cylinder	*cylinder_new(char *data);
 t_sphere	*sphere_new(char *data);
-t_plane		*plane_new(char *data, t_data *data_struct);
+t_plane		*plane_new(char *data);
 
 // add_node.c
 void		add_back(void **head, void *new, int type);
-void		add_plane(t_plane **head, t_plane *new, t_data *data);
-void		add_sphere(t_sphere **head, t_sphere *new, t_data *data);
-void		add_cylinder(t_cylinder **head, t_cylinder *new, t_data *data);
+void		add_plane(t_plane **head, t_plane *new);
+void		add_sphere(t_sphere **head, t_sphere *new);
+void		add_cylinder(t_cylinder **head, t_cylinder *new);
 
 // print_info.c
 void		print_info(t_data *data);

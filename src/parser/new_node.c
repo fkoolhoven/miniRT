@@ -6,24 +6,13 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:43 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 16:52:38 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:23:48 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	get_true_plane_normal(t_plane *new, t_data *data)
-{
-	t_vector	plane_to_light;
-	double		dot_product;
-
-	plane_to_light = subtract_vectors(&new->point, &data->light.origin);
-	dot_product = dot(&plane_to_light, &new->normal);
-	if (dot_product >= 0)
-		new->normal = multiply(&new->normal, -1);
-}
-
-t_plane	*plane_new(char *data, t_data *data_struct)
+t_plane	*plane_new(char *data)
 {
 	t_plane	*new;
 	char	**items;
@@ -42,7 +31,6 @@ t_plane	*plane_new(char *data, t_data *data_struct)
 		error("Plane parameters are incorrect", EXIT_FAILURE);
 	if (!plane_parameters_are_valid(*new))
 		error("Plane parameters are incorrect", EXIT_FAILURE);
-	get_true_plane_normal(new, data_struct);
 	new->next = NULL;
 	frdp(items);
 	return (new);

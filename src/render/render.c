@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/27 12:01:08 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:40:57 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 	bool			in_shadow;
 	t_hit_params	shadow_params;
 
-	rounding_correction = multiply(&light_rec->normal, 0.0001);
+	rounding_correction = multiply(&light_rec->normal, ROUNDING_CORRECTION);
 	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
 	shadow_ray.direction = subtract_vectors(&data->light.origin, \
 		&light_rec->point);
@@ -76,7 +76,7 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, \
 
 	inside_object = false;
 	black = get_point(0, 0, 0);
-	light_params = get_hit_params(LIGHT_RAY, light_rec); // ray type necessary?
+	light_params = get_hit_params(LIGHT_RAY, light_rec);
 	object_was_hit = hit_objects(data, &ray, &light_params);
 	if (light_params.inside_object) // make this better?
 	{

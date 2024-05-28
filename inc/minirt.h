@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/27 12:36:18 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:40:01 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
+
+# define ROUNDING_CORRECTION 0.0001
 
 # define ESCAPE 256
 

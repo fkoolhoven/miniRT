@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:41:58 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/27 12:03:48 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:14:33 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,26 @@ static bool	scene_is_valid(t_data *data)
 	return (true);
 }
 
+static bool	extension_is_valid(char *file)
+{
+	int	len;
+
+	len = ft_strlen(file);
+	if (len < 4)
+		return (false);
+	if (ft_strncmp(file + len - 3, ".rt", 3) != 0)
+		return (false);
+	return (true);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
 	if (argc != 2)
 		error("Incorrect number of arguments", EXIT_FAILURE);
+	else if (!extension_is_valid(argv[1]))
+		error("Incorrect file extenstion", EXIT_FAILURE);
 	parse(&data, argv[1]);
 	if (scene_is_valid(&data))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_caps.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:53:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/23 21:29:25 by felicia          ###   ########.fr       */
+/*   Updated: 2024/05/28 18:40:09 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
 	{
 		hit_point = trace_ray(&cyl_params->rotated_ray, t);
 		distance_to_center = subtract_vectors(&hit_point, &plane->point);
-		if (length(&distance_to_center) > cyl_params->rotated_cylinder.radius)
+		if (length(&distance_to_center) > cyl_params->rotated_cylinder.radius - ROUNDING_CORRECTION)
 			return (false);
 		else
 		{
