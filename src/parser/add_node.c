@@ -6,12 +6,11 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:39 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/28 18:23:35 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:35:04 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
 
 void	add_plane(t_plane **head, t_plane *new)
 {

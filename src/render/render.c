@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/06/01 14:47:24 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:06:52 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,6 @@ static void	color_pixel(t_color *pixel_color, \
 	mlx_put_pixel(image, viewport->pixel_x, viewport->pixel_y, rgba);
 }
 
-static void	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
-{
-	t_vector		rounding_correction;
-	t_ray			shadow_ray;
-	double			distance_to_light;
-	bool			in_shadow;
-	t_hit_params	shadow_params;
-
-	rounding_correction = multiply(&light_rec->normal, ROUNDING_CORRECTION);
-	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
-	shadow_ray.direction = subtract_vectors(&data->light.origin, \
-		&light_rec->point);
-	distance_to_light = length(&shadow_ray.direction);
-	shadow_ray.direction = normalize(&shadow_ray.direction);
-	shadow_params = get_hit_params(SHADOW_RAY, shadow_rec);
-	shadow_params.closest_so_far = distance_to_light;
-	in_shadow = hit_objects(data, &shadow_ray, &shadow_params);
-	light_rec->in_shadow = in_shadow;
-}
-
 static void	render_image_black(t_data *data, t_viewport *viewport)
 {
 	t_color	black;
@@ -61,12 +41,9 @@ static void	render_image_black(t_data *data, t_viewport *viewport)
 		}
 		viewport->pixel_y++;
 	}
-	viewport->pixel_y--;
-	viewport->pixel_x--;
 }
 
-static t_color	get_pixel_color(t_data *data, t_ray ray, \
-	t_hit *light_rec, t_hit *shadow_rec, t_viewport *viewport)
+static t_color	get_pixel_color(t_data *data, t_ray ray, t_viewport *viewport)
 {
 	bool			object_was_hit;
 	t_hit_params	light_params;
@@ -76,43 +53,33 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, \
 
 	inside_object = false;
 	black = get_point(0, 0, 0);
-	light_params = get_hit_params(LIGHT_RAY, light_rec);
+	light_params = get_hit_params(LIGHT_RAY, data->light_rec);
 	object_was_hit = hit_objects(data, &ray, &light_params);
-	if (light_params.inside_object) // make this better?
-	{
+	if (light_params.inside_object)
 		render_image_black(data, viewport);
-		return (black);
-	}
-	if (object_was_hit)
+	else if (object_was_hit)
 	{
-		inside_object = dot(&light_rec->normal, &ray.direction) > 0;
-		if (inside_object)
-			return (black);
-		check_if_shadow(data, light_rec, shadow_rec);
-		color = apply_shading(data, light_rec, shadow_rec);
+		color = apply_shading(data, data->light_rec, data->shadow_rec);
 		return (color);
 	}
-	else
-		return (black);
+	return (black);
 }
 
-static void	free_render_data(t_hit *light_rec, t_hit *shadow_rec)
+static void	free_render_data(t_data *data)
 {
-	free(light_rec);
-	free(shadow_rec);
+	free(data->light_rec);
+	free(data->shadow_rec);
 }
 
 void	render_image(t_data *data)
 {
 	t_viewport		viewport;
-	t_hit			*light_rec;
-	t_hit			*shadow_rec;
 	t_ray			light_ray;
 	t_color			pixel_color;
 
 	viewport = set_up_viewport(data);
-	light_rec = get_hit_record();
-	shadow_rec = get_hit_record();
+	data->light_rec = get_hit_record();
+	data->shadow_rec = get_hit_record();
 	light_ray.origin = data->camera.view_point;
 	viewport.pixel_y = 0;
 	while (viewport.pixel_y < data->window_height)
@@ -120,14 +87,14 @@ void	render_image(t_data *data)
 		viewport.pixel_x = 0;
 		while (viewport.pixel_x < data->window_width)
 		{
-			// printf("x %d y %d\n", viewport.pixel_x, viewport.pixel_y);
 			set_ray_direction(&viewport, &light_ray, data);
-			pixel_color = get_pixel_color(data, light_ray, \
-				light_rec, shadow_rec, &viewport);
+			pixel_color = get_pixel_color(data, light_ray, &viewport);
+			if (viewport.pixel_x == data->window_width)
+				break ;
 			color_pixel(&pixel_color, &viewport, data->mlx_info->img_ptr);
 			viewport.pixel_x++;
 		}
 		viewport.pixel_y++;
 	}
-	free_render_data(light_rec, shadow_rec);
+	free_render_data(data);
 }

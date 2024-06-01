@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:45 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/24 18:16:05 by felicia          ###   ########.fr       */
+/*   Updated: 2024/06/01 18:08:40 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_hit
 	t_vector	normal;
 	double		t;
 	t_color		color;
-	bool		in_shadow;
 }	t_hit;
 
 typedef struct s_camera
@@ -151,6 +150,8 @@ typedef struct s_data
 	int32_t			window_width;
 
 	t_mlx_info		*mlx_info;
+	t_hit			*light_rec;
+	t_hit			*shadow_rec;
 }	t_data;
 
 typedef struct s_hit_params

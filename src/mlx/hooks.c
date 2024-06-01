@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:43:39 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/22 17:37:06 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:34:38 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static void	camera_orientation_keys(t_data *data)
 		orientation->z += 0.1;
 	else
 		return ;
-	printf("orientation: %f %f %f\n", orientation->x, orientation->y, orientation->z);
+	printf("orientation: %f %f %f\n", \
+		orientation->x, orientation->y, orientation->z);
 	render_image(data);
 }
 
@@ -73,7 +74,8 @@ static void	camera_view_point_keys(t_data *data)
 		view_point->z -= 0.5;
 	else
 		return ;
-	printf("view point: %f %f %f\n", view_point->x, view_point->y, view_point->z);
+	printf("view point: %f %f %f\n", \
+		view_point->x, view_point->y, view_point->z);
 	render_image(data);
 }
 
@@ -87,15 +89,4 @@ void	key_press(mlx_key_data_t key_data, void *param)
 	camera_view_point_keys(data);
 	camera_orientation_keys(data);
 	camera_field_of_view_keys(data);
-}
-
-void	resize(int32_t new_width, int32_t new_height, void *param)
-{
-	t_data	*data;
-
-	data = (t_data *)param;
-	data->window_width = new_width;
-	data->window_height = new_height;
-	mlx_resize_image(data->mlx_info->img_ptr, new_width, new_height);
-	render_image(data);
 }

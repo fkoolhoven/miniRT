@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
-/*   Updated: 2024/06/01 14:50:11 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:11:57 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,8 @@ void	free_all_data(t_data *data);
 
 // error.c
 void	error(char *message, int code);
+
+// valid_scene.c
+bool	scene_is_valid(t_data *data);
 
 #endif

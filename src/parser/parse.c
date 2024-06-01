@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:34 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/28 18:23:14 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:34:56 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,3 @@ void	parse(t_data *data, char *file)
 	close(fd);
 	print_info(data);
 }
-
