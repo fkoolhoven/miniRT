@@ -16,5 +16,5 @@ L 3,3,3 0.9 255,255,255
 
 C 0.0,0.0,2 0,0,-1 90
 
-# 8 cylinders in a circle around the origin
+# sphere
 sp 0,0,0    1   0,255,0

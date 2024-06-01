@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/28 18:40:57 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:47:24 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	render_image(t_data *data)
 		viewport.pixel_x = 0;
 		while (viewport.pixel_x < data->window_width)
 		{
+			// printf("x %d y %d\n", viewport.pixel_x, viewport.pixel_y);
 			set_ray_direction(&viewport, &light_ray, data);
 			pixel_color = get_pixel_color(data, light_ray, \
 				light_rec, shadow_rec, &viewport);

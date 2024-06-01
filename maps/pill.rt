@@ -1,0 +1,15 @@
+# Ambient light
+A 0.2 255,255,255
+# Diffuse light
+L 0,0,1.6 0.6 255,255,255
+
+# front view
+C 0,0,2 0,0,-1 90
+# cylinder surface
+# C 0,0,1 0,0,-1 90
+
+# 1 cylinder
+cy 0,0,0        0,1,0   1   1   255,0,0
+# 2 spheres
+sp 0,0.5,0              1       255,0,0
+sp 0,-0.5,0             1       255,0,0

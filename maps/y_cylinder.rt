@@ -1,0 +1,12 @@
+# Ambient light
+A 0.2 255,255,255
+# Diffuse light
+L 0,0,1.6 0.6 255,255,255
+
+# front view
+C 0,0,2 0,0,-1 90
+# cylinder surface
+# C 0,0,1 0,0,-1 90
+
+# cylinder along y-axis
+cy 0,0,0                 0,1,0   1 1   255,0,0

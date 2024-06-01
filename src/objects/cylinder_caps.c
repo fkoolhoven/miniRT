@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:53:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/28 18:40:09 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:12:09 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
 	{
 		hit_point = trace_ray(&cyl_params->rotated_ray, t);
 		distance_to_center = subtract_vectors(&hit_point, &plane->point);
-		if (length(&distance_to_center) > cyl_params->rotated_cylinder.radius - ROUNDING_CORRECTION)
+		if (length(&distance_to_center) > cyl_params->rotated_cylinder.radius)
 			return (false);
 		else
 		{
@@ -58,18 +58,43 @@ static t_plane	create_cap_plane(t_cyl_params *cyl_params, int cap)
 	return (cap_plane);
 }
 
+int	find_closest_cap(t_plane *top, t_plane *bottom, t_cyl_params *cyl_params)
+{
+	t_point		camera_position;
+	t_vector	top_to_camera;
+	t_vector	bottom_to_camera;
+	double		distance_to_top_cap;
+	double		distance_to_bottom_cap;
+
+	camera_position = cyl_params->rotated_ray.origin;
+	top_to_camera = subtract_vectors(&top->point, &camera_position);
+	distance_to_top_cap = length(&top_to_camera);
+	bottom_to_camera = subtract_vectors(&bottom->point, &camera_position);
+	distance_to_bottom_cap = length(&bottom_to_camera);
+	if (distance_to_top_cap < distance_to_bottom_cap)
+		return (TOP);
+	else
+		return (BOTTOM);
+}
+
 int	find_cylinder_cap_hit(t_hit_params *hit_params, t_cyl_params *cyl_params)
 {
-	bool	hit_top_cap;
-	bool	hit_bottom_cap;
 	t_plane	top_plane;
 	t_plane	bottom_plane;
+	int		closest_cap;
+	bool	hit_cap;
 
 	top_plane = create_cap_plane(cyl_params, TOP);
 	bottom_plane = create_cap_plane(cyl_params, BOTTOM);
-	hit_top_cap = hit_disk(&top_plane, hit_params, TOP, cyl_params);
-	hit_bottom_cap = hit_disk(&bottom_plane, hit_params, BOTTOM, cyl_params);
-	if (hit_bottom_cap || hit_top_cap)
-		return (true);
-	return (false);
+	closest_cap = find_closest_cap(&top_plane, &bottom_plane, cyl_params);
+	if (closest_cap == BOTTOM)
+	{
+		hit_cap = hit_disk(&bottom_plane, hit_params, BOTTOM, cyl_params);
+		return (hit_cap);
+	}
+	else
+	{
+		hit_cap = hit_disk(&top_plane, hit_params, TOP, cyl_params);
+		return (hit_cap);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/05/23 21:29:05 by felicia          ###   ########.fr       */
+/*   Updated: 2024/06/01 15:03:52 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,15 @@ bool	find_closer_cylinder_hit(t_cylinder *cylinder,
 	cyl_params.rotated_ray = rotate_ray(ray, cylinder);
 	cyl_params.rotated_cylinder = rotate_cylinder(cylinder);
 	hit_side = find_cylinder_tube_hit(cylinder, hit_params, &cyl_params);
+	// if (hit_side)
+	// {
+	// 	printf("s t: %f\n", hit_params->closest_so_far);
+	// }
 	hit_cap = find_cylinder_cap_hit(hit_params, &cyl_params);
+	// if (hit_cap)
+	// {
+	// 	printf("c t: %f\n", hit_params->closest_so_far);
+	// }
 	if (hit_cap || hit_side)
 		return (true);
 	return (false);
