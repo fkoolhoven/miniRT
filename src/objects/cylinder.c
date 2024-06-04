@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/06/01 17:33:47 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:04:28 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static bool	within_cylinder_height(t_point *hit_point, t_cylinder *cylinder)
 
 	center_to_intersection = subtract_vectors(hit_point, &cylinder->center);
 	y = dot(&center_to_intersection, &cylinder->axis);
-	if (y <= -cylinder->height / 2.0 || y >= cylinder->height / 2.0)
+	if (y <= (-cylinder->height / 2.0) - ROUNDING_CORRECTION \
+		|| y >= (cylinder->height / 2.0) + ROUNDING_CORRECTION)
 		return (false);
 	return (true);
 }
@@ -115,6 +116,8 @@ bool	find_closer_cylinder_hit(t_cylinder *cylinder,
 	hit_side = find_cylinder_tube_hit(cylinder, hit_params, &cyl_params);
 	hit_cap = find_cylinder_cap_hit(hit_params, &cyl_params);
 	if (hit_cap || hit_side)
+	{
 		return (true);
+	}
 	return (false);
 }

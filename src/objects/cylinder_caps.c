@@ -6,11 +6,18 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:53:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/06/01 15:12:09 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:08:21 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static bool	within_radius(t_vector *distance_to_center, t_cylinder *cylinder)
+{
+	if (length(distance_to_center) > cylinder->radius - ROUNDING_CORRECTION)
+		return (false);
+	return (true);
+}
 
 static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
 	int cap, t_cyl_params *cyl_params)
@@ -25,7 +32,7 @@ static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
 	{
 		hit_point = trace_ray(&cyl_params->rotated_ray, t);
 		distance_to_center = subtract_vectors(&hit_point, &plane->point);
-		if (length(&distance_to_center) > cyl_params->rotated_cylinder.radius)
+		if (!within_radius(&distance_to_center, &cyl_params->rotated_cylinder))
 			return (false);
 		else
 		{

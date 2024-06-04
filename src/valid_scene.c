@@ -6,7 +6,7 @@
 /*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:35:46 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/06/01 17:36:00 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:47:18 by fkoolhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static bool	light_is_inside_object(t_data *data)
 		free(rec);
 		return (true);
 	}
+	free(rec);
 	return (false);
 }
 
