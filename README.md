@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="img/minirt.png" alt="logo" width="1000" height="auto" />
+  <img src="img/mini-rt.png" alt="logo" width="1000" height="auto" />
   <p>
     Writing a raytracer in C.
   </p>
@@ -13,28 +13,28 @@ A project made in accordance with the MiniRT project which is part of the Codam 
  <img src="img/fun.png" alt="image" width="1000" height="auto" />
 - Simple geometric objects with adjustable position, rotation, size and color
 <p float="left">
-  <img src="img/cyl1.png" alt="image" width="300" height="auto" />
-  <img src="img/cyl2.png" alt="image" width="300" height="auto" />
-  <img src="img/cyl3.png" alt="image" width="300" height="auto" />
+  <img src="img/cyl1.png" alt="image" width="280" height="auto" />
+  <img src="img/cyl2.png" alt="image" width="280" height="auto" />
+  <img src="img/cyl3.png" alt="image" width="280" height="auto" />
 </p>
 - Diffuse and ambient light, with adjustable color, intensity and position <br>
 - Planes, cylinders, spheres
 <p float="left">
-  <img src="img/col1.png" alt="image" width="300" height="auto" />
-  <img src="img/col2.png" alt="image" width="300" height="auto" />
-  <img src="img/col3.png" alt="image" width="300" height="auto" />
+  <img src="img/col1.png" alt="image" width="280" height="auto" />
+  <img src="img/col2.png" alt="image" width="280" height="auto" />
+  <img src="img/col3.png" alt="image" width="280" height="auto" />
 </p>
 - Objects intersecting, adjustable camera (position, orientation, field of view)
 <p float="left">
-  <img src="img/grid1.png" alt="image" width="300" height="auto" />
-  <img src="img/grid2.png" alt="image" width="300" height="auto" />
-  <img src="img/grid3.png" alt="image" width="300" height="auto" />
+  <img src="img/grid1.png" alt="image" width="280" height="auto" />
+  <img src="img/grid2.png" alt="image" width="280" height="auto" />
+  <img src="img/grid3.png" alt="image" width="280" height="auto" />
 </p>
 - Different points of view
 <p float="left">
-  <img src="img/top1.png" alt="image" width="300" height="auto" />
-  <img src="img/top2.png" alt="image" width="300" height="auto" />
-  <img src="img/top3.png" alt="image" width="300" height="auto" />
+  <img src="img/top1.png" alt="image" width="280" height="auto" />
+  <img src="img/top2.png" alt="image" width="280" height="auto" />
+  <img src="img/top3.png" alt="image" width="280" height="auto" />
 </p>
 
 # Getting started
