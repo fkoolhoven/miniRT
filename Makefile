@@ -22,7 +22,11 @@ OBJ				:= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DISCARD			:= /dev/null 2>&1
 
 
-all: $(NAME)
+all: init-submodule $(NAME)
+
+init-submodule:
+	@git submodule init
+	@git submodule update
 
 $(NAME): $(OBJ) $(LIBMLX_BUILD) $(LIBFT)
 	@echo "$(GREEN)$(BOLD)COMPILING:  $(RESET)$(GREEN)$(NAME)$(RESET)"

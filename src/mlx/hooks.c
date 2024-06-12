@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:43:39 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/06/01 17:34:38 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:10:58 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ static void	camera_orientation_keys(t_data *data)
 		orientation->z += 0.1;
 	else
 		return ;
-	printf("orientation: %f %f %f\n", \
-		orientation->x, orientation->y, orientation->z);
+	printf("orientation: %f %f %f\n", orientation->x, orientation->y, orientation->z);
 	render_image(data);
 }
 
@@ -74,8 +73,7 @@ static void	camera_view_point_keys(t_data *data)
 		view_point->z -= 0.5;
 	else
 		return ;
-	printf("view point: %f %f %f\n", \
-		view_point->x, view_point->y, view_point->z);
+	printf("view point: %f %f %f\n", view_point->x, view_point->y, view_point->z);
 	render_image(data);
 }
 

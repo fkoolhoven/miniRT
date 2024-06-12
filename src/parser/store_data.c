@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:55:38 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/06/01 14:33:55 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:13:48 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static void	store_light(t_data *data, char *input)
 		error(strerror(errno), errno);
 	if (ft_count_items(items) != 3)
 		error(input, 1);
-	if (store_xyz(items[0], &data->light.origin) || \
-		store_xyz(items[2], &(data->light.color)))
+	if (store_xyz(items[0], &data->light.origin) || store_xyz(items[2], &(data->light.color)))
 		error("Light parameters are incorrect", EXIT_FAILURE);
 	data->light.brightness = ft_atod(items[1]);
 	if (!light_parameters_are_valid(data->light))
@@ -44,8 +43,7 @@ static void	store_camera(t_data *data, char *input)
 		error(strerror(errno), errno);
 	if (ft_count_items(items) != 3)
 		error(input, 1);
-	if (store_xyz(items[0], &data->camera.view_point) || \
-		store_xyz(items[1], &data->camera.orientation))
+	if (store_xyz(items[0], &data->camera.view_point) || store_xyz(items[1], &data->camera.orientation))
 		error("Camera parameters are incorrect", EXIT_FAILURE);
 	data->camera.horizontal_fov = ft_atod(items[2]);
 	if (!camera_parameters_are_valid(data->camera))

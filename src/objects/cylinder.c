@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:27:47 by felicia           #+#    #+#             */
-/*   Updated: 2024/06/04 19:04:28 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:12:09 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static bool	within_cylinder_height(t_point *hit_point, t_cylinder *cylinder)
 
 	center_to_intersection = subtract_vectors(hit_point, &cylinder->center);
 	y = dot(&center_to_intersection, &cylinder->axis);
-	if (y <= (-cylinder->height / 2.0) - ROUNDING_CORRECTION \
-		|| y >= (cylinder->height / 2.0) + ROUNDING_CORRECTION)
+	if (y <= (-cylinder->height / 2.0) - ROUNDING_CORRECTION || y >= (cylinder->height / 2.0) + ROUNDING_CORRECTION)
 		return (false);
 	return (true);
 }
@@ -33,14 +32,11 @@ static void	solve_quadratic(t_cyl_params *cyl_params)
 	double		c;
 	double		discriminant;
 
-	to_origin = subtract_vectors(&cyl_params->rotated_ray.origin, \
-		&cyl_params->rotated_cylinder.center);
+	to_origin = subtract_vectors(&cyl_params->rotated_ray.origin, &cyl_params->rotated_cylinder.center);
 	a = length_squared(&cyl_params->rotated_ray.direction);
-	a -= square(dot(&cyl_params->rotated_ray.direction, \
-		&cyl_params->rotated_cylinder.axis));
+	a -= square(dot(&cyl_params->rotated_ray.direction, &cyl_params->rotated_cylinder.axis));
 	b = dot(&to_origin, &cyl_params->rotated_cylinder.axis);
-	b = dot(&cyl_params->rotated_ray.direction, \
-		&cyl_params->rotated_cylinder.axis) * b;
+	b = dot(&cyl_params->rotated_ray.direction, &cyl_params->rotated_cylinder.axis) * b;
 	b = 2 * (dot(&cyl_params->rotated_ray.direction, &to_origin) - b);
 	c = length_squared(&to_origin);
 	c -= square(dot(&to_origin, &cyl_params->rotated_cylinder.axis));
@@ -52,8 +48,7 @@ static void	solve_quadratic(t_cyl_params *cyl_params)
 	cyl_params->discriminant = discriminant;
 }
 
-static double	get_t_for_cylinder_tube(t_cyl_params *cyl_params, \
-	t_hit_params *hit_params)
+static double	get_t_for_cylinder_tube(t_cyl_params *cyl_params, t_hit_params *hit_params)
 {
 	double	t;
 	double	sqrt_discriminant;
@@ -75,8 +70,7 @@ static double	get_t_for_cylinder_tube(t_cyl_params *cyl_params, \
 	return (t);
 }
 
-static bool	find_cylinder_tube_hit(t_cylinder *cylinder, \
-	t_hit_params *hit_params, t_cyl_params *cyl_params)
+static bool	find_cylinder_tube_hit(t_cylinder *cylinder, t_hit_params *hit_params, t_cyl_params *cyl_params)
 {
 	double		t;
 	t_vector	local_normal;
@@ -90,8 +84,7 @@ static bool	find_cylinder_tube_hit(t_cylinder *cylinder, \
 		hit_point = trace_ray(&cyl_params->rotated_ray, t);
 		if (!within_cylinder_height(&hit_point, &cyl_params->rotated_cylinder))
 			return (false);
-		local_normal = subtract_vectors(&hit_point, \
-			&cyl_params->rotated_cylinder.center);
+		local_normal = subtract_vectors(&hit_point, &cyl_params->rotated_cylinder.center);
 		local_normal.y = 0;
 		local_normal = normalize(&local_normal);
 		local_normal = rotate(&local_normal, cylinder->inverse_rotation);
@@ -103,8 +96,7 @@ static bool	find_cylinder_tube_hit(t_cylinder *cylinder, \
 	return (false);
 }
 
-bool	find_closer_cylinder_hit(t_cylinder *cylinder,
-	t_ray *ray, t_hit_params *hit_params) \
+bool	find_closer_cylinder_hit(t_cylinder *cylinder, t_ray *ray, t_hit_params *hit_params)
 {
 	t_cyl_params	cyl_params;
 	bool			hit_side;

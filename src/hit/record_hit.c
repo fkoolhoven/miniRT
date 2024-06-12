@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   record_hit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:42:11 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/05/28 18:29:25 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:10:44 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	record_cylinder_cap_hit(double t, t_plane *cap, t_ray *ray, t_hit *rec)
 	rec->object_type = CYLINDER_CAP;
 }
 
-void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, \
-	t_hit *rec, t_cyl_params *cyl_params)
+void	record_cylinder_tube_hit(double t, t_cylinder *cylinder, t_hit *rec, t_cyl_params *cyl_params)
 {
 	rec->t = t;
 	rec->point = trace_ray(&cyl_params->normal_ray, rec->t);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:23 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/06/01 18:10:23 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:14:54 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ static bool	check_if_shadow(t_data *data, t_hit *light_rec, t_hit *shadow_rec)
 
 	rounding_correction = multiply(&light_rec->normal, ROUNDING_CORRECTION);
 	shadow_ray.origin = add_vectors(&light_rec->point, &rounding_correction);
-	shadow_ray.direction = subtract_vectors(&data->light.origin, \
-		&light_rec->point);
+	shadow_ray.direction = subtract_vectors(&data->light.origin, &light_rec->point);
 	distance_to_light = length(&shadow_ray.direction);
 	shadow_ray.direction = normalize(&shadow_ray.direction);
 	shadow_params = get_hit_params(SHADOW_RAY, shadow_rec);

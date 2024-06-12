@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:18 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/06/04 19:04:04 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:14:48 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void	color_pixel(t_color *pixel_color, \
-	t_viewport *viewport, mlx_image_t *image)
+static void	color_pixel(t_color *pixel_color, t_viewport *viewport, mlx_image_t *image)
 {
 	unsigned int	rgba;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_caps.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:53:40 by felicia           #+#    #+#             */
-/*   Updated: 2024/06/04 19:08:21 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:11:21 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static bool	within_radius(t_vector *distance_to_center, t_cylinder *cylinder)
 	return (true);
 }
 
-static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
-	int cap, t_cyl_params *cyl_params)
+static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, int cap, t_cyl_params *cyl_params)
 {
 	double		t;
 	t_point		hit_point;
@@ -37,11 +36,9 @@ static bool	hit_disk(t_plane *plane, t_hit_params *hit_params, \
 		else
 		{
 			local_normal = get_point(0, 1 * cap, 0);
-			world_normal = rotate(&local_normal, \
-				cyl_params->rotated_cylinder.inverse_rotation);
+			world_normal = rotate(&local_normal, cyl_params->rotated_cylinder.inverse_rotation);
 			plane->normal = world_normal;
-			record_cylinder_cap_hit(t, plane, &cyl_params->normal_ray, \
-				hit_params->rec);
+			record_cylinder_cap_hit(t, plane, &cyl_params->normal_ray, hit_params->rec);
 			hit_params->closest_so_far = t;
 			return (true);
 		}

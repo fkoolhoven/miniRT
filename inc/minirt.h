@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:09:30 by felicia           #+#    #+#             */
-/*   Updated: 2024/06/01 18:11:57 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:23:06 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define BOLD		"\033[1m"
 # define OFF		"\033[0m"
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 1200
+# define WINDOW_HEIGHT 800
 
 # define ROUNDING_CORRECTION 0.0001
 

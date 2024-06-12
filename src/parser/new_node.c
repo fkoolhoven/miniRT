@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoolhov <fkoolhov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felicia <felicia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:53:43 by fkoolhov          #+#    #+#             */
-/*   Updated: 2024/06/01 15:30:29 by fkoolhov         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:13:16 by felicia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ t_plane	*plane_new(char *data)
 	new = malloc(sizeof(t_plane));
 	if (!new)
 		error("Malloc failure", errno);
-	if (store_xyz(items[0], &new->point) || \
-		store_xyz(items[1], &new->normal) || \
-		store_xyz(items[2], &(new->color)))
+	if (store_xyz(items[0], &new->point) || store_xyz(items[1], &new->normal) || store_xyz(items[2], &(new->color)))
 		error("Plane parameters are incorrect", EXIT_FAILURE);
 	if (!plane_parameters_are_valid(*new))
 		error("Plane parameters are incorrect", EXIT_FAILURE);
@@ -49,8 +47,7 @@ t_sphere	*sphere_new(char *data)
 	new = malloc(sizeof(t_sphere));
 	if (!new)
 		error("Malloc failure", errno);
-	if (store_xyz(items[0], &new->center) || \
-		store_xyz(items[2], &(new->color)))
+	if (store_xyz(items[0], &new->center) || store_xyz(items[2], &(new->color)))
 		error("Sphere parameters are incorrect", EXIT_FAILURE);
 	new->radius = ft_atod(items[1]) / 2;
 	if (!sphere_parameters_are_valid(*new))
@@ -73,9 +70,7 @@ t_cylinder	*cylinder_new(char *data)
 	new = malloc(sizeof(t_cylinder));
 	if (!new)
 		error("Malloc failure", errno);
-	if (store_xyz(items[0], &new->center) || \
-		store_xyz(items[1], &new->axis) || \
-		store_xyz(items[4], &(new->color)))
+	if (store_xyz(items[0], &new->center) || store_xyz(items[1], &new->axis) || store_xyz(items[4], &(new->color)))
 		error("Cylinder parameters are incorrect", EXIT_FAILURE);
 	new->radius = ft_atod(items[2]) / 2;
 	new->height = ft_atod(items[3]);
