@@ -9,28 +9,30 @@
 # About the project
 A project made in accordance with the MiniRT project which is part of the Codam Core Curriculum. For this project it was mandatory to use [the school's graphics library](https://github.com/codam-coding-college/MLX42). The purpose of the project is to write a raytracer. A ray tracer is a type of graphics rendering technique that simulates the physical behavior of light to generate images. It traces the path of light rays from the eye of the observer back to the light source, calculating the color of each pixel based on the material it hits and the angle of incidence.
 
-# Features 
- <img src="img/fun.png" alt="image" width="790" height="auto" />
-- Simple geometric objects with adjustable position, rotation, size and color
+# Features
+Check the [subject](https://github.com/fkoolhoven/miniRT/blob/main/subject.pdf) for all the requirements we had to meet.
+<img src="img/fun.png" alt="image" width="790" height="auto" />
+<br>
+Simple geometric objects with adjustable position, rotation, size and color
 <div style="display: flex; justify-content: space-between;">
   <img src="img/cyl1.png" alt="image" width="260" height="auto" />
   <img src="img/cyl2.png" alt="image" width="260" height="auto" />
   <img src="img/cyl3.png" alt="image" width="260" height="auto" />
 </div>
-- Diffuse and ambient light, with adjustable color, intensity and position <br>
-- Planes, cylinders, spheres
+Diffuse and ambient light, with adjustable color, intensity and position <br>
+Planes, cylinders, spheres
 <div style="display: flex; justify-content: space-between;">
   <img src="img/col1.png" alt="image" width="260" height="auto" />
   <img src="img/col2.png" alt="image" width="260" height="auto" />
   <img src="img/col3.png" alt="image" width="260" height="auto" />
 </div>
-- Objects intersecting, adjustable camera (position, orientation, field of view)
+Objects intersecting, adjustable camera (position, orientation, field of view)
 <div style="display: flex; justify-content: space-between;">
   <img src="img/grid1.png" alt="image" width="260" height="auto" />
   <img src="img/grid2.png" alt="image" width="260" height="auto" />
   <img src="img/grid3.png" alt="image" width="260" height="auto" />
 </div>
-- Different points of view
+Different points of view
 <div style="display: flex; justify-content: space-between;">
   <img src="img/top1.png" alt="image" width="260" height="auto" />
   <img src="img/top2.png" alt="image" width="260" height="auto" />
