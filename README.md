@@ -13,28 +13,28 @@ A project made in accordance with the MiniRT project which is part of the Codam 
  <img src="img/fun.png" alt="image" width="1000" height="auto" />
 - Simple geometric objects with adjustable position, rotation, size and color
 <div style="display: flex; justify-content: space-between;">
-  <img src="img/cyl1.png" alt="image" width="280" height="auto" />
-  <img src="img/cyl2.png" alt="image" width="280" height="auto" />
-  <img src="img/cyl3.png" alt="image" width="280" height="auto" />
+  <img src="img/cyl1.png" alt="image" width="260" height="auto" />
+  <img src="img/cyl2.png" alt="image" width="260" height="auto" />
+  <img src="img/cyl3.png" alt="image" width="260" height="auto" />
 </div>
 - Diffuse and ambient light, with adjustable color, intensity and position <br>
 - Planes, cylinders, spheres
 <div style="display: flex; justify-content: space-between;">
-  <img src="img/col1.png" alt="image" width="280" height="auto" />
-  <img src="img/col2.png" alt="image" width="280" height="auto" />
-  <img src="img/col3.png" alt="image" width="280" height="auto" />
+  <img src="img/col1.png" alt="image" width="260" height="auto" />
+  <img src="img/col2.png" alt="image" width="260" height="auto" />
+  <img src="img/col3.png" alt="image" width="260" height="auto" />
 </div>
 - Objects intersecting, adjustable camera (position, orientation, field of view)
 <div style="display: flex; justify-content: space-between;">
-  <img src="img/grid1.png" alt="image" width="280" height="auto" />
-  <img src="img/grid2.png" alt="image" width="280" height="auto" />
-  <img src="img/grid3.png" alt="image" width="280" height="auto" />
+  <img src="img/grid1.png" alt="image" width="260" height="auto" />
+  <img src="img/grid2.png" alt="image" width="260" height="auto" />
+  <img src="img/grid3.png" alt="image" width="260" height="auto" />
 </div>
 - Different points of view
 <div style="display: flex; justify-content: space-between;">
-  <img src="img/top1.png" alt="image" width="280" height="auto" />
-  <img src="img/top2.png" alt="image" width="280" height="auto" />
-  <img src="img/top3.png" alt="image" width="280" height="auto" />
+  <img src="img/top1.png" alt="image" width="260" height="auto" />
+  <img src="img/top2.png" alt="image" width="260" height="auto" />
+  <img src="img/top3.png" alt="image" width="260" height="auto" />
 </div>
 
 # Getting started
