@@ -10,7 +10,7 @@
 A project made in accordance with the MiniRT project which is part of the Codam Core Curriculum. For this project it was mandatory to use [the school's graphics library](https://github.com/codam-coding-college/MLX42). The purpose of the project is to write a raytracer. A ray tracer is a type of graphics rendering technique that simulates the physical behavior of light to generate images. It traces the path of light rays from the eye of the observer back to the light source, calculating the color of each pixel based on the material it hits and the angle of incidence.
 
 # Features 
- <img src="img/fun.png" alt="image" width="1000" height="auto" />
+ <img src="img/fun.png" alt="image" width="790" height="auto" />
 - Simple geometric objects with adjustable position, rotation, size and color
 <div style="display: flex; justify-content: space-between;">
   <img src="img/cyl1.png" alt="image" width="260" height="auto" />
