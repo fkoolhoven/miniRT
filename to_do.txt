@@ -1,6 +1,0 @@
-To do:
-- Check if MLX config in Makefile is correct / figure out how we want to do this on intra
-
-Final:
-- Leak
-- Norminette
