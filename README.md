@@ -38,6 +38,12 @@ Different points of view
   <img src="img/top2.png" alt="image" width="260" height="auto" />
   <img src="img/top3.png" alt="image" width="260" height="auto" />
 </div>
+Spheres, adjustable light
+<div style="display: flex; justify-content: space-between;">
+  <img src="img/sp1.png" alt="image" width="260" height="auto" />
+  <img src="img/sp2.png" alt="image" width="260" height="auto" />
+  <img src="img/sp3.png" alt="image" width="260" height="auto" />
+</div>
 
 # Getting started
 
