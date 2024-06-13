@@ -32,13 +32,13 @@ Objects intersecting, adjustable camera (position, orientation, field of view)
   <img src="img/grid2.png" alt="image" width="260" height="auto" />
   <img src="img/grid3.png" alt="image" width="260" height="auto" />
 </div>
-Different points of view
+Different points of view, shadows
 <div style="display: flex; justify-content: space-between;">
   <img src="img/top1.png" alt="image" width="260" height="auto" />
   <img src="img/top2.png" alt="image" width="260" height="auto" />
   <img src="img/top3.png" alt="image" width="260" height="auto" />
 </div>
-Spheres, adjustable light
+Spheres, adjustable light, shadows
 <div style="display: flex; justify-content: space-between;">
   <img src="img/sp1.png" alt="image" width="260" height="auto" />
   <img src="img/sp2.png" alt="image" width="260" height="auto" />
