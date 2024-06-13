@@ -54,10 +54,12 @@ make
 # Usage
 ⚠️ Please note this project was made on/for Linux! ⚠️
 
-MiniRT takes a .rt file as input. The file describes a word/scene. For example:
+MiniRT takes a .rt file as input. The file describes a world/scene. For example:
 ```c
 ./miniRT scenes/sphere.rt
 ```
+describes a world with a single sphere, a camera looking at it and a light source illuminating it.
+
 - Use left and right arrow to change the camera position across the X-axis
 - Use up and down arrow to change the camera position across the Y-axis
 - Use P and L arrow to change the camera position across the Z-axis
