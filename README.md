@@ -80,6 +80,7 @@ describes a world with a single sphere, a camera looking at it and a light sourc
 - Implementing mathematical formulas in C
 - Debugging complex mathematics
 - Using an external graphics library
+- Understanding 3d space, points and vectors
 
 # Contact
 See my profile page for ways to contact me!
