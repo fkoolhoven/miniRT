@@ -46,11 +46,9 @@ static t_color	get_pixel_color(t_data *data, t_ray ray, t_viewport *viewport)
 {
 	bool			object_was_hit;
 	t_hit_params	light_params;
-	bool			inside_object;
 	t_color			color;
 	t_color			black;
 
-	inside_object = false;
 	black = get_point(0, 0, 0);
 	light_params = get_hit_params(LIGHT_RAY, data->light_rec);
 	object_was_hit = hit_objects(data, &ray, &light_params);
